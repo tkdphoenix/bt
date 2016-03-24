@@ -10,8 +10,8 @@
 	if(isset($_POST['payment_method_nonce'])){
 		$nonce = $_POST['payment_method_nonce'];
 		$amt = 50.00;
-	showBTHeader("Braintree Initialization", "Results");
-	showBTLeftNav();
+		showBTHeader("Braintree Initialization", "Results");
+		showBTLeftNav();
 		try{
 			$result = Braintree_Transaction::sale(array(
 				'amount' => $amt,
@@ -52,7 +52,7 @@
 			echo "<p class='error'>This payment could not be processed.". $e->getMessage() ."</p>";
 			echo "<br><br>Transaction errors: <br>";
 			var_dump($result->errors);
-		}
+		} // END catch block
 	} else { // END if(isset($_POST['payment_method_nonce']))
 	showBTHeader("Dropin UI", "Dropin UI");
 	showBTLeftNav();

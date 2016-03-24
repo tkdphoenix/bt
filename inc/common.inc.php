@@ -39,7 +39,7 @@ function showBTHeader($title, $heading){
  */
 function showBTLeftNav(){
 ?>
-			<div class="col-md-2">
+			<div class="col-md-2 leftNav">
 				<h3>Navigation</h3>
 				<ul class="nav nav-pills nav-stacked">
 					<li>
@@ -59,8 +59,11 @@ function showBTLeftNav(){
 					<li>
 						<h4>Subscriptions</h4>
 						<a href="createSubscription.php">Create Subscription</a></li>
-					<li><a href=""></a></li>
-					<li><a href=""></a></li>
+					<!-- <li><a href=""></a></li>
+					<li><a href=""></a></li> -->
+					<li>
+						<h4>3D Secure</h4>
+						<a href="3DS.php">3D Secure Checkout</a></li>
 				</ul>
 			</div>
 <?php

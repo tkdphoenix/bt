@@ -7,48 +7,45 @@
 	$clientToken = Braintree_ClientToken::generate();
 
 	// test if the nonce has been posted
-	if(isset($_POST['submit'])){
-		if(isset($_POST['payment_method_nonce'])){
-			$nonce = $_POST['payment_method_nonce'];
-			$amt = 30.00;
+	if(isset($_POST['payment_method_nonce'])){
+		$nonce = $_POST['payment_method_nonce'];
+		$amt = 30.00;
 
-			try{
-				$result = Braintree_Transaction::sale(array(
-					'amount' => $amt,
-					'paymentMethodNonce' => $nonce,
-					'options' => array(
-						'submitForSettlement' => false
-					)
-				));
+		try{
+			$result = Braintree_Transaction::sale(array(
+				'amount' => $amt,
+				'paymentMethodNonce' => $nonce,
+				'options' => array(
+					'submitForSettlement' => false
+				)
+			));
 
-				if($result->success){
-					showBTHeader("Simple Sales Transaction Response", "Response");
-					showBTLeftNav();
+			if($result->success){
+				showBTHeader("Simple Sales Transaction Response", "Response");
+				showBTLeftNav();
 ?>
-			<div class="col-md-7">
-				<div class="row">
-					<div class="col-md-12">
+		<div class="col-md-7">
+			<div class="row">
+				<div class="col-md-12">
 <?php
-					$txn = $result->transaction;
+				$txn = $result->transaction;
 
-					echo "<p>Your payment went through. You are the proud owner of a iPad charging cable!</p>";
-					echo "<h3>Transaction detaiils:</h3>";
-					echo "id = ". $txn->id ."</p>";
-					echo "<p>status = ". $txn->status ."</p>";
-					echo "<p>type = ". $txn->type ."</p>";
-					echo "<p>amount = ". $txn->amount ."</p>";
+				echo "<p>Your payment went through. You are the proud owner of a iPad charging cable!</p>";
+				echo "<h3>Transaction detaiils:</h3>";
+				echo "id = ". $txn->id ."</p>";
+				echo "<p>status = ". $txn->status ."</p>";
+				echo "<p>type = ". $txn->type ."</p>";
+				echo "<p>amount = ". $txn->amount ."</p>";
 
-				} else if (isset($result->errors)){ 
-					throw new Exception("The transaction wasn't successful");
-				}
-
-			} catch (Exception $e){
-				echo "<p class='error'>This payment could not be processed.". $e->getMessage() ."</p>";
-				echo "<br><br>Transaction errors: <br>";
-				var_dump($result->errors);			
+			} else if (isset($result->errors)){ 
+				throw new Exception("The transaction wasn't successful.");
 			}
-		} // END if(isset($_POST['payment_method_nonce']))
-	} else { // end if(isset($_POST['payment_method_nonce']))
+		} catch (Exception $e){
+			echo "<p class='error'>This payment could not be processed.". $e->getMessage() ."</p>";
+			echo "<br><br>Transaction errors: <br>";
+			var_dump($result->errors);			
+		}
+	} else { // END if(isset($_POST['payment_method_nonce']))
 		showBTHeader("Braintree Initialization", "Welcome to Braintree!");
 		showBTLeftNav();
 ?>
