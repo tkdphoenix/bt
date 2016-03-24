@@ -1,0 +1,2 @@
+03/22/16 02:11:52 MST - createCustomer.php page
+81717: Credit card number is not an accepted test number.

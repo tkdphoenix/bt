@@ -1,0 +1,31 @@
+@font-face {
+  font-family: 'Courier_Prime';
+  src: url('../fonts/Courier_Prime.woff') format('woff'), /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+       url('../fonts/Courier_Prime.ttf') format('truetype'); /* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */
+}
+
+h1,h2,h3,h4,h5,h6{
+	color: #69c4a7;
+	font-family: 'Courier_Prime', 'Helvetica Neue', Helvetica, sans-serif;
+}
+.smallLabel{
+	font-size: 65%;
+	position: relative;
+	padding-right: 5px;
+	padding-left: 55px;
+}
+.greenBtn{
+	color: #fff;
+	font-family: 'Courier_Prime', 'Helvetica Neue', Helvetica, sans-serif;
+	background-color: #69c4a7;
+}
+.nav>li>a{
+	color:#000;
+	font-family: 'Courier_Prime', 'Helvetica Neue', Helvetica, sans-serif;
+}
+.cord{ 
+	width: 150px;
+	height: 150px;
+	margin-bottom: 30px;
+}
+.cordTxt{ font-size: 18px; }

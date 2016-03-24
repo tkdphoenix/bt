@@ -1,0 +1,9 @@
+form{
+	width: 90%;
+	margin: 0 auto;
+}
+a.list-group-item{ color: #428bca; }
+#apiCredsForm{ margin-bottom: 50px;}
+#apiCredsForm input[type=text]{
+	width: 460px;
+}
