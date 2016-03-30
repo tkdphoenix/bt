@@ -17,12 +17,11 @@
 			<div class="row">
 				<div class="col-md-12">
 					<form id="checkoutForm" method="post" action="?">
-						<input type="number" id="cardNum" name="cardNum" placeholder="Card number" tabindex="1">
-						<input type="number" id="cvv" name="cvv" placeholder="CVV" tabindex="2">
-						<input type="text" id="zip" name="zip" placeholder="Postal Code" tabindex="3">
-						<input type="date" id="expDate" name="expDate" placeholder="Expiration Date" tabindex="4">
-						<input name="amt" type="hidden" value="10.00">
-						<input name="submit" type="submit" value="Pay $10">
+						<div id="cardNum" class="hosted" tabindex="5"></div>
+						<div id="cvv" class="hosted" tabindex="10">
+						<!-- <div id="zip"> -->
+						<div id="expDate" class="hosted" tabindex="20">
+						<input class="btn greenBtn" name="submit" type="submit" value="Pay $10">
 					</form>
 				</div>
 			</div>
@@ -33,7 +32,7 @@
 	if(isset($_POST['submit'])){
 		if(isset($_POST['payment_method_nonce'])){
 			$nonce = $_POST['payment_method_nonce'];
-			$amt = $_POST['amt'];
+			$amt = 10.00;
 			echo "nonce = ". $nonce ."\r\n";
 			echo "amt = ". $amt ."\r\n";
 
@@ -120,9 +119,9 @@
 				cvv: {
 					selector: "#cvv"
 				},
-				postalCode: {
-					selector: "#zip"
-				},
+				// postalCode: {
+				// 	selector: "#zip"
+				// },
 				expirationDate: {
 					selector: "#expDate"
 				}

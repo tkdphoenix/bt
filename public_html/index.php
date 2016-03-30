@@ -10,7 +10,6 @@
 	if(isset($_POST['payment_method_nonce'])){
 		$nonce = $_POST['payment_method_nonce'];
 		$amt = 30.00;
-
 		try{
 			$result = Braintree_Transaction::sale(array(
 				'amount' => $amt,
@@ -30,12 +29,12 @@
 <?php
 				$txn = $result->transaction;
 
-				echo "<p>Your payment went through. You are the proud owner of a iPad charging cable!</p>";
+				echo "<p>Your payment was completed successfully. You are the proud owner of a iPad charging cable!</p>";
 				echo "<h3>Transaction detaiils:</h3>";
 				echo "id = ". $txn->id ."</p>";
 				echo "<p>status = ". $txn->status ."</p>";
 				echo "<p>type = ". $txn->type ."</p>";
-				echo "<p>amount = ". $txn->amount ."</p>";
+				echo "<p>amount = ". $txn->amount ." ". $txn->currencyIsoCode ."</p>";
 
 			} else if (isset($result->errors)){ 
 				throw new Exception("The transaction wasn't successful.");
