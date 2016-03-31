@@ -1,6 +1,5 @@
 <?php
 	defined("DS")? null : require_once(realpath(dirname(__FILE__) . DIRECTORY_SEPARATOR . "..") . DIRECTORY_SEPARATOR . "inc" . DIRECTORY_SEPARATOR . "initialize.php");
-
 	require_once(LIB_PATH . DS . "inc" . DS . "common.inc.php");
 	require_once(LIB_PATH . DS . "btVars.php");
 
@@ -88,7 +87,7 @@
 					</div>
 				</div>
 			</div>
-			<script src="https://js.braintreegateway.com/v2/braintree.js"></script>
+			<script src="https://js.braintreegateway.com/js/braintree-2.21.0.min.js"></script>
 			<script>
 				braintree.setup(
 					"<?=$clientToken?>",

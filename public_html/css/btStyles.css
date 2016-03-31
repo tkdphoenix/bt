@@ -34,3 +34,7 @@ h1,h2,h3,h4,h5,h6{
 	height: 150px;
 	margin-bottom: 30px;
 }
+#hostedCheckoutForm>div{
+	height: 30px;
+	border: 1px solid grey;
+}

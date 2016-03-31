@@ -351,7 +351,7 @@ if(isset($_POST['newCustSubmit'])){ // if the form has been submitted
 	showForm();
 }
 ?>
-<script src="https://js.braintreegateway.com/v2/braintree.js"></script>
+<script src="https://js.braintreegateway.com/js/braintree-2.21.0.min.js"></script>
 <script>
 	$("document").ready(function(){
 		// custom nonce prep

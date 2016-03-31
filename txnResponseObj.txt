@@ -19,7 +19,8 @@ object(Braintree\ Transaction) #9 (1) { ["_attributes":protected]= > array(57) {
     	["timezone"] => string(3) "UTC"
 	}
 	["customer"] => array(8) {
-    	["id"] => NULL["firstName"] => NULL
+    	["id"] => NULL
+    	["firstName"] => NULL
     	["lastName"] => NULL
     	["company"] => NULL
     	["email"] => NULL
@@ -78,12 +79,15 @@ object(Braintree\ Transaction) #9 (1) { ["_attributes":protected]= > array(57) {
     ["taxAmount"] => NULL
     ["taxExempt"] => bool(false)
     ["creditCard"] => array(20) {
-		["token"] => NULL["bin"] => string(6) "411111" 
+		["token"] => NULL
+		["bin"] => string(6) "411111" 
 		["last4"] => string(4) "1111" 
 		["cardType"] => string(4) "Visa" 
 		["expirationMonth"] => string(2) "11" 
 		["expirationYear"] => string(4) "2018" 
-		["customerLocation"] => string(2) "US" ["cardholderName"] => NULL["imageUrl"] => string(84) "https://assets.braintreegateway.com/payment_method_logo/visa.png?environment=sandbox" 
+		["customerLocation"] => string(2) "US" 
+		["cardholderName"] => NULL
+		["imageUrl"] => string(84) "https://assets.braintreegateway.com/payment_method_logo/visa.png?environment=sandbox" 
 		["prepaid"] => string(7) "Unknown" 
 		["healthcare"] => string(7) "Unknown" 
 		["debit"] => string(7) "Unknown" 
@@ -98,123 +102,128 @@ object(Braintree\ Transaction) #9 (1) { ["_attributes":protected]= > array(57) {
 	}
 	["statusHistory"] =>  (1) {
 	    [0] => object(Braintree\ Transaction\ StatusDetails) #18 (1) { 
-    	["	_attributes":protected]= > array(5) {
+	    	["	_attributes":protected]= > array(5) {
         		["timestamp"] => object(DateTime) #20 (3) { ["date"]= > string(26) "2016-03-23 20:07:37.000000" 
-        		["timezone_type"] => int(3)
-        		["timezone"] => string(3) "UTC" 
-        	}
-        	["status"] => string(10) "authorized" 
-        	["amount"] => string(5) "30.00" 
-        	["user"] => string(10) "tkdphoenix" 
-        	["transactionSource"] => string(3) "api" 
-        }
+	        		["timezone_type"] => int(3)
+	        		["timezone"] => string(3) "UTC" 
+        		}
+	        	["status"] => string(10) "authorized" 
+	        	["amount"] => string(5) "30.00" 
+	        	["user"] => string(10) "tkdphoenix" 
+	        	["transactionSource"] => string(3) "api" 
+	        }
+		}
 	}
-}
-["planId"] => NULL
-["subscriptionId"] => NULL
-["subscription"] => array(2) {
-    ["billingPeriodEndDate"] => NULL
-    ["billingPeriodStartDate"] => NULL 
-}
-["addOns"] => array(0) {}
-["discounts"] => array(0) {}
-["descriptor"] => object(Braintree\ Descriptor) #14 (1) { 
-	["_attributes":protected]= > array(3) {
-	    ["name"] => NULL
-	    ["phone"] => NULL
-	    ["url"] => NULL 
+	["planId"] => NULL
+	["subscriptionId"] => NULL
+	["subscription"] => array(2) {
+	    ["billingPeriodEndDate"] => NULL
+	    ["billingPeriodStartDate"] => NULL 
 	}
-}
-["recurring"] => bool(false)
-["channel"] => NULL
-["serviceFeeAmount"] => NULL
-["escrowStatus"] => NULL
-	["disbursementDetails"] => object(Braintree\ DisbursementDetails) #16 (1) { ["_attributes":protected]= > array(6) {
-	    ["disbursementDate"] => NULL["settlementAmount"] => NULL
-	    ["settlementCurrencyIsoCode"] => NULL
-	    ["settlementCurrencyExchangeRate"] => NULL
-	    ["fundsHeld"] => NULL
-	    ["success"] => NULL 
+	["addOns"] => array(0) {}
+	["discounts"] => array(0) {}
+	["descriptor"] => object(Braintree\ Descriptor) #14 (1) { 
+		["_attributes":protected]= > array(3) {
+		    ["name"] => NULL
+		    ["phone"] => NULL
+		    ["url"] => NULL 
+		}
 	}
-}
-["disputes"] => array(0) {}
-["paymentInstrumentType"] => string(11) "credit_card" 
-["processorSettlementResponseCode"] => NULL
-["processorSettlementResponseText"] => NULL
-["threeDSecureInfo"] => NULL
-["creditCardDetails"] => object(Braintree\ Transaction\ CreditCardDetails) #10 (1) { 
-	["_attributes":protected]= > array(22) {
-	    ["token"] => NULL["bin"] => string(6)
-	    "411111" ["last4"] => string(4)
-	    "1111" ["cardType"] => string(4)
-	    "Visa" ["expirationMonth"] => string(2)
-	    "11" ["expirationYear"] => string(4)
-	    "2018" ["customerLocation"] => string(2)
-	    "US" ["cardholderName"] => NULL["imageUrl"] => string(84)
-	    "https://assets.braintreegateway.com/payment_method_logo/visa.png?environment=sandbox" ["prepaid"] => string(7)
-	    "Unknown" ["healthcare"] => string(7)
-	    "Unknown" ["debit"] => string(7)
-	    "Unknown" ["durbinRegulated"] => string(7)
-	    "Unknown" ["commercial"] => string(7)
-	    "Unknown" ["payroll"] => string(7)
-	    "Unknown" ["issuingBank"] => string(7)
-	    "Unknown" ["countryOfIssuance"] => string(7)
-	    "Unknown" ["productId"] => string(7)
-	    "Unknown" ["uniqueNumberIdentifier"] => NULL["venmoSdk"] => bool(false)["expirationDate"] => string(7)
-	    "11/2018" ["maskedNumber"] => string(16) "411111******1111" 
+	["recurring"] => bool(false)
+	["channel"] => NULL
+	["serviceFeeAmount"] => NULL
+	["escrowStatus"] => NULL
+	["disbursementDetails"] => object(Braintree\ DisbursementDetails) #16 (1) {
+		["_attributes":protected]= > array(6) {
+		    ["disbursementDate"] => NULL["settlementAmount"] => NULL
+		    ["settlementCurrencyIsoCode"] => NULL
+		    ["settlementCurrencyExchangeRate"] => NULL
+		    ["fundsHeld"] => NULL
+		    ["success"] => NULL 
+		}
 	}
-}
-["customerDetails"] => object(Braintree\ Transaction\ CustomerDetails) #7 (1) {
-	["_attributes":protected]= > array(8) {
-    	["id"] => NULL
-    	["firstName"] => NULL
-    	["lastName"] => NULL
-    	["company"] => NULL
-    	["email"] => NULL
-    	["website"] => NULL
-    	["phone"] => NULL
-    	["fax"] => NULL
+	["disputes"] => array(0) {}
+	["paymentInstrumentType"] => string(11) "credit_card" 
+	["processorSettlementResponseCode"] => NULL
+	["processorSettlementResponseText"] => NULL
+	["threeDSecureInfo"] => NULL
+	["creditCardDetails"] => object(Braintree\ Transaction\ CreditCardDetails) #10 (1) { 
+		["_attributes":protected]= > array(22) {
+		    ["token"] => NULL
+		    ["bin"] => string(6) "411111" 
+		    ["last4"] => string(4) "1111" 
+		    ["cardType"] => string(4) "Visa" 
+		    ["expirationMonth"] => string(2) "11" 
+		    ["expirationYear"] => string(4) "2018" 
+		    ["customerLocation"] => string(2) "US" 
+		    ["cardholderName"] => NULL
+		    ["imageUrl"] => string(84) "https://assets.braintreegateway.com/payment_method_logo/visa.png?environment=sandbox" 
+		    ["prepaid"] => string(7)"Unknown" 
+		    ["healthcare"] => string(7)"Unknown" 
+		    ["debit"] => string(7)"Unknown" 
+		    ["durbinRegulated"] => string(7)"Unknown" 
+		    ["commercial"] => string(7)"Unknown" 
+		    ["payroll"] => string(7)"Unknown" 
+		    ["issuingBank"] => string(7)"Unknown" 
+		    ["countryOfIssuance"] => string(7)"Unknown" 
+		    ["productId"] => string(7)"Unknown" 
+		    ["uniqueNumberIdentifier"] => NULL
+		    ["venmoSdk"] => bool(false)
+		    ["expirationDate"] => string(7) "11/2018" 
+		    ["maskedNumber"] => string(16) "411111******1111" 
+		}
 	}
-}
-["billingDetails"] => object(Braintree\ Transaction\ AddressDetails) #8 (1) { 
-	["_attributes":protected]= > array(13) {
-	    ["id"] => NULL
-	    ["firstName"] => NULL
-	    ["lastName"] => NULL
-	    ["company"] => NULL
-	    ["streetAddress"] => NULL
-	    ["extendedAddress"] => NULL
-	    ["locality"] => NULL
-	    ["region"] => NULL
-	    ["postalCode"] => NULL
-	    ["countryName"] => NULL
-	    ["countryCodeAlpha2"] => NULL
-	    ["countryCodeAlpha3"] => NULL
-	    ["countryCodeNumeric"] => NULL 
+	["customerDetails"] => object(Braintree\ Transaction\ CustomerDetails) #7 (1) {
+		["_attributes":protected]= > array(8) {
+	    	["id"] => NULL
+	    	["firstName"] => NULL
+	    	["lastName"] => NULL
+	    	["company"] => NULL
+	    	["email"] => NULL
+	    	["website"] => NULL
+	    	["phone"] => NULL
+	    	["fax"] => NULL
+		}
 	}
-}
-["shippingDetails"] => object(Braintree\ Transaction\ AddressDetails) #11 (1) { 
-	["_attributes":protected]= > array(13) {
-	    ["id"] => NULL
-	    ["firstName"] => NULL
-	    ["lastName"] => NULL
-	    ["company"] => NULL
-	    ["streetAddress"] => NULL
-	    ["extendedAddress"] => NULL
-	    ["locality"] => NULL
-	    ["region"] => NULL
-	    ["postalCode"] => NULL
-	    ["countryName"] => NULL
-	    ["countryCodeAlpha2"] => NULL
-	    ["countryCodeAlpha3"] => NULL
-	    ["countryCodeNumeric"] => NULL 
+	["billingDetails"] => object(Braintree\ Transaction\ AddressDetails) #8 (1) { 
+		["_attributes":protected]= > array(13) {
+		    ["id"] => NULL
+		    ["firstName"] => NULL
+		    ["lastName"] => NULL
+		    ["company"] => NULL
+		    ["streetAddress"] => NULL
+		    ["extendedAddress"] => NULL
+		    ["locality"] => NULL
+		    ["region"] => NULL
+		    ["postalCode"] => NULL
+		    ["countryName"] => NULL
+		    ["countryCodeAlpha2"] => NULL
+		    ["countryCodeAlpha3"] => NULL
+		    ["countryCodeNumeric"] => NULL 
+		}
 	}
-}
-["subscriptionDetails"] => object(Braintree\ Transaction\ SubscriptionDetails) #17 (1) { 
-	["_attributes":protected]= > array(2) {
-    	["billingPeriodEndDate"] => NULL
-    	["billingPeriodStartDate"] => NULL
-    }
-}
+	["shippingDetails"] => object(Braintree\ Transaction\ AddressDetails) #11 (1) { 
+		["_attributes":protected]= > array(13) {
+		    ["id"] => NULL
+		    ["firstName"] => NULL
+		    ["lastName"] => NULL
+		    ["company"] => NULL
+		    ["streetAddress"] => NULL
+		    ["extendedAddress"] => NULL
+		    ["locality"] => NULL
+		    ["region"] => NULL
+		    ["postalCode"] => NULL
+		    ["countryName"] => NULL
+		    ["countryCodeAlpha2"] => NULL
+		    ["countryCodeAlpha3"] => NULL
+		    ["countryCodeNumeric"] => NULL 
+		}
+	}
+	["subscriptionDetails"] => object(Braintree\ Transaction\ SubscriptionDetails) #17 (1) { 
+		["_attributes":protected]= > array(2) {
+	    	["billingPeriodEndDate"] => NULL
+	    	["billingPeriodStartDate"] => NULL
+	    }
+	}
 }
 }

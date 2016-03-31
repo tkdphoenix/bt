@@ -1,4 +1,6 @@
 <?php
+// @TODO add payment token table below the input boxes and tie those to the payment token field so that you can click the payment token and it populates into the input field after clearing out text in that box.
+
 defined("DS")? null : require_once(realpath(dirname(__FILE__) . DIRECTORY_SEPARATOR . "..") . DIRECTORY_SEPARATOR . "inc" . DIRECTORY_SEPARATOR . "initialize.php");
 
 require_once(LIB_PATH . DS . "btVars.php");

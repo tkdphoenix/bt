@@ -113,7 +113,7 @@ client.verify3DS({
 					</div>
 				</div>
 			</div>
-			<script src="https://js.braintreegateway.com/v2/braintree.js"></script>
+			<script src="https://js.braintreegateway.com/js/braintree-2.21.0.min.js"></script>
 			<script>
 				braintree.setup(
 					"<?=$clientToken?>",
