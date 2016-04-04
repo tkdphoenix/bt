@@ -16,5 +16,10 @@ $(".radioBillingAddr").on('click', function(){
 		$('.billingAddressDetails').show();
 	}
 });
-// $('input[name=withPmtMethodRadio]:checked', '#newCustForm').val()
-// $('input[name=withBillingAddressRadio]:checked', '#newCustForm').val()
+
+function setCookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    var expires = "expires="+d.toUTCString();
+    document.cookie = cname + "=" + cvalue + "; " + expires;
+}

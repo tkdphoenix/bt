@@ -15,7 +15,7 @@
 		showBTLeftNav();
 
 ?>		
-<script src="https://js.braintreegateway.com/js/braintree-2.21.0.min.js"></script>
+<script src="https://js.braintreegateway.com/js/braintree-2.22.2.min.js"></script>
 <script>
 // Using the generated client token to instantiate the Braintree client.
 var client = new braintree.api.Client({
@@ -87,23 +87,18 @@ client.verify3DS({
 					<div class="col-md-12">
 						<form id="checkout" class="form-horizontal" method="post" action="?">
 							<div class="form-group">
-								<label for="num">Card Number
-									<input id="num" class="form-control" data-braintree-name="number" value="4111111111111111">
+								<label for="cardNum">Card Number
+									<div id="cardNum" class="form-control"></div>
 								</label>
 							</div>
 							<div class="form-group">
-								<label for="mo">Month
-									<input id="mo" class="form-control" data-braintree-name="expiration_month" value="11">
-								</label>
-							</div>
-							<div class="form-group">
-								<label for="yr">Year (yy)
-									<input id="yr" class="form-control" data-braintree-name="expiration_year" value="22">
+								<label for="expDate">Expiration Date
+									<div id="expDate" class="form-control" tabindex="25"></div>
 								</label>
 							</div>
 							<div class="form-group">
 								<label for="cvv">CVV
-									<input id="cvv" class="form-control" data-braintree-name="cvv" value="111">
+									<div id="cvv" class="form-control"></div>
 								</label>
 							</div>
 							<div class="form-group">
@@ -113,12 +108,29 @@ client.verify3DS({
 					</div>
 				</div>
 			</div>
-			<script src="https://js.braintreegateway.com/js/braintree-2.21.0.min.js"></script>
+			<script src="https://js.braintreegateway.com/js/braintree-2.22.2.min.js"></script>
 			<script>
 				braintree.setup(
 					"<?=$clientToken?>",
 					'custom', {
-					id: 'checkout'
+						id: 'checkout',
+						paypal: {
+							container: "paypalContainer"
+						},
+						hostedFields: {
+							number: {
+								selector: "#cardNum",
+								placeholder: "Card Number"
+							},
+							cvv: {
+								selector: "#cvv",
+								placeholder: "CVV"
+							},
+							expirationDate: {
+								selector: "#expDate",
+								placeholder: "Expiration Date"
+							}
+						}
 					}
 				);
 			</script>

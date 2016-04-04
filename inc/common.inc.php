@@ -58,9 +58,12 @@ function showBTLeftNav(){
 					<li><a href="deleteCustomer.php">Delete Customer</a></li>
 					<li>
 						<h4>Subscriptions</h4>
-						<a href="createSubscription.php">Create Subscription</a></li>
-					<!-- <li><a href=""></a></li>
-					<li><a href=""></a></li> -->
+						<a href="cancelSubscription.php">Cancel Subscription</a>
+						<a href="createSubscription.php">Create Subscription</a>
+						<a href="findSubscription.php">Find Subscription</a>
+						<a href="retrySubscription.php">Retry Subscription Charge</a>
+						<a href="searchSubscription.php">Search Subscription</a>
+						<a href="updateSubscription.php">Update Subscription</a></li>
 					<li>
 						<h4>3D Secure</h4>
 						<a href="3DS.php">3D Secure Checkout</a></li>

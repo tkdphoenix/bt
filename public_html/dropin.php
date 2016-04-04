@@ -69,7 +69,7 @@
 	</div>
 
 
-	<script src="https://js.braintreegateway.com/js/braintree-2.21.0.min.js"></script>
+	<script src="https://js.braintreegateway.com/js/braintree-2.22.2.min.js"></script>
 	<script>
 		var clientToken =   "<?=$clientToken?>";
 
