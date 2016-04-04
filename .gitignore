@@ -1,3 +1,8 @@
 dropinResponse.js
 *DS_Store*
 node_modules
+subscriptionResponseObj.js
+dropinResponse.js
+txnResponseObj.js
+subscriptionSearchResponseObj.js
+emptySearchResponse.js
