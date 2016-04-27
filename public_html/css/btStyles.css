@@ -4,7 +4,7 @@
        url('../fonts/Courier_Prime.ttf') format('truetype'); /* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */
 }
 
-h1,h2,h3,h4,h5,h6{
+h1,h2,h3,h4,h5,h6, .planTable .plan{
 	color: #69c4a7;
 	font-family: 'Courier_Prime', 'Helvetica Neue', Helvetica, sans-serif;
 }
@@ -39,4 +39,11 @@ h1,h2,h3,h4,h5,h6{
 	border: 1px solid grey;
 }
 #planTable.table.table-hover>tbody>tr>td.planClick, #active.table.table-hover>tbody>tr>td.subscrClick{ color: #69c4a7; }
-
+/* on createSubscription page*/
+.planTable>caption{
+	color: #69c4a7;
+	font-size: 20pt;
+	font-family: 'Courier_Prime', 'Helvetica Neue', Helvetica, sans-serif;
+}
+.planTable .plan{cursor: pointer;}
+.planBoxes, a.greenLink{ color: #69c4a7; } 

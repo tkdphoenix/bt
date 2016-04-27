@@ -15,7 +15,7 @@
 				'amount' => $amt,
 				'paymentMethodNonce' => $nonce,
 				'options' => array(
-					'submitForSettlement' => false
+					'submitForSettlement' => true
 				)
 			));
 

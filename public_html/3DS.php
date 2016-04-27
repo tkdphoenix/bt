@@ -15,25 +15,14 @@
 		showBTLeftNav();
 
 ?>		
-<script src="https://js.braintreegateway.com/js/braintree-2.22.2.min.js"></script>
+<!-- <script src="https://js.braintreegateway.com/js/braintree-2.22.2.min.js"></script> -->
 <script>
 // Using the generated client token to instantiate the Braintree client.
-var client = new braintree.api.Client({
-  clientToken: "<?=$clientToken?>"
-});
+// var client = new braintree.api.Client({
+//   clientToken: "<?=$clientToken?>"
+// });
 
-client.verify3DS({
-  amount: "<?=$amt?>",
-  creditCard: "<?=$nonce?>"
-}, function (error, response) {
-	if (!error) {
-		// 3D Secure finished. Using response.nonce you may proceed with the transaction with the associated server side parameters below.
-		return true;
-	} else {
-		// Handle errors
-		$(".leftNav").after("<h3>Errors</h3><p>"+ error.message +"</p>");
-	}
-});
+
 </script>
 
 <?php
@@ -52,6 +41,11 @@ client.verify3DS({
 				// header and left nav are already on the page
 ?>
 		<div class="col-md-7">
+			<div class="row">
+				<div class="col-md-12">
+					<div id="paypalContainer"></div>
+				</div>
+			</div>
 			<div class="row">
 				<div class="col-md-12">
 <?php
@@ -110,13 +104,34 @@ client.verify3DS({
 			</div>
 			<script src="https://js.braintreegateway.com/js/braintree-2.22.2.min.js"></script>
 			<script>
+				// Using the generated client token to instantiate the Braintree client.
+				var client = new braintree.api.Client({
+				  clientToken: "<?=$clientToken?>"
+				});
 				braintree.setup(
 					"<?=$clientToken?>",
 					'custom', {
 						id: 'checkout',
-						paypal: {
-							container: "paypalContainer"
+						onPaymentMethodReceived: function(obj){
+							console.info(obj);
+							$('#checkout').submit();
+
+							client.verify3DS({
+							  amount: 500,
+							  creditCard: obj.nonce
+							}, function (error, response) {
+								if (!error) {
+									// 3D Secure finished. Using response.nonce you may proceed with the transaction with the associated server side parameters below.
+									return true;
+								} else {
+									// Handle errors
+									$(".leftNav").after("<h3>Errors</h3><p>"+ error.message +"</p>");
+								}
+							});
 						},
+						// paypal: {
+						// 	container: "#paypalContainer"
+						// },
 						hostedFields: {
 							number: {
 								selector: "#cardNum",

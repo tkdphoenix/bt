@@ -67,6 +67,9 @@ function showBTLeftNav(){
 					<li>
 						<h4>3D Secure</h4>
 						<a href="3DS.php">3D Secure Checkout</a></li>
+					<li>
+						<h4>Marketplace</h4>
+						<a href="createMerchantAccount.php">Create Merchant</a></li>
 				</ul>
 			</div>
 <?php

@@ -10,7 +10,7 @@ $(".radioPmtMethod").on('click', function(){
 // event listener for billing address
 $(".radioBillingAddr").on('click', function(){
 	var radioBillingAddr = $(this);
-	if($(this).val() === "false"){
+	if($(radioBillingAddr).val() === "false"){
 		$('.billingAddressDetails').hide();
 	} else {
 		$('.billingAddressDetails').show();
@@ -23,3 +23,8 @@ function setCookie(cname, cvalue, exdays) {
     var expires = "expires="+d.toUTCString();
     document.cookie = cname + "=" + cvalue + "; " + expires;
 }
+$(".planTable .plan").on("click", function(){
+	var planBtn = $(this);
+	var planId = planBtn.parent().next().text();
+	$("#planId").val(planId);
+});

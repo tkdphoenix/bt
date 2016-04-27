@@ -18,7 +18,7 @@
 				'paymentMethodNonce' => $nonce,
 				'options' => array(
 					'submitForSettlement' => false
-					// 'storeInVaultOnSuccess' => true,
+					// 'storeInVaultOnSuccess' => true
 				)
 			));
 
@@ -28,11 +28,12 @@
 			<div class="col-md-7">
 				<div class="row">
 					<div class="col-md-12">
+						<p>Your payment is an authorization ONLY. You will need to either go to the <a href="settlement.php">settlement page</a> or settle the transaction in your account on <a href="https://braintreepayments.com">Braintree.com</a></p>
 <?php
 				$txn = $result->transaction;
 
 				echo "<h3>Transaction detaiils:</h3>";
-				echo "id = ". $txn->id ."</p>";
+				echo "<p>id = ". $txn->id ."</p>";
 				echo "<p>status = ". $txn->status ."</p>";
 				echo "<p>type = ". $txn->type ."</p>";
 				echo "<p>amount = ". $txn->amount ."</p>";
