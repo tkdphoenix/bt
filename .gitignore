@@ -10,3 +10,4 @@ composerProj
 herokuTest
 public_html/transaction_report.csv
 public_html/webhooks/webhook.log
+logs/
