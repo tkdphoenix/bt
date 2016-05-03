@@ -2,7 +2,7 @@
 defined("DS")? null : require_once(realpath(dirname(__FILE__) . DIRECTORY_SEPARATOR . "..") . DIRECTORY_SEPARATOR . "inc" . DIRECTORY_SEPARATOR . "initialize.php");
 
 require_once(LIB_PATH . DS . "btVars.php");
-require_once("../inc/common.inc.php");
+require_once(LIB_PATH . DS . "inc" . DS . "common.inc.php");
 function showForm(){
 ?>
 	<form id="cancelForm" class="form-horizontal" action="?" method="post">
@@ -13,7 +13,7 @@ function showForm(){
 } // END showForm()
 
 if(isset($_POST['cancelSubmit'])){
-	$subscrId = $_POST['subscrId'];
+	$subscrId = strip_tags_special_chars($_POST['subscrId']);
 	showBTHeader("Subscription Cancellation", "Subscription Cancellation");
 	showBTLeftNav();
 	// try{ @TODO work on code to allo BT errors to show, but more neatly than var_dump()

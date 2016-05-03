@@ -16,11 +16,11 @@ function showForm(){
 } // END showForm()
 
 if(isset($_POST['submit'])){
-	$planId = $_POST['planId'];
+	$planId = strip_tags_special_chars($_POST['planId']);
 	$collection = Braintree_Subscription::search([
 	  Braintree_SubscriptionSearch::planId()->is($planId)
 	]);
-	$planIndex = $_POST['planVal'];
+	$planIndex = strip_tags_special_chars($_POST['planVal']);
 	$selectedPlan = $_SESSION['plans'][$planIndex];
 	// Test if a plan has any subscriptions
 	if(count($collection->_ids) < 1){ // There are no subscriptions to the given plan

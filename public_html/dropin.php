@@ -8,7 +8,7 @@
 	// echo "Your client token: ". $clientToken . "<br>";
 
 	if(isset($_POST['payment_method_nonce'])){
-		$nonce = $_POST['payment_method_nonce'];
+		$nonce = strip_tags_special_chars($_POST['payment_method_nonce']);
 		$amt = 50.00;
 		showBTHeader("Braintree Initialization", "Results");
 		showBTLeftNav();
@@ -16,8 +16,11 @@
 			$result = Braintree_Transaction::sale(array(
 				'amount' => $amt,
 				'paymentMethodNonce' => $nonce,
+				// 'paymentMethodNonce' => "fake-processor-declined-visa-nonce",
+				// 'paymentMethodNonce' => "fake-gateway-rejected-fraud-nonce",
 				'options' => array(
-					'submitForSettlement' => false
+					// 'submitForSettlement' => false
+					'submitForSettlement' => true
 					// 'storeInVaultOnSuccess' => true
 				)
 			));

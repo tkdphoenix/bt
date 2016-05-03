@@ -11,7 +11,7 @@ $clientToken = Braintree_ClientToken::generate();
 if(isset($_POST['submitPmt'])){
 	if(isset($_POST['paymentType'])){
 		if($_POST['paymentType'] === "token"){
-			$token = $_POST['paymentToken'];
+			$token = strip_tags_special_chars($_POST['paymentToken']);
 			// use token to create txn with Braintree_Transaction::sale()
 			$result = Braintree_Transaction::sale([
 				'amount' => '10.00',
@@ -21,7 +21,7 @@ if(isset($_POST['submitPmt'])){
 				]
 			]);
 		} elseif($_POST['paymentType'] === "custId"){
-			$custId = $_POST['paymentToken'];
+			$custId = strip_tags_special_chars($_POST['paymentToken']);
 			// use customer ID to create txn with Braintree_Transaction::sale()
 			$result = Braintree_Transaction::sale([
 				'amount' => '10.00',

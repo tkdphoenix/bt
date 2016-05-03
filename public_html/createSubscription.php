@@ -32,8 +32,8 @@ function showForm($errorsArr=[]){
 
 
 if(isset($_POST['subscriptionSubmit'])){
-	$token = $_POST['paymentMethodToken'];
-	$planId = $_POST['planId'];
+	$token = strip_tags_special_chars($_POST['paymentMethodToken']);
+	$planId = strip_tags_special_chars($_POST['planId']);
 
 	// @TODO perform form validation here
 

@@ -12,6 +12,11 @@ function showForm($errorsArr=[]){
 			echo "<p class='alert alert-danger'>". $errMsg ."</p>";
 		}
 	}
+	if(isset($_POST)){
+		foreach($_POST as $key=>$val){
+			$$key = strip_tags_special_chars($_POST[$key]);	
+		}
+	}
 ?>
 	<div class="col-md-7">
 		<div class="row">
@@ -21,49 +26,50 @@ function showForm($errorsArr=[]){
 					<div class="form-group">
 						<label for="first" class="col-md-3 control-label">First Name</label>
 						<div class="col-md-9">
-							<input type="text" id="first" class="form-control" name="first" value="<?php echo (isset($_POST['first']))? $_POST['first']: ''; ?>" required>
+							<!--<input type="text" id="first" class="form-control" name="first" value="<?php //echo (isset($_POST['first']))? $_POST['first']: ''; ?>" required>-->
+							<input type="text" id="first" class="form-control" name="first" value="<?php echo (isset($first))? $first: ''; ?>" required>
 						</div>
 					</div>
 					
 					<div class="form-group">
 						<label for="last" class="col-md-3 control-label">Last Name</label>
 						<div class="col-md-9">
-							<input type="text" id="last" class="form-control" name="last" value="<?php echo (isset($_POST['last']))? $_POST['last']: ''; ?>" required>
+							<input type="text" id="last" class="form-control" name="last" value="<?php echo (isset($last))? $last: ''; ?>" required>
 						</div>
 					</div>
 					
 					<div class="form-group">
 						<label for="company" class="col-md-3 control-label">Company</label>
 						<div class="col-md-9">
-							<input type="text" id="company" class="form-control" name="company" value="<?php echo (isset($_POST['company']))? $_POST['company']: ''; ?>">
+							<input type="text" id="company" class="form-control" name="company" value="<?php echo (isset($company))? $company: ''; ?>">
 						</div>
 					</div>
 					
 					<div class="form-group">
 						<label for="email" class="col-md-3 control-label">Email </label>
 						<div class="col-md-9">
-							<input type="email" id="email" class="form-control" name="email" value="<?php echo (isset($_POST['email']))? $_POST['email']: ''; ?>" required>
+							<input type="email" id="email" class="form-control" name="email" value="<?php echo (isset($email))? $email: ''; ?>" required>
 						</div>
 					</div>
 					
 					<div class="form-group">
 						<label for="phone" class="col-md-3 control-label">Phone </label>
 						<div class="col-md-9">
-							<input type="tel" id="phone" class="form-control" name="phone" value="<?php echo (isset($_POST['phone']))? $_POST['phone']: ''; ?>" required>
+							<input type="tel" id="phone" class="form-control" name="phone" value="<?php echo (isset($phone))? $phone: ''; ?>" required>
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label for="fax" class="col-md-3 control-label">Fax </label>
 						<div class="col-md-9">
-							<input type="tel" id="fax" class="form-control" name="fax" value="<?php echo (isset($_POST['fax']))? $_POST['fax']: ''; ?>">
+							<input type="tel" id="fax" class="form-control" name="fax" value="<?php echo (isset($fax))? $fax: ''; ?>">
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label for="website" class="col-md-3 control-label">Website </label>
 						<div class="col-md-9">
-							<input type="url" id="website" class="form-control" name="website" value="<?php echo (isset($_POST['website']))? $_POST['website']: ''; ?>">
+							<input type="url" id="website" class="form-control" name="website" value="<?php echo (isset($website))? $website: ''; ?>">
 						</div>
 					</div>
 
@@ -74,7 +80,7 @@ function showForm($errorsArr=[]){
 						</div>
 						<label for="customerId" class="col-md-3 control-label">Customer ID</label>
 						<div class="col-md-9">
-							<input type="text" id="customerId" class="form-control" name="customerId" value="<?php echo (isset($_POST['customerId']))? $_POST['customerId']: ''; ?>">
+							<input type="text" id="customerId" class="form-control" name="customerId" value="<?php echo (isset($customerId))? $customerId: ''; ?>">
 						</div>
 					</div> <!-- end main form-group -->
 
@@ -103,12 +109,12 @@ function showForm($errorsArr=[]){
 						<div class="form-group">
 							<label for="cardholderName" class="col-md-2 control-label">Cardholder Name</label>
 							<div class="col-md-2">
-								<input type="text" class="form-control" name="cardholderName" value="<?php echo (isset($_POST['cardholderName']))? $_POST['cardholderName']: ''; ?>" placeholder="First Last">
+								<input type="text" class="form-control" name="cardholderName" value="<?php echo (isset($cardholderName))? $cardholderName: ''; ?>" placeholder="First Last">
 							</div>
 						
 							<label for="number" class="col-md-2 control-label">Credit Card Number</label>
 							<div class="col-md-3">
-								<!-- <input id="number" type="text" class="form-control" name="number" value="<?php echo (isset($_POST['number']))? $_POST['number']: ''; ?>" placeholder="Credit Card Number"> -->
+								<!-- <input id="number" type="text" class="form-control" name="number" value="<?php //echo (isset($_POST['number']))? $_POST['number']: ''; ?>" placeholder="Credit Card Number"> -->
 								<input id="number" type="text" class="form-control" data-braintree-name="number" placeholder="Credit Card Number">
 							</div>
 						</div>
@@ -116,13 +122,13 @@ function showForm($errorsArr=[]){
 						<div class="form-group">	
 							<label for="expirationMonth" class="col-md-2 control-label">Expiration Date (MM/YY)</label>
 							<div class="col-md-2">
-								<!-- <input id="expirationDate" type="text" class="form-control" name="expirationDate" value="<?php echo (isset($_POST['expirationDate']))? $_POST['expirationDate']: ''; ?>" placeholder="Expiration Date (MM/YYYY)"> -->
+								<!-- <input id="expirationDate" type="text" class="form-control" name="expirationDate" value="<?php //echo (isset($_POST['expirationDate']))? $_POST['expirationDate']: ''; ?>" placeholder="Expiration Date (MM/YYYY)"> -->
 								<input id="expirationDate" type="text" class="form-control" data-braintree-name="expiration_date" placeholder="Expiration Date (MM/YYYY)">
 							</div>
 
 							<label for="token" class="col-md-2 control-label">Payment Method Token (optional)</label>
 							<div class="col-md-2">
-								<input type="text" class="form-control" name="token" value="<?php echo (isset($_POST['token']))? $_POST['token']: ''; ?>" placeholder="Payment Method Token">
+								<input type="text" class="form-control" name="token" value="<?php echo (isset($token))? $token: ''; ?>" placeholder="Payment Method Token">
 							</div>
 						</div>
 
@@ -163,56 +169,56 @@ function showForm($errorsArr=[]){
 						<div class="form-group">
 							<label for="firstName" class="col-md-3 control-label">First Name</label>
 							<div class="col-md-9">
-								<input type="text" class="form-control" name="billing_firstName" value="<?php echo (isset($_POST['billing_firstName']))? $_POST['billing_firstName']: ''; ?>" placeholder="First Name">
+								<input type="text" class="form-control" name="billing_firstName" value="<?php echo (isset($billing_firstName))? $billing_firstName: ''; ?>" placeholder="First Name">
 							</div>
 						</div>
 						
 						<div class="form-group">
 							<label for="lastName" class="col-md-3 control-label">Last Name</label>
 							<div class="col-md-9">
-								<input type="text" class="form-control" name="billing_lastName" value="<?php echo (isset($_POST['billing_lastName']))? $_POST['billing_lastName']: ''; ?>" placeholder="Last Name">
+								<input type="text" class="form-control" name="billing_lastName" value="<?php echo (isset($billing_lastName))? $billing_lastName: ''; ?>" placeholder="Last Name">
 							</div>
 						</div>
 						
 						<div class="form-group">
 							<label for="company" class="col-md-3 control-label">Company</label>
 							<div class="col-md-9">
-								<input type="text" class="form-control" name="billing_company" value="<?php echo (isset($_POST['billing_company']))? $_POST['billing_company']: ''; ?>" placeholder="Company">
+								<input type="text" class="form-control" name="billing_company" value="<?php echo (isset($billing_company))? $billing_company: ''; ?>" placeholder="Company">
 							</div>
 						</div>
 						
 						<div class="form-group">
 							<label for="streetAddress" class="col-md-3 control-label">Street Address</label>
 							<div class="col-md-9">
-								<input type="text" class="form-control" name="streetAddress" value="<?php echo (isset($_POST['streetAddress']))? $_POST['streetAddress']: ''; ?>" placeholder="Street Address">
+								<input type="text" class="form-control" name="streetAddress" value="<?php echo (isset($streetAddress))? $streetAddress: ''; ?>" placeholder="Street Address">
 							</div>
 						</div>
 						
 						<div class="form-group">
 							<label for="extendedAddress" class="col-md-3 control-label">Address 2</label>
 							<div class="col-md-9">
-								<input type="text" class="form-control" name="extendedAddress" value="<?php echo (isset($_POST['extendedAddress']))? $_POST['extendedAddress']: ''; ?>" placeholder="Address 2">
+								<input type="text" class="form-control" name="extendedAddress" value="<?php echo (isset($extendedAddress))? $extendedAddress: ''; ?>" placeholder="Address 2">
 							</div>
 						</div>
 						
 						<div class="form-group">
 							<label for="locality" class="col-md-3 control-label">City</label>
 							<div class="col-md-9">
-								<input type="text" class="form-control" name="locality" value="<?php echo (isset($_POST['locality']))? $_POST['locality']: ''; ?>" placeholder="City">
+								<input type="text" class="form-control" name="locality" value="<?php echo (isset($locality))? $locality: ''; ?>" placeholder="City">
 							</div>
 						</div>
 						
 						<div class="form-group">
 							<label for="region" class="col-md-3 control-label">State / Province (Region)</label>
 							<div class="col-md-9">
-								<input type="text" class="form-control" name="region" value="<?php echo (isset($_POST['region']))? $_POST['region']: ''; ?>" placeholder="State / Province (Region)">
+								<input type="text" class="form-control" name="region" value="<?php echo (isset($region))? $region: ''; ?>" placeholder="State / Province (Region)">
 							</div>
 						</div>
 						
 						<div class="form-group">
 							<label for="postalCode" class="col-md-3 control-label">Postal Code</label>
 							<div class="col-md-9">
-								<input type="num" class="form-control" name="postalCode" value="<?php echo (isset($_POST['postalCode']))? $_POST['postalCode']: ''; ?>" placeholder="Postal Code">
+								<input type="num" class="form-control" name="postalCode" value="<?php echo (isset($postalCode))? $postalCode: ''; ?>" placeholder="Postal Code">
 							</div>
 						</div>
 						
@@ -238,45 +244,53 @@ if(isset($_POST['newCustSubmit'])){ // if the form has been submitted
 	showBTHeader("Add New Customer", "Add New Customer");
 	showBTLeftNav();
 	$errorsArr = [];
-	$nonce = $_SESSION['nonce'];
+	$nonce = $_SESSION['nonce']; // already sanitized
 
-	$customerDetails = array(
-		"firstName"			=> $_POST['first'],
-		"lastName"			=> $_POST['last'],
-		"company"			=> $_POST['company'],
-		"email"				=> $_POST['email'],
-		"phone"				=> $_POST['phone'],
-		"fax"				=> $_POST['fax'],
-		"website"			=> $_POST['website']
+	$customerDetails = array( // sanitized here
+		"firstName"			=> strip_tags_special_chars($_POST['first']),
+		"lastName"			=> strip_tags_special_chars($_POST['last']),
+		"company"			=> strip_tags_special_chars($_POST['company']),
+		"email"				=> strip_tags_special_chars($_POST['email']),
+		"phone"				=> strip_tags_special_chars($_POST['phone']),
+		"fax"				=> strip_tags_special_chars($_POST['fax']),
+		"website"			=> strip_tags_special_chars($_POST['website'])
 	);
 
 	// This can be set dynamically from BT, so it does not have to be passed
 	if(!empty($_POST['customerId'])){
-		$customerDetails["id"] = $_POST['customerId'];
+		$customerDetails["id"] = strip_tags_special_chars($_POST['customerId']);
 	}
 
 	// @TODO validate values on the server side and the client side
 	// if a payment method has been chosen, create payment method
-	if($_POST['withPmtMethodRadio'] === "true"){ // if payment method details are submitted, set those variables
+	if($_POST['withPmtMethodRadio'] === "true" && $_POST["withBillingAddressRadio"] === "false"){ // if payment method details are submitted, set those variables
 
 		$customerDetails['paymentMethodNonce'] = $nonce;
 	}
 
 	// @TODO validate values on the server side and the client side
 	// if a billing address has been chosen, create a billing address
-	if($_POST['withBillingAddressRadio'] === "true"){
-		$customerDetails["billingAddress"] = array(
-			"firstName"			=> $_POST['billing_firstName'],
-			"lastName"			=> $_POST['billing_lastName'],
-			"company"			=> $_POST['billing_company'],
-			"streetAddress"		=> $_POST['streetAddress'],
-			"extendedAddress"	=> $_POST['extendedAddress'],
-			"locality"			=> $_POST['locality'],
-			"region"			=> $_POST['region'],
-			"postalCode"		=> $_POST['postalCode'],
-			"countryName"		=> $_POST['country']
+	if($_POST["withPmtMethodRadio"] === "true" && $_POST['withBillingAddressRadio'] === "true"){
+		$customerDetails["creditCard"] = array(
+			"paymentMethodNonce"	=> strip_tags_special_chars($nonce),
+			"billingAddress" 		=> array(
+				"firstName"			=> strip_tags_special_chars($_POST['billing_firstName']),
+				"lastName"			=> strip_tags_special_chars($_POST['billing_lastName']),
+				"company"			=> strip_tags_special_chars($_POST['billing_company']),
+				"streetAddress"		=> strip_tags_special_chars($_POST['streetAddress']),
+				"extendedAddress"	=> strip_tags_special_chars($_POST['extendedAddress']),
+				"locality"			=> strip_tags_special_chars($_POST['locality']),
+				"region"			=> strip_tags_special_chars($_POST['region']),
+				"postalCode"		=> strip_tags_special_chars($_POST['postalCode']),
+				"countryName"		=> strip_tags_special_chars($_POST['country'])
+			),
+			"options"				=> array(
+				"verifyCard"		=> true
+			)
 		);
 	}
+	// echo "All customer details: <br>";
+	// var_dump($customerDetails); exit();
 ?>
 	<div class="col-md-7">
 		<div class="row">
@@ -288,13 +302,11 @@ if(isset($_POST['newCustSubmit'])){ // if the form has been submitted
 	try{
 		$result = Braintree_Customer::create($customerDetails);
 		if ($result->success) {
-		    echo $result->customer->id ."<br>";
-		    echo $result->customer->paymentMethods[0]->token;
-		    // @TODO may move output section from ln 312 to here.
+		    // echo $result->customer->id ."<br>";
+		    // echo $result->customer->paymentMethods[0]->token;
 		    // @TODO need to add section to show payment method billing address if created
 		} else {
 			echo "<br>Customer NOT created!<br>";
-
 			foreach($result->errors->deepAll() as $error){
 				file_put_contents($pathToBTErrorLog, timeNow() . " MST - createCustomer.php page\r\n" . $error->code .": ". $error->message, FILE_APPEND);
 				throw new Exception($error->message, $error->code);
@@ -306,7 +318,6 @@ if(isset($_POST['newCustSubmit'])){ // if the form has been submitted
 	}
 
 	if(isset($result->success)){
-
 		$customerId = $result->customer->id;
 	?>
 		<div class="col-md-7">

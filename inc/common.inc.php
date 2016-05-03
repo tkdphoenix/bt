@@ -3,6 +3,10 @@
 // @todo this is not correct - should be absolute
 $pathToBTErrorLog 	= realpath(dirname(__FILE__) .DS. '..') .DS. "logs" .DS. "BraintreeErrors.txt";
 
+function strip_tags_special_chars($string){
+	return htmlspecialchars(strip_tags($string));
+}
+
 /**
  * This is the header specific to Braintree separated out for code reuse and ease of maintenance
  *
