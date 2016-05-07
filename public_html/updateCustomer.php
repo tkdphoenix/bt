@@ -15,7 +15,7 @@ function showSearchForm(){
 					<div class="form-group">
 						<label for="searchID">Customer ID to search for</label>
 						<div class="col-md-9">
-							<input type="text" id="searchId" class="form-control" name="searchId" value="<?php echo (isset($_POST['searchId']))? $_POST['searchId']: ''; ?>" required>
+							<input type="text" id="searchId" class="form-control" name="searchId" value="<?php echo (isset($_POST['searchId']))? strip_tags_special_chars($_POST['searchId']): ''; ?>" required>
 						</div>
 					</div>
 
@@ -258,13 +258,13 @@ if(isset($_POST['updateCustSubmit'])){ // if the form has been submitted
 	showBTLeftNav();
 	$errorsArr = [];
 	$customerDetails = array(
-		"firstName"			=> $_POST['first'],
-		"lastName"			=> $_POST['last'],
-		"company"			=> $_POST['company'],
-		"email"				=> $_POST['email'],
-		"phone"				=> $_POST['phone'],
-		"fax"				=> $_POST['fax'],
-		"website"			=> $_POST['website']
+		"firstName"			=> strip_tags_special_chars($_POST['first']),
+		"lastName"			=> strip_tags_special_chars($_POST['last']),
+		"company"			=> strip_tags_special_chars($_POST['company']),
+		"email"				=> strip_tags_special_chars($_POST['email']),
+		"phone"				=> strip_tags_special_chars($_POST['phone']),
+		"fax"				=> strip_tags_special_chars($_POST['fax']),
+		"website"			=> strip_tags_special_chars($_POST['website'])
 	);
 
 	if(isset($_COOKIE['customerId'])){
@@ -320,10 +320,10 @@ if(isset($_POST['updateCustSubmit'])){ // if the form has been submitted
 	if($_POST['withPmtMethodRadio'] === "true"){ // if payment method details are submitted, set those variables
 
 		$creditCard = array(
-			"cardholderName" 	=> $_POST['cardholderName'],
-			"number"			=> $_POST['number'],
-			"expirationDate"	=> $_POST['expirationDate'],
-			"token"				=> $_POST['token']
+			"cardholderName" 	=> strip_tags_special_chars($_POST['cardholderName']),
+			"number"			=> strip_tags_special_chars($_POST['number']),
+			"expirationDate"	=> strip_tags_special_chars($_POST['expirationDate']),
+			"token"				=> strip_tags_special_chars($_POST['token'])
 		);
 
 		// @TODO validate values before submitting
@@ -333,15 +333,15 @@ if(isset($_POST['updateCustSubmit'])){ // if the form has been submitted
 	
 	if($_POST['withBillingAddressRadio'] != 0){
 		$billingAddress = array(
-			"firstName"			=> $_POST['billing_firstName'],
-			"lastName"			=> $_POST['billing_lastName'],
-			"company"			=> $_POST['billing_company'],
-			"streetAddress"		=> $_POST['streetAddress'],
-			"extendedAddress"	=> $_POST['extendedAddress'],
-			"locality"			=> $_POST['locality'],
-			"region"			=> $_POST['region'],
-			"postalCode"		=> $_POST['postalCode'],
-			"countryName"		=> $_POST['country']
+			"firstName"			=> strip_tags_special_chars($_POST['billing_firstName']),
+			"lastName"			=> strip_tags_special_chars($_POST['billing_lastName']),
+			"company"			=> strip_tags_special_chars($_POST['billing_company']),
+			"streetAddress"		=> strip_tags_special_chars($_POST['streetAddress']),
+			"extendedAddress"	=> strip_tags_special_chars($_POST['extendedAddress']),
+			"locality"			=> strip_tags_special_chars($_POST['locality']),
+			"region"			=> strip_tags_special_chars($_POST['region']),
+			"postalCode"		=> strip_tags_special_chars($_POST['postalCode']),
+			"countryName"		=> strip_tags_special_chars($_POST['country'])
 		);
 
 		// @TODO validate values before submitting
@@ -361,7 +361,7 @@ if(isset($_POST['updateCustSubmit'])){ // if the form has been submitted
 ?>
 	<script>
 		// the header has already been set, so set the cookie to remember the customer ID on the client side
-		var customerId = "<?=$_POST['searchId']?>";
+		var customerId = "<?=strip_tags_special_chars($_POST['searchId'])?>";
 		var d = new Date();
 		d.setTime(d.getTime() + (24*60*60*1000)); // 1 day
 		d = d.toUTCString();
@@ -369,7 +369,7 @@ if(isset($_POST['updateCustSubmit'])){ // if the form has been submitted
 		document.cookie="customerId="+ customerId +"; expires="+ d;
 	</script>
 <?php
-	$customerId = $_POST['searchId'];
+	$customerId = strip_tags_special_chars($_POST['searchId']);
 
 	$customer = Braintree_Customer::find($customerId);
 

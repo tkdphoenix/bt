@@ -3,6 +3,10 @@
 // @todo this is not correct - should be absolute
 $pathToBTErrorLog 	= realpath(dirname(__FILE__) .DS. '..') .DS. "logs" .DS. "BraintreeErrors.txt";
 
+function strip_tags_special_chars($string){
+	return htmlspecialchars(strip_tags($string));
+}
+
 /**
  * This is the header specific to Braintree separated out for code reuse and ease of maintenance
  *
@@ -58,12 +62,18 @@ function showBTLeftNav(){
 					<li><a href="deleteCustomer.php">Delete Customer</a></li>
 					<li>
 						<h4>Subscriptions</h4>
-						<a href="createSubscription.php">Create Subscription</a></li>
-					<!-- <li><a href=""></a></li>
-					<li><a href=""></a></li> -->
+						<a href="cancelSubscription.php">Cancel Subscription</a>
+						<a href="createSubscription.php">Create Subscription</a>
+						<a href="findSubscription.php">Find Subscription</a>
+						<a href="retrySubscription.php">Retry Subscription Charge</a>
+						<a href="searchSubscription.php">Search Subscription</a>
+						<a href="updateSubscription.php">Update Subscription</a></li>
 					<li>
 						<h4>3D Secure</h4>
 						<a href="3DS.php">3D Secure Checkout</a></li>
+					<li>
+						<h4>Marketplace</h4>
+						<a href="createMerchantAccount.php">Create Merchant</a></li>
 				</ul>
 			</div>
 <?php

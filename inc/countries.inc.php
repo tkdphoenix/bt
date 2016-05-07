@@ -1,4 +1,8 @@
-					<select id="country" name="country" class="form-control" value="<?php echo (isset($_POST['country']))? $_POST['country']: ' '; ?>">
+<?php
+require_once("common.inc.php");
+(isset($_POST["country"]))? $country = strip_tags_special_chars($_POST["country"]) : $country = "";
+?>
+					<select id="country" name="country" class="form-control" value="<?php echo $country; ?>">
 						<option value=" " default>Please Select Your Country</option>
 						<option value="United States of America">United States of America</option>
 						<option value="Afghanistan">Afghanistan</option>

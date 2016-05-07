@@ -21,7 +21,7 @@ function showForm(){
 if(isset($_POST['txnID'])){
 	showBTHeader("Void Transaction", "Results");
 	showBTLeftNav();
-	$txnid = $_POST['txnID'];
+	$txnid = strip_tags_special_chars($_POST['txnID']);
 	$result = Braintree_Transaction::void($txnid);
 ?>
 	<div class="col-md-7">

@@ -7,33 +7,22 @@
 	$clientToken = Braintree_ClientToken::generate();
 
 	if(isset($_POST['payment_method_nonce'])){
-		$nonce = $_POST['payment_method_nonce'];
-
+		$nonce = strip_tags_special_chars($_POST['payment_method_nonce']);
+		echo $nonce;
 		$amt = 500;
 		// display header and leftNav
 		showBTHeader("Braintree 3DS", "3DS Check");
 		showBTLeftNav();
 
 ?>		
-<script src="https://js.braintreegateway.com/js/braintree-2.21.0.min.js"></script>
+<!-- <script src="https://js.braintreegateway.com/js/braintree-2.22.2.min.js"></script> -->
 <script>
 // Using the generated client token to instantiate the Braintree client.
-var client = new braintree.api.Client({
-  clientToken: "<?=$clientToken?>"
-});
+// var client = new braintree.api.Client({
+//   clientToken: "<?=$clientToken?>"
+// });
 
-client.verify3DS({
-  amount: "<?=$amt?>",
-  creditCard: "<?=$nonce?>"
-}, function (error, response) {
-	if (!error) {
-		// 3D Secure finished. Using response.nonce you may proceed with the transaction with the associated server side parameters below.
-		return true;
-	} else {
-		// Handle errors
-		$(".leftNav").after("<h3>Errors</h3><p>"+ error.message +"</p>");
-	}
-});
+
 </script>
 
 <?php
@@ -52,6 +41,11 @@ client.verify3DS({
 				// header and left nav are already on the page
 ?>
 		<div class="col-md-7">
+			<div class="row">
+				<div class="col-md-12">
+					<div id="paypalContainer"></div>
+				</div>
+			</div>
 			<div class="row">
 				<div class="col-md-12">
 <?php
@@ -87,23 +81,18 @@ client.verify3DS({
 					<div class="col-md-12">
 						<form id="checkout" class="form-horizontal" method="post" action="?">
 							<div class="form-group">
-								<label for="num">Card Number
-									<input id="num" class="form-control" data-braintree-name="number" value="4111111111111111">
+								<label for="cardNum">Card Number
+									<div id="cardNum" class="form-control"></div>
 								</label>
 							</div>
 							<div class="form-group">
-								<label for="mo">Month
-									<input id="mo" class="form-control" data-braintree-name="expiration_month" value="11">
-								</label>
-							</div>
-							<div class="form-group">
-								<label for="yr">Year (yy)
-									<input id="yr" class="form-control" data-braintree-name="expiration_year" value="22">
+								<label for="expDate">Expiration Date
+									<div id="expDate" class="form-control" tabindex="25"></div>
 								</label>
 							</div>
 							<div class="form-group">
 								<label for="cvv">CVV
-									<input id="cvv" class="form-control" data-braintree-name="cvv" value="111">
+									<div id="cvv" class="form-control"></div>
 								</label>
 							</div>
 							<div class="form-group">
@@ -113,12 +102,50 @@ client.verify3DS({
 					</div>
 				</div>
 			</div>
-			<script src="https://js.braintreegateway.com/v2/braintree.js"></script>
+			<script src="https://js.braintreegateway.com/js/braintree-2.22.2.min.js"></script>
 			<script>
+				// Using the generated client token to instantiate the Braintree client.
+				var client = new braintree.api.Client({
+				  clientToken: "<?=$clientToken?>"
+				});
 				braintree.setup(
 					"<?=$clientToken?>",
 					'custom', {
-					id: 'checkout'
+						id: 'checkout',
+						onPaymentMethodReceived: function(obj){
+							console.info(obj);
+							$('#checkout').submit();
+
+							client.verify3DS({
+							  amount: 500,
+							  creditCard: obj.nonce
+							}, function (error, response) {
+								if (!error) {
+									// 3D Secure finished. Using response.nonce you may proceed with the transaction with the associated server side parameters below.
+									return true;
+								} else {
+									// Handle errors
+									$(".leftNav").after("<h3>Errors</h3><p>"+ error.message +"</p>");
+								}
+							});
+						},
+						// paypal: {
+						// 	container: "#paypalContainer"
+						// },
+						hostedFields: {
+							number: {
+								selector: "#cardNum",
+								placeholder: "Card Number"
+							},
+							cvv: {
+								selector: "#cvv",
+								placeholder: "CVV"
+							},
+							expirationDate: {
+								selector: "#expDate",
+								placeholder: "Expiration Date"
+							}
+						}
 					}
 				);
 			</script>

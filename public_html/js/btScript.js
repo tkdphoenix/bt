@@ -10,11 +10,21 @@ $(".radioPmtMethod").on('click', function(){
 // event listener for billing address
 $(".radioBillingAddr").on('click', function(){
 	var radioBillingAddr = $(this);
-	if($(this).val() === "false"){
+	if($(radioBillingAddr).val() === "false"){
 		$('.billingAddressDetails').hide();
 	} else {
 		$('.billingAddressDetails').show();
 	}
 });
-// $('input[name=withPmtMethodRadio]:checked', '#newCustForm').val()
-// $('input[name=withBillingAddressRadio]:checked', '#newCustForm').val()
+
+function setCookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    var expires = "expires="+d.toUTCString();
+    document.cookie = cname + "=" + cvalue + "; " + expires;
+}
+$(".planTable .plan").on("click", function(){
+	var planBtn = $(this);
+	var planId = planBtn.parent().next().text();
+	$("#planId").val(planId);
+});

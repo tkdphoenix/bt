@@ -1,6 +1,5 @@
 <?php
 	defined("DS")? null : require_once(realpath(dirname(__FILE__) . DIRECTORY_SEPARATOR . "..") . DIRECTORY_SEPARATOR . "inc" . DIRECTORY_SEPARATOR . "initialize.php");
-
 	require_once(LIB_PATH . DS . "inc" . DS . "common.inc.php");
 	require_once(LIB_PATH . DS . "btVars.php");
 
@@ -8,14 +7,14 @@
 
 	// test if the nonce has been posted
 	if(isset($_POST['payment_method_nonce'])){
-		$nonce = $_POST['payment_method_nonce'];
+		$nonce = strip_tags_special_chars($_POST['payment_method_nonce']);
 		$amt = 30.00;
 		try{
 			$result = Braintree_Transaction::sale(array(
 				'amount' => $amt,
 				'paymentMethodNonce' => $nonce,
 				'options' => array(
-					'submitForSettlement' => false
+					'submitForSettlement' => true
 				)
 			));
 
@@ -87,7 +86,7 @@
 					</div>
 				</div>
 			</div>
-			<script src="https://js.braintreegateway.com/v2/braintree.js"></script>
+			<script src="https://js.braintreegateway.com/js/braintree-2.22.2.min.js"></script>
 			<script>
 				braintree.setup(
 					"<?=$clientToken?>",

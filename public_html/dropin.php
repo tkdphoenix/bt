@@ -8,7 +8,7 @@
 	// echo "Your client token: ". $clientToken . "<br>";
 
 	if(isset($_POST['payment_method_nonce'])){
-		$nonce = $_POST['payment_method_nonce'];
+		$nonce = strip_tags_special_chars($_POST['payment_method_nonce']);
 		$amt = 50.00;
 		showBTHeader("Braintree Initialization", "Results");
 		showBTLeftNav();
@@ -16,9 +16,12 @@
 			$result = Braintree_Transaction::sale(array(
 				'amount' => $amt,
 				'paymentMethodNonce' => $nonce,
+				// 'paymentMethodNonce' => "fake-processor-declined-visa-nonce",
+				// 'paymentMethodNonce' => "fake-gateway-rejected-fraud-nonce",
 				'options' => array(
-					'submitForSettlement' => false
-					// 'storeInVaultOnSuccess' => true,
+					// 'submitForSettlement' => false
+					'submitForSettlement' => true
+					// 'storeInVaultOnSuccess' => true
 				)
 			));
 
@@ -28,11 +31,12 @@
 			<div class="col-md-7">
 				<div class="row">
 					<div class="col-md-12">
+						<p>Your payment is an authorization ONLY. You will need to either go to the <a href="settlement.php">settlement page</a> or settle the transaction in your account on <a href="https://braintreepayments.com">Braintree.com</a></p>
 <?php
 				$txn = $result->transaction;
 
 				echo "<h3>Transaction detaiils:</h3>";
-				echo "id = ". $txn->id ."</p>";
+				echo "<p>id = ". $txn->id ."</p>";
 				echo "<p>status = ". $txn->status ."</p>";
 				echo "<p>type = ". $txn->type ."</p>";
 				echo "<p>amount = ". $txn->amount ."</p>";
@@ -69,7 +73,7 @@
 	</div>
 
 
-	<script src="https://js.braintreegateway.com/v2/braintree.js"></script>
+	<script src="https://js.braintreegateway.com/js/braintree-2.22.2.min.js"></script>
 	<script>
 		var clientToken =   "<?=$clientToken?>";
 

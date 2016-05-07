@@ -1,7 +1,11 @@
 <?php
 file_put_contents("webhook.log", "Testing file\r\n", FILE_APPEND);
-require_once("../../inc/common.inc.php");
-require_once("../btVars.php");
+
+defined("DS")? null : require_once(realpath(dirname(__FILE__) . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "..") . DIRECTORY_SEPARATOR . "inc" . DIRECTORY_SEPARATOR . "initialize.php");
+
+require_once(LIB_PATH . DS . "btVars.php");
+require_once(LIB_PATH . "inc". DS ."common.inc.php");
+
 if(isset($_GET['bt_challenge'])){
 	$result = Braintree_WebhookNotification::verify($_GET['bt_challenge']);
 	file_put_contents("webhook.log", "Webhook registered - " . $result . "x x x x" ."\r\n", FILE_APPEND);
@@ -12,7 +16,7 @@ if(isset($_GET['bt_challenge'])){
 	$smsVars = httpPost($smsUrl, $params);
 } else if(isset($_POST["bt_signature"]) && isset($_POST["bt_payload"])){
     $webhookNotification = Braintree_WebhookNotification::parse(
-        $_POST["bt_signature"], $_POST["bt_payload"]
+        strip_tags_special_chars($_POST["bt_signature"]), strip_tags_special_chars($_POST["bt_payload"])
     );
 
     $message =

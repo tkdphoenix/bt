@@ -28,27 +28,35 @@
 		</div>
 	<?php
 	} // END showForm()
-	// test if the nonce has been posted
-	if(isset($_POST['submit'])){
-		if(isset($_POST['payment_method_nonce'])){
-			$nonce = $_POST['payment_method_nonce'];
-			$amt = 10.00;
-			echo "nonce = ". $nonce ."\r\n";
-			echo "amt = ". $amt ."\r\n";
 
-			try{
-				$result = Braintree_Transaction::sale(
-						array(
-							'amount' => $amt,
-							'paymentMethodNonce' => $nonce,
-							'options' => array(
-								'submitForSettlement' => false
-						  	)
-						)
-					);
-			} catch (Exception $e){
-				echo "<p class='error'>This payment could not be processed. ". $e->getMessage() ."</p";
+	// test if the nonce has been posted
+	if(isset($_POST['payment_method_nonce'])){
+		$nonce = strip_tags_special_chars($_POST['payment_method_nonce']);
+		$amt = strip_tags_special_chars($_POST['amt']);
+		// echo "nonce = ". $nonce ."\r\n";
+		// echo "amt = ". $amt ."\r\n";
+
+		try{
+			$result = Braintree_Transaction::sale(
+				array(
+					'amount' => $amt,
+					'paymentMethodNonce' => $nonce,
+					'options' => array(
+						'submitForSettlement' => false
+				  	)
+				)
+			);
+			if(!$result->success){
+				foreach($result->errors->deepAll() as $error){
+					file_put_contents($pathToBTErrorLog, timeNow() . " MST - createCustomer.php page\r\n" . $error->code .": ". $error->message, FILE_APPEND);
+					throw new Exception($error->message, $error->code);
+					var_dump($error);
+				}
+				
 			}
+		} catch (Exception $e){
+			echo "<p class='error'>This payment could not be processed. ". $e->getMessage() ."</p";
+		}
 
 		if($result->success){
 			$txn = $result->transaction;
@@ -59,71 +67,175 @@
 				<div class="row">
 					<div class="col-md-12">
 <?php
-				echo "Transaction detaiils: <br>";
-				echo "id = ". $txn->id ."<br>";
-				echo "status = ". $txn->status ."<br>";
-				echo "type = ". $txn->type ."<br>";
-				echo "amount = ". $txn->amount ."<br>";
-				echo "merchantAccountId = ". $txn->merchantAccountId ."<br>";
-				echo "orderId = ". $txn->orderId ."<br>";
-				echo parseObj($txn->createdAt, "createdAt");
-				echo parseObj($txn->updatedAt, "updatedAt");
-				echo parseObj($txn->customer, "customer");
-				echo parseObj($txn->billing, "billing");
-				echo "refundId = ". $txn->refundId ."<br>";
-				echo parseObj($txn->refundIds, "refundIds");
-				echo "refundedTransactionId = ". $txn->refundedTransactionId ."<br>";
-				echo "settlementBatchId = ". $txn->settlementBatchId ."<br>";
-				echo parseObj($txn->shipping, "shipping");
-				echo "customFields = ". $txn->customFields ."<br>"; // string??
-				echo "avsErrorResponseCode = ". $txn->avsErrorResponseCode ."<br>";
-				echo "avsPostalCodeResponseCode = ". $txn->avsPostalCodeResponseCode ."<br>";
-				echo "avsStreetAddressResponseCode = ". $txn->avsStreetAddressResponseCode ."<br>";
-				echo "cvvResponseCode = ". $txn->cvvResponseCode ."<br>";
-				echo "gatewayRejectionReason = ". $txn->gatewayRejectionReason ."<br>";
-				echo "processorAuthorizationCode = ". $txn->processorAuthorizationCode ."<br>";
-				echo "processorResponseCode = ". $txn->processorResponseCode ."<br>";
-				echo "processorResponseText = ". $txn->processorResponseText ."<br>";
-				echo "additionalProcessorResponse = ". $txn->additionalProcessorResponse ."<br>";
-				echo "voiceReferralNumber = ". $txn->voiceReferralNumber ."<br>";
-				echo "purchaseOrderNumber = ". $txn->purchaseOrderNumber ."<br>";
-				echo "taxAmount = ". $txn->taxAmount ."<br>";
-				echo "taxExempt = ". $txn->taxExempt ."<br>";
-				echo parseObj($txn->creditCard, "creditCard");
-				echo parseObj($txn->Braintree_Transaction_StatusDetails, "Braintree_Transaction_StatusDetails");
-				echo "planId = ". $txn->planId ."<br>";
-				echo "subscriptionId = ". $txn->subscriptionId ."<br>";
-				echo parseObj($txn->subscription, "subscription");
+			echo "Transaction detaiils: <br>";
+			echo "id = ". $txn->id ."<br>";
+			echo "status = ". $txn->status ."<br>";
+			echo "type = ". $txn->type ."<br>";
+			echo "amount = ". $txn->amount ."<br>";
+			echo "merchantAccountId = ". $txn->merchantAccountId ."<br>";
+			echo "subMerchantAccountId = ". $txn->subMerchantAccountId ."<br>";
+			echo "masterMerchantAccountId = ". $txn->masterMerchantAccountId ."<br>";
+			echo "orderId = ". $txn->orderId ."<br>";
+			echo "createdAt Date = ". $txn->createdAt->date ." ". $txn->createdAt->timezone ."<br>";
+			echo "updatedAt Date = ". $txn->updatedAt->date ." ". $txn->updatedAt->timezone ."<br>";
+			echo "customer Id = ". $txn->customer['id'] ."<br>";
+			echo "customer firstName = ". $txn->customer['firstName'] ."<br>";
+			echo "customer lastName = ". $txn->customer['lastName'] ."<br>";
+			echo "customer company = ". $txn->customer['company'] ."<br>";
+			echo "customer email = ". $txn->customer['email'] ."<br>";
+			echo "customer phone = ". $txn->customer['phone'] ."<br>";
+			echo "customer fax = ". $txn->customer['fax'] ."<br>";
+			echo "billing Id = ". $txn->billing['id'] ."<br>";
+			echo "billing firstName = ". $txn->billing['firstName'] ."<br>";
+			echo "billing lastName = ". $txn->billing['lastName'] ."<br>";
+			echo "billing company = ". $txn->billing['company'] ."<br>";
+			echo "billing streetAddress = ". $txn->billing['streetAddress'] ."<br>";
+			echo "billing extendedAddress = ". $txn->billing['extendedAddress'] ."<br>";
+			echo "billing locality = ". $txn->billing['locality'] ."<br>";
+			echo "billing region = ". $txn->billing['region'] ."<br>";
+			echo "billing postalCode = ". $txn->billing['postalCode'] ."<br>";
+			echo "billing countryName = ". $txn->billing['countryName'] ."<br>";
+			echo "billing countryCodeAlpha2 = ". $txn->billing['countryCodeAlpha2'] ."<br>";
+			echo "billing countryCodeAlpha3 = ". $txn->billing['countryCodeAlpha3'] ."<br>";
+			echo "billing countryCodeNumeric = ". $txn->billing['countryCodeNumeric'] ."<br>";
+			echo "refundId = ". $txn->refundId ."<br>";
+			for($i=0, $ii=$txn->refundIds.count(); $i<$ii; $i++){
+				echo "refundIds$i = ". $txn->refundIds[$i] ."<br>";
+			}
+			echo "refundedTransactionId = ". $txn->refundedTransactionId ."<br>";
+			for($i=0, $ii=$txn->partialSettlementTransactionIds.count(); $i<$ii; $i++){
+				echo "partialSettlementTransactionIds$i = ". $txn->partialSettlementTransactionIds[$i] ."<br>";
+			}
+			echo "authorizedTransactionId = ". $txn->authorizedTransactionId ."<br>";
+			echo "settlementBatchId = ". $txn->settlementBatchId ."<br>";
+			echo "shipping ID = ". $txn->shipping['id'] ."<br>";
+			echo "shipping firstName = ". $txn->shipping['firstName'] ."<br>";
+			echo "shipping lastName = ". $txn->shipping['lastName'] ."<br>";
+			echo "shipping company = ". $txn->shipping['company'] ."<br>";
+			echo "shipping streetAddress = ". $txn->shipping['streetAddress'] ."<br>";
+			echo "shipping extendedAddress = ". $txn->shipping['extendedAddress'] ."<br>";
+			echo "shipping locality = ". $txn->shipping['locality'] ."<br>";
+			echo "shipping region = ". $txn->shipping['region'] ."<br>";
+			echo "shipping postalCode = ". $txn->shipping['postalCode'] ."<br>";
+			echo "shipping countryName = ". $txn->shipping['countryName'] ."<br>";
+			echo "shipping countryCodeAlpha2 = ". $txn->shipping['countryCodeAlpha2'] ."<br>";
+			echo "shipping countryCodeAlpha3 = ". $txn->shipping['countryCodeAlpha3'] ."<br>";
+			echo "shipping countryCodeNumeric = ". $txn->shipping['countryCodeNumeric'] ."<br>";
+			echo "customFields = ". $txn->customFields ."<br>";
+			echo "avsErrorResponseCode = ". $txn->avsErrorResponseCode ."<br>";
+			echo "avsPostalCodeResponseCode = ". $txn->avsPostalCodeResponseCode ."<br>";
+			echo "avsStreetAddressResponseCode = ". $txn->avsStreetAddressResponseCode ."<br>";
+			echo "cvvResponseCode = ". $txn->cvvResponseCode ."<br>";
+			echo "gatewayRejectionReason = ". $txn->gatewayRejectionReason ."<br>";
+			echo "processorAuthorizationCode = ". $txn->processorAuthorizationCode ."<br>";
+			echo "processorResponseCode = ". $txn->processorResponseCode ."<br>";
+			echo "processorResponseText = ". $txn->processorResponseText ."<br>";
+			echo "additionalProcessorResponse = ". $txn->additionalProcessorResponse ."<br>";
+			echo "voiceReferralNumber = ". $txn->voiceReferralNumber ."<br>";
+			echo "purchaseOrderNumber = ". $txn->purchaseOrderNumber ."<br>";
+			echo "taxAmount = ". $txn->taxAmount ."<br>";
+			echo "taxExempt = ". $txn->taxExempt ."<br>";
+			echo "creditCard token = ". $txn->creditCard['token'] ."<br>";
+			echo "creditCard bin = ". $txn->creditCard['bin'] ."<br>";
+			echo "creditCard last4 = ". $txn->creditCard['last4'] ."<br>";
+			echo "creditCard cardType = ". $txn->creditCard['cardType'] ."<br>";
+			echo "creditCard expirationMonth = ". $txn->creditCard['expirationMonth'] ."<br>";
+			echo "creditCard expirationYear = ". $txn->creditCard['expirationYear'] ."<br>";
+			echo "creditCard customerLocation = ". $txn->creditCard['customerLocation'] ."<br>";
+			echo "creditCard cardholderName = ". $txn->creditCard['cardholderName'] ."<br>";
+			echo "creditCard imageUrl = ". $txn->creditCard['imageUrl'] ."<br>";
+			echo "creditCard prepaid = ". $txn->creditCard['prepaid'] ."<br>";
+			echo "creditCard healthcare = ". $txn->creditCard['healthcare'] ."<br>";
+			echo "creditCard debit = ". $txn->creditCard['debit'] ."<br>";
+			echo "creditCard durbinRegulated = ". $txn->creditCard['durbinRegulated'] ."<br>";
+			echo "creditCard commercial = ". $txn->creditCard['commercial'] ."<br>";
+			echo "creditCard payroll = ". $txn->creditCard['payroll'] ."<br>";
+			echo "creditCard issuingBank = ". $txn->creditCard['issuingBank'] ."<br>";
+			echo "creditCard countryOfIssuance = ". $txn->creditCard['countryOfIssuance'] ."<br>";
+			echo "creditCard productId = ". $txn->creditCard['productId'] ."<br>";
+			echo "creditCard uniqueNumberIdentifier = ". $txn->creditCard['uniqueNumberIdentifier'] ."<br>";
+			echo "creditCard venmoSdk = ". $txn->creditCard['venmoSdk'] ."<br>";
+			
+			// @TODO may not work well - need to experiment to make sure this is right
+			echo "transaction statusDetails timestamp= ". $txn->statusDetails['timestamp']->date ." ". $txn->statusDetails['timstamp']->timezone ."<br>"; 
+			echo "transaction statusDetails status= ". $txn->statusDetails->status ."<br>"; 
+			echo "transaction statusDetails amount= ". $txn->statusDetails->amount ."<br>"; 
+			echo "transaction statusDetails user= ". $txn->statusDetails->user ."<br>"; 
+			echo "transaction statusDetails transactionSource= ". $txn->statusDetails->transactionSource ."<br>";
+			echo "planId = ". $txn->planId ."<br>";
+			echo "subscriptionId = ". $txn->subscriptionId ."<br>";
+			echo "subscriptionId billingPeriodEndDate = ". $txn->subscriptionId['billingPeriodEndDate'] ."<br>";
+			echo "subscriptionId billingPeriodStartDate = ". $txn->subscriptionId['billingPeriodStartDate'] ."<br>";
+			for($i=0, $ii=$txn->addOns.count(); $i<$ii; $i++){
+				echo "addOns$i = ". $txn->addOns[$i] ."<br>";
+			}
+			for($i=0, $ii=$txn->discounts.count(); $i<$ii; $i++){
+				echo "discounts$i = ". $txn->discounts[$i] ."<br>";
+			}
+			echo "Transaction descriptor name: ". $txn->descriptor['name'] ."<br>";
+			echo "Transaction descriptor phone: ". $txn->descriptor['phone'] ."<br>";
+			echo "Transaction descriptor url: ". $txn->descriptor['url'] ."<br>";
+			echo "Transaction recurring: "; echo ($txn->recurring)? 'true': 'false';
+			echo "Transaction channel: ". $txn->channel ."<br>";
+			echo "Transaction serviceFeeAmount: ". $txn->serviceFeeAmount ."<br>";
+			echo "Transaction escrowStatus: ". $txn->escrowStatus ."<br>";
+			echo "Transaction escrowStatus: ". $txn->escrowStatus ."<br>";
+
+			// @TODO not done
 		} // END if($result->success)
-
-
-		}
-	} else { // END if(isset($_POST['submit']))
+	} else { // END if(isset($_POST['payment_method_nonce']))
 	showBTHeader("Hosted Fields", "Hosted Fields");
 	showBTLeftNav();
+?>
+		<div class="col-md-7">
+			<div class="row">
+				<div class="col-md-12">
+					<h3>Pay by PayPal</h3>
+					<div id="paypalContainer"></div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<h3>Pay by Credit Card</h3>		
+<?php
 	showForm();
 ?>
-
+				</div>
+			</div>
+		</div>
 	
-	<script src="https://js.braintreegateway.com/v2/braintree.js"></script>
+	<script src="https://js.braintreegateway.com/js/braintree-2.22.1.js"></script>
 	<script>
 	braintree.setup(
 		"<?=$clientToken?>",
-		'custom', 
+		"custom", 
 		{
-			id: 'checkoutForm',
+			id: 'hostedCheckoutForm',
+			paypal: {
+				container: "paypalContainer"
+			},
 			hostedFields: {
 				number: {
-					selector: "#cardNum"
+					selector: "#cardNum",
+					placeholder: "Card Number"
 				},
 				cvv: {
-					selector: "#cvv"
+					selector: "#cvv",
+					placeholder: "CVV"
 				},
+<<<<<<< HEAD
 				// postalCode: {
 				// 	selector: "#zip"
 				// },
+=======
+				postalCode: {
+					selector: "#zip",
+					placeholder: "Postal Code"
+				},
+>>>>>>> 92f489510d1a155d800796f4074f3a8c0b06972b
 				expirationDate: {
-					selector: "#expDate"
+					selector: "#expDate",
+					placeholder: "Expiration Date"
 				}
 			}
 		});

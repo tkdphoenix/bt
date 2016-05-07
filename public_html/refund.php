@@ -22,7 +22,7 @@ function showForm(){
 if(isset($_POST['txnID'])){
 	showBTHeader("Refund Transactions", "Results");
 	showBTLeftNav();
-	$txnid = $_POST['txnID'];
+	$txnid = strip_tags_special_chars($_POST['txnID']);
 	// @TODO add try / catch block once errors are understood and result object (see createCustomer.php - ln 267)
 	$result = Braintree_Transaction::refund($txnid);
 ?>
