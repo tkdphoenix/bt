@@ -1,5 +1,10 @@
 <?php
-session_start();
+	(isset($_SESSION['plans'])) ? session_start() : '';
+
+// session_start();
+// prevent session hijacking
+session_regenerate_id();
+
 defined("DS")? null : require_once(realpath(dirname(__FILE__) . DIRECTORY_SEPARATOR . "..") . DIRECTORY_SEPARATOR . "inc" . DIRECTORY_SEPARATOR . "initialize.php");
 
 require_once(LIB_PATH . DS . "btVars.php");
@@ -21,7 +26,8 @@ if(isset($_POST['submit'])){
 	  Braintree_SubscriptionSearch::planId()->is($planId)
 	]);
 	$planIndex = strip_tags_special_chars($_POST['planVal']);
-	$selectedPlan = $_SESSION['plans'][$planIndex];
+	(isset($_SESSION['plans']) && isset($planIndex)) ? $selectedPlan = $_SESSION['plans'][$planIndex] : '';
+	// $selectedPlan = $_SESSION['plans'][$planIndex];
 	// Test if a plan has any subscriptions
 	if(count($collection->_ids) < 1){ // There are no subscriptions to the given plan
 		showBTHeader("No Subscriptions Found", "No Subscriptions");

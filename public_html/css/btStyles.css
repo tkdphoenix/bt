@@ -46,4 +46,11 @@ h1,h2,h3,h4,h5,h6, .planTable .plan{
 	font-family: 'Courier_Prime', 'Helvetica Neue', Helvetica, sans-serif;
 }
 .planTable .plan{cursor: pointer;}
-.planBoxes, a.greenLink{ color: #69c4a7; } 
+.planBoxes, a.greenLink{ color: #69c4a7; }
+.page404 .container h1{ color:red; }
+.page404 .container .mainImg{ margin: 0 auto;  }
+.page404 .container p{ font-size: 16px; }
+.page404 .container .randomFact{
+	font-weight: bold;
+	font-size: 18pt;
+}

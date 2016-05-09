@@ -4,7 +4,7 @@
 $pathToBTErrorLog 	= realpath(dirname(__FILE__) .DS. '..') .DS. "logs" .DS. "BraintreeErrors.txt";
 
 function strip_tags_special_chars($string){
-	return htmlspecialchars(strip_tags($string));
+	return htmlentities(strip_tags($string));
 }
 
 /**
@@ -58,6 +58,7 @@ function showBTLeftNav(){
 					<li>
 						<h4>Customers</h4>
 						<a href="createCustomer.php">Create Customer</a></li>
+					<li><a href="findCustomer.php">Find Customer</a></li>
 					<li><a href="updateCustomer.php">Update Customer</a></li>
 					<li><a href="deleteCustomer.php">Delete Customer</a></li>
 					<li>

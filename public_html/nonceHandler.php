@@ -1,5 +1,8 @@
 <?php
 	session_start();
+	// prevent session hijacking
+	session_regenerate_id();
+	
 	defined("DS")? null : require_once(realpath(dirname(__FILE__) . DIRECTORY_SEPARATOR . "..") . DIRECTORY_SEPARATOR . "inc" . DIRECTORY_SEPARATOR . "initialize.php");
 	require_once(LIB_PATH . DS . "inc" . DS . "common.inc.php");
 

@@ -75,28 +75,32 @@ if(isset($_POST['subscriptionSubmit'])){
 
 	if(isset($result) && $result->success){
 		showBTHeader("Successful Subscription", "Successful Subscription");
+		showBTLeftNav();
 		// put details on the page to show completion
 	?>
-	<section class="container">
-		<h4>Subscription creation successful</h4>
-		<p>Your subscription details are as follows:</p>
-		<p>Status: <?=$result->subscription->status?><br>
-		   Billing Day of the Month: <?=$result->subscription->billingDayOfMonth?><br>
-		   Plan ID: <?=$result->subscription->planId?><br>
-		   Price: <?=$result->subscription->price?><br>
-		   <strong>Discounts:</strong><br>
-	<?php
-	foreach($result->subscription->discounts as $d){
-		// print_r($d);
-		echo "Amount: ". $d->amount ."<br>";
-		echo "ID: ". $d->id ."<br>";
-		echo "Name: ". $d->name ."<br>";
-		echo "<br>";
+	<div class="col-md-10">
+		<section class="container">
+			<h4>Subscription creation successful</h4>
+			<p>Your subscription details are as follows:</p>
+			<p>Status: <?=$result->subscription->status?><br>
+			   Billing Day of the Month: <?=$result->subscription->billingDayOfMonth?><br>
+			   Plan ID: <?=$result->subscription->planId?><br>
+			   Price: <?=$result->subscription->price?><br>
+			   <strong>Discounts:</strong><br>
+<?php
+		foreach($result->subscription->discounts as $d){
+			// print_r($d);
+			echo "Amount: ". $d->amount ."<br>";
+			echo "ID: ". $d->id ."<br>";
+			echo "Name: ". $d->name ."<br>";
+			echo "---------------------<br>";
+			echo "<br>";
+		}
 		echo "<a class='btn greenBtn' href='createSubscription.php'>Create a new subscription</a>";
-	}
-	?>
-		</p>
-	</section>
+?>
+			</p>
+		</section>
+	</div>
 	<?php
 	}
 

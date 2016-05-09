@@ -1,5 +1,7 @@
 <?php
   session_start();
+  // prevent session hijacking
+  session_regenerate_id();
 
   // If the CLASSIC session vars aren't set, try to set them with a cookie
   if (!isset($_SESSION['user'])) {
