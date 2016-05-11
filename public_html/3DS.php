@@ -6,8 +6,7 @@
 
 	$clientToken = Braintree_ClientToken::generate();
 
-	if(isset($_POST['submit'])){
-		echo "YES!!!"; exit();
+	if(isset($_POST['payment_method_nonce'])){
 	// if(isset($_POST['payment_method_nonce'])){
 		$nonce = strip_tags_special_chars($_POST['payment_method_nonce']);
 		echo $nonce;
@@ -24,7 +23,8 @@
 			    'options' => [
 			        'three_d_secure' => [
 			            'required' => true
-			        ]
+			        ],
+			        'submitForSettlement' => true
 			    ]
 			]);
 			if($result->success){
@@ -70,6 +70,7 @@
 				<div class="row">
 					<div class="col-md-12">
 						<form id="checkout" class="form-horizontal" method="post" action="?">
+						<!-- <form id="checkout" class="form-horizontal" method="post" action="3DSComplete.php"> -->
 							<div class="form-group">
 								<label for="cardNum">Card Number
 									<div id="cardNum" class="form-control"></div>
@@ -106,8 +107,11 @@
 							console.info(obj);
 
 							client.verify3DS({
-							  amount: 500,
-							  creditCard: obj.nonce
+								amount: 500,
+								creditCard: obj.nonce,
+								onUserClose: function(){
+									alert("You must complete the 3D Secure verification to complete your transaction.");
+								}
 							}, function (error, response) {
 								if (!error) {
 									// 3D Secure finished. Using response.nonce you may proceed with the transaction with the associated server side parameters below.
@@ -115,7 +119,9 @@
 									// add the nonce to the form
 									var addNonce = "<input type='hidden' name='payment_method_nonce' value='"+ response.nonce +"'>";
 									$("#submitCustom").parent().before(addNonce);
-									return true;
+									// submit the form
+									var form = document.getElementById('checkout');
+									HTMLFormElement.prototype.submit.call(form);
 								} else {
 									// Handle errors
 									$(".leftNav").after("<h3>Errors</h3><p>"+ error.message +"</p>");
@@ -142,8 +148,6 @@
 						}
 					}
 				);
-				// submit the form
-				$('#checkout').submit();
 			</script>
 <?php
 showBTFooter();

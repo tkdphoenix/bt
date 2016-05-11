@@ -5,8 +5,8 @@ session_regenerate_id();
 
 defined("DS")? null : require_once(realpath(dirname(__FILE__) . DIRECTORY_SEPARATOR . "..") . DIRECTORY_SEPARATOR . "inc" . DIRECTORY_SEPARATOR . "initialize.php");
 
-require_once(LIB_PATH . DS . "inc" . DS . "common.inc.php");
 require_once(LIB_PATH . DS . "btVars.php");
+require_once(LIB_PATH . DS . "inc" . DS . "common.inc.php");
 // create the clientToken
 $clientToken = Braintree_ClientToken::generate();
 function showForm($errorsArr=[]){
@@ -123,7 +123,7 @@ function showForm($errorsArr=[]){
 						</div>
 
 						<div class="form-group">	
-							<label for="expirationMonth" class="col-md-2 control-label">Expiration Date (MM/YY)</label>
+							<label for="expiration_date" class="col-md-2 control-label">Expiration Date (MM/YY)</label>
 							<div class="col-md-2">
 								<!-- <input id="expirationDate" type="text" class="form-control" name="expirationDate" value="<?php //echo (isset($_POST['expirationDate']))? $_POST['expirationDate']: ''; ?>" placeholder="Expiration Date (MM/YYYY)"> -->
 								<input id="expirationDate" type="text" class="form-control" data-braintree-name="expiration_date" placeholder="Expiration Date (MM/YYYY)">
@@ -292,8 +292,6 @@ if(isset($_POST['newCustSubmit'])){ // if the form has been submitted
 			)
 		);
 	}
-	// echo "All customer details: <br>";
-	// var_dump($customerDetails); exit();
 ?>
 	<div class="col-md-7">
 		<div class="row">

@@ -54,3 +54,12 @@ h1,h2,h3,h4,h5,h6, .planTable .plan{
 	font-weight: bold;
 	font-size: 18pt;
 }
+.form-control.braintree-hosted-fields-invalid{
+	border: 1px solid red;
+}
+
+
+
+
+
+

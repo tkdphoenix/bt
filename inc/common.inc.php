@@ -155,7 +155,7 @@ function sendPush($params){
  * @return string         	end result should be a string that can be echoed to the screen or parsed into DB, etc.
  */
 function parseObj($obj, $prefix = ''){
-	$stringRtrn = '';
+	$stringRtrn = 'here!! ';
 	foreach($obj as $key=>$value){
 		if($prefix){
 			switch ($key) {

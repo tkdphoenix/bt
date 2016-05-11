@@ -1,5 +1,6 @@
 <?php
-	(isset($_SESSION['plans'])) ? session_start() : '';
+	(isset($_SESSION['plans'])) ?  : session_start();
+	session_regenerate_id();
 
 // session_start();
 // prevent session hijacking
@@ -8,7 +9,7 @@ session_regenerate_id();
 defined("DS")? null : require_once(realpath(dirname(__FILE__) . DIRECTORY_SEPARATOR . "..") . DIRECTORY_SEPARATOR . "inc" . DIRECTORY_SEPARATOR . "initialize.php");
 
 require_once(LIB_PATH . DS . "btVars.php");
-require_once("../inc/common.inc.php");
+require_once(LIB_PATH . DS . "inc" . DS . "common.inc.php");
 
 function showForm(){
 ?>
@@ -33,15 +34,15 @@ if(isset($_POST['submit'])){
 		showBTHeader("No Subscriptions Found", "No Subscriptions");
 		showBTLeftNav();
 ?>
-		<div class="col-md-5">There is no one signed up for this plan.</div>
-		<div class="col-md-5">
+		<div class="col-md-10">There is no one signed up for this plan.</div>
+<!-- 		<div class="col-md-5">
 			<p>Plan Name: <?=$selectedPlan[0]?></p>
 			<p>Price: <?=$selectedPlan[1] ." ". $selectedPlan[2]?></p>
 			<p>Trial Period: <?php if($selectedPlan[3]){ echo $selectedPlan[4] ." ". $selectedPlan[5]; if ($selectedPlan[4] != 1){ echo "s"; }} else { echo "None"; }?></p>
 			<p>Billing Cycle: <?="Every ". $selectedPlan[6] ." Month(s)"?></p>
-		</div>
+		</div> -->
 <?php
-	} else { // There are subscriptions to the given plan
+	} else { // There ARE subscriptions to the given plan
 		$active		= 0;
 		$canceled	= 0;
 		$pastDue	= 0;
