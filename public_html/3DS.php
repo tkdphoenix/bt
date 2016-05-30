@@ -43,8 +43,9 @@
 				echo "<p>type = ". $txn->type ."</p>";
 				echo "<p>amount = ". $txn->amount ."</p>";
 			} else { 
+				var_dump($result->errors->deepAll());
 				throw new Exception("The transaction wasn't successful.");
-				var_dump($result->errors);
+				
 			}
 		} catch (Exception $e){
 			echo 'Caught exception: ',  $e->getMessage(), "\n";

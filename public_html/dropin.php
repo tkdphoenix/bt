@@ -19,8 +19,8 @@
 				// 'paymentMethodNonce' => "fake-processor-declined-visa-nonce",
 				// 'paymentMethodNonce' => "fake-gateway-rejected-fraud-nonce",
 				'options' => array(
-					// 'submitForSettlement' => false
-					'submitForSettlement' => true
+					'submitForSettlement' => false
+					// 'submitForSettlement' => true
 					// 'storeInVaultOnSuccess' => true
 				)
 			));

@@ -14,23 +14,25 @@
 		}
 	?>
 				<form id="hostedCheckoutForm" method="post" action="?">
-					<label for="cardNum">Card Number</label>
-					<div id="cardNum" tabindex="10"></div>
+					<div id="error-message"></div>
+					<label for="card-number">Card Number</label>
+					<div id="card-number" class="hosted-field" tabindex="10"></div>
 					<label for="cvv">CVV</label>
-					<div id="cvv" tabindex="15"></div>
+					<div id="cvv" class="hosted-field" tabindex="15"></div>
 					<label for="zip">Zip Code</label>
 					<div id="zip" tabindex="20"></div>
-					<label for="expDate">Expiration Date</label>
-					<div id="expDate" tabindex="25"></div>
+					<label for="expiration-date">Expiration Date</label>
+					<div id="expiration-date" class="hosted-field" tabindex="25"></div>
 					<input id="amt" name="amt" type="hidden" value="10.00" />
-					<input class="btn greenBtn" name="submit" type="submit" value="Pay $10" tabindex="30" />
+					<input type="hidden" name="payment-method-nonce">
+					<input class="btn greenBtn" name="btnSubmit" type="submit" value="Pay $10" tabindex="30" disabled />
 				</form>
 	<?php
 	} // END showForm()
 
 	// test if the nonce has been posted
-	if(isset($_POST['payment_method_nonce'])){
-		$nonce = strip_tags_special_chars($_POST['payment_method_nonce']);
+	if(isset($_POST['payment-method-nonce'])){
+		$nonce = strip_tags_special_chars($_POST['payment-method-nonce']);
 		$amt = strip_tags_special_chars($_POST['amt']);
 		// echo "nonce = ". $nonce ."\r\n";
 		// echo "amt = ". $amt ."\r\n";
@@ -47,7 +49,7 @@
 			);
 			if(!$result->success){
 				foreach($result->errors->deepAll() as $error){
-					file_put_contents($pathToBTErrorLog, "\r\n". timeNow() . " MST - hostedFields.php page\r\n" . $error->code .": ". $error->message, FILE_APPEND);
+					file_put_contents($pathToBTErrorLog, timeNow() . " MST - createCustomer.php page\r\n" . $error->code .": ". $error->message, FILE_APPEND);
 					throw new Exception($error->message, $error->code);
 					var_dump($error);
 				}
@@ -66,8 +68,6 @@
 				<div class="row">
 					<div class="col-md-12">
 <?php
-			include_once(LIB_PATH . DS . "inc" . DS . "ParseObject.php");
-
 			echo "Transaction detaiils: <br>";
 			echo "id = ". $txn->id ."<br>";
 			echo "status = ". $txn->status ."<br>";
@@ -77,13 +77,8 @@
 			echo "subMerchantAccountId = ". $txn->subMerchantAccountId ."<br>";
 			echo "masterMerchantAccountId = ". $txn->masterMerchantAccountId ."<br>";
 			echo "orderId = ". $txn->orderId ."<br>";
-			foreach($txn->createdAt as $key){
-				echo gettype($key);
-			}
-			$createdAt = $txn->createdAt;
-			echo "createdAt Date = ". $createdAt->format('Y-m-d H:i:s') ."<br>";
-			$updatedAt = $txn->updatedAt;
-			echo "updatedAt Date = ". $updatedAt->format('Y-m-d H:i:s') ."<br>";
+			echo "createdAt Date = ". $txn->createdAt->date ." ". $txn->createdAt->timezone ."<br>";
+			echo "updatedAt Date = ". $txn->updatedAt->date ." ". $txn->updatedAt->timezone ."<br>";
 			echo "customer Id = ". $txn->customer['id'] ."<br>";
 			echo "customer firstName = ". $txn->customer['firstName'] ."<br>";
 			echo "customer lastName = ". $txn->customer['lastName'] ."<br>";
@@ -105,11 +100,11 @@
 			echo "billing countryCodeAlpha3 = ". $txn->billing['countryCodeAlpha3'] ."<br>";
 			echo "billing countryCodeNumeric = ". $txn->billing['countryCodeNumeric'] ."<br>";
 			echo "refundId = ". $txn->refundId ."<br>";
-			for($i=0, $ii=count($txn->refundIds); $i<$ii; $i++){
+			for($i=0, $ii=$txn->refundIds.count(); $i<$ii; $i++){
 				echo "refundIds$i = ". $txn->refundIds[$i] ."<br>";
 			}
 			echo "refundedTransactionId = ". $txn->refundedTransactionId ."<br>";
-			for($i=0, $ii=count($txn->partialSettlementTransactionIds); $i<$ii; $i++){
+			for($i=0, $ii=$txn->partialSettlementTransactionIds.count(); $i<$ii; $i++){
 				echo "partialSettlementTransactionIds$i = ". $txn->partialSettlementTransactionIds[$i] ."<br>";
 			}
 			echo "authorizedTransactionId = ". $txn->authorizedTransactionId ."<br>";
@@ -162,17 +157,23 @@
 			echo "creditCard uniqueNumberIdentifier = ". $txn->creditCard['uniqueNumberIdentifier'] ."<br>";
 			echo "creditCard venmoSdk = ". $txn->creditCard['venmoSdk'] ."<br>";
 			
-			// @TODO make this cleaner and show a user-friendly message that only shows pertinent fields
+			// @TODO may not work well - need to experiment to make sure this is right
+			echo "transaction statusDetails timestamp= ". $txn->statusDetails['timestamp']->date ." ". $txn->statusDetails['timstamp']->timezone ."<br>"; 
+			echo "transaction statusDetails status= ". $txn->statusDetails->status ."<br>"; 
+			echo "transaction statusDetails amount= ". $txn->statusDetails->amount ."<br>"; 
+			echo "transaction statusDetails user= ". $txn->statusDetails->user ."<br>"; 
+			echo "transaction statusDetails transactionSource= ". $txn->statusDetails->transactionSource ."<br>";
 			echo "planId = ". $txn->planId ."<br>";
 			echo "subscriptionId = ". $txn->subscriptionId ."<br>";
 			echo "subscriptionId billingPeriodEndDate = ". $txn->subscriptionId['billingPeriodEndDate'] ."<br>";
 			echo "subscriptionId billingPeriodStartDate = ". $txn->subscriptionId['billingPeriodStartDate'] ."<br>";
-			for($i=0, $ii=count($txn->addOns); $i<$ii; $i++){
+			for($i=0, $ii=$txn->addOns.count(); $i<$ii; $i++){
 				echo "addOns$i = ". $txn->addOns[$i] ."<br>";
 			}
-			for($i=0, $ii=count($txn->discounts); $i<$ii; $i++){
+			for($i=0, $ii=$txn->discounts.count(); $i<$ii; $i++){
 				echo "discounts$i = ". $txn->discounts[$i] ."<br>";
 			}
+			echo "Transaction descriptor name: ". $txn->descriptor['name'] ."<br>";
 			echo "Transaction descriptor phone: ". $txn->descriptor['phone'] ."<br>";
 			echo "Transaction descriptor url: ". $txn->descriptor['url'] ."<br>";
 			echo "Transaction recurring: "; echo ($txn->recurring)? 'true': 'false';
@@ -190,7 +191,7 @@
 		<div class="col-md-7">
 			<div class="row">
 				<div class="col-md-12">
-					<h3>Pay with PayPal</h3>
+					<h3>Pay by PayPal</h3>
 					<div id="paypalContainer"></div>
 				</div>
 			</div>
@@ -204,40 +205,111 @@
 			</div>
 		</div>
 	
-	<script src="https://js.braintreegateway.com/js/braintree-2.22.1.js"></script>
+    <!-- Load the required core client. -->
+    <script src="https://js.braintreegateway.com/web/3.0.0-beta.7/js/client.min.js"></script>
+
+    <!-- Load Hosted Fields. -->
+    <script src="https://js.braintreegateway.com/web/3.0.0-beta.7/js/hosted-fields.min.js"></script>
+
 	<script>
-	braintree.setup(
-		"<?=$clientToken?>",
-		"custom", 
-		{
-			id: 'hostedCheckoutForm',
-			paypal: {
-				container: "paypalContainer",
-				singleUse: true,
-				amount: $("#amt").val(),
-				currency: "USD",
-				locale: "en_us",
-				enableShippingAddress: true
-			},
-			hostedFields: {
-				number: {
-					selector: "#cardNum",
-					placeholder: "Card Number"
-				},
-				cvv: {
-					selector: "#cvv",
-					placeholder: "CVV"
-				},
-				postalCode: {
-					selector: "#zip",
-					placeholder: "Postal Code"
-				},
-				expirationDate: {
-					selector: "#expDate",
-					placeholder: "Expiration Date"
-				}
-			}
-		});
+	var form = document.querySelector('#hostedCheckoutForm');
+	var submit = document.querySelector('input[type="submit"]');
+	var clientToken = "<?=$clientToken?>";
+
+	braintree.client.create({
+	    authorization: clientToken
+	}, function (clientErr, clientInstance) {
+	    if(clientErr) {
+	        // Handle error in client creation
+	        return;
+	    }
+
+	    braintree.hostedFields.create({
+	        client: clientInstance,
+	        styles: {
+	            'input': {
+	                'font-size': '14pt'
+	            },
+	            'input.invalid': {
+	                'color': 'red'
+	            },
+	            'input.valid': {
+	                'color': 'green'
+	            }
+	        },
+	        fields: {
+	            number: {
+	                selector: '#card-number',
+	                placeholder: '41111 1111 1111 1111'
+	            },
+	            cvv: {
+	                selector: '#cvv',
+	                placeholder: '123'
+	            },
+	            expirationDate: {
+	                selector: '#expiration-date',
+	                placeholder: '10 / 2019'
+	            }
+	        }
+	    }, function (hostedFieldsErr, hostedFieldsInstance) {
+	        if (hostedFieldsErr) {
+	            // Handle error in Hosted Fields creation
+	            return;
+	        }
+
+	        submit.removeAttribute('disabled');
+
+	        form.addEventListener('submit', function(event){
+	            event.preventDefault();
+
+	            hostedFieldsInstance.tokenize(function(tokenizeErr, payload){
+                    if(tokenizeErr){
+                        // Handle error in Hosted Fields Tokenization
+                        return;
+                    }
+
+                    // Put 'payload.nonce' into the 'payment-method-nonce' input, and then
+                    // submit the form. Alternatively, you could send the nonce to your server
+                    // with AJAX.
+                    document.querySelector('input[name="payment-method-nonce"]').value = payload.nonce;
+                    form.submit();
+	            });
+	        }, false);
+	    });
+	});
+
+//	braintree.setup(
+//		"<?//=$clientToken?>//",
+//		"custom",
+//		{
+//			id: 'hostedCheckoutForm',
+//			paypal: {
+//				container: "paypalContainer",
+//				singleUse: true,
+//				amount: $("#amt").val(),
+//				currency: "USD",
+//				locale: "en_us",
+//				enableShippingAddress: true
+//			},
+//			hostedFields: {
+//				number: {
+//					selector: "#cardNum",
+//					placeholder: "Card Number"
+//				},
+//				cvv: {
+//					selector: "#cvv",
+//					placeholder: "CVV"
+//				},
+//				postalCode: {
+//					selector: "#zip",
+//					placeholder: "Postal Code"
+//				},
+//				expirationDate: {
+//					selector: "#expDate",
+//					placeholder: "Expiration Date"
+//				}
+//			}
+//		});
 	</script>
 <?php
 showBTFooter();

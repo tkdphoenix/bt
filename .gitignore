@@ -12,3 +12,4 @@ public_html/transaction_report.csv
 public_html/webhooks/webhook.log
 public_html/test/
 logs/
+.idea/
