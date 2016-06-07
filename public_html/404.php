@@ -423,9 +423,9 @@ $randomNum = rand(0, $max);
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>404 Page</title>
-	<link rel="stylesheet" href="bootstrap-3.3.4-dist/css/bootstrap.min.css">
-	<link rel="stylesheet" href="css/btStyles.css">
-	<script src="js/jquery-2.1.1.min.js"></script>
+	<link rel="stylesheet" href="/bootstrap-3.3.4-dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/css/btStyles.css">
+	<script src="/js/jquery-2.1.1.min.js"></script>
 </head>
 <body class="page404">
 	<div class="container">

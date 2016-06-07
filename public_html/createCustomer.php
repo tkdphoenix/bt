@@ -17,7 +17,7 @@ function showForm($errorsArr=[]){
 	}
 	if(isset($_POST)){
 		foreach($_POST as $key=>$val){
-			$$key = strip_tags_special_chars($_POST[$key]);	
+			$$key = strip_tags($_POST[$key]);
 		}
 	}
 ?>
@@ -29,7 +29,6 @@ function showForm($errorsArr=[]){
 					<div class="form-group">
 						<label for="first" class="col-md-3 control-label">First Name</label>
 						<div class="col-md-9">
-							<!--<input type="text" id="first" class="form-control" name="first" value="<?php //echo (isset($_POST['first']))? $_POST['first']: ''; ?>" required>-->
 							<input type="text" id="first" class="form-control" name="first" value="<?php echo (isset($first))? $first: ''; ?>" required>
 						</div>
 					</div>
@@ -85,7 +84,7 @@ function showForm($errorsArr=[]){
 						<div class="col-md-9">
 							<input type="text" id="customerId" class="form-control" name="customerId" value="<?php echo (isset($customerId))? $customerId: ''; ?>">
 						</div>
-					</div> <!-- end main form-group -->
+					</div> <!-- END main form-group -->
 
 
 					<h3>Payment Method Details</h3>
@@ -106,32 +105,38 @@ function showForm($errorsArr=[]){
 							</div>
 							<div class="col-md-9"></div>						
 						</div>
-					</div> <!-- end .radio -->
+					</div> <!-- END .radio -->
 						
 					<div id="paymentMethodDetails" class="paymentMethodDetails">
+						<div id="pwpp" class="form-group"></div>
 						<div class="form-group">
 							<label for="cardholderName" class="col-md-2 control-label">Cardholder Name</label>
-							<div class="col-md-2">
+							<div class="col-md-4">
 								<input type="text" class="form-control" name="cardholderName" value="<?php echo (isset($cardholderName))? $cardholderName: ''; ?>" placeholder="First Last">
 							</div>
 						
-							<label for="number" class="col-md-2 control-label">Credit Card Number</label>
-							<div class="col-md-3">
-								<!-- <input id="number" type="text" class="form-control" name="number" value="<?php //echo (isset($_POST['number']))? $_POST['number']: ''; ?>" placeholder="Credit Card Number"> -->
-								<input id="number" type="text" class="form-control" data-braintree-name="number" placeholder="Credit Card Number">
+							<label for="cardNum" class="col-md-2 control-label">Credit Card Number</label>
+							<div class="col-md-4">
+								<div id="cardNum" class="form-control"></div>
 							</div>
 						</div>
 
 						<div class="form-group">	
-							<label for="expiration_date" class="col-md-2 control-label">Expiration Date (MM/YY)</label>
-							<div class="col-md-2">
-								<!-- <input id="expirationDate" type="text" class="form-control" name="expirationDate" value="<?php //echo (isset($_POST['expirationDate']))? $_POST['expirationDate']: ''; ?>" placeholder="Expiration Date (MM/YYYY)"> -->
-								<input id="expirationDate" type="text" class="form-control" data-braintree-name="expiration_date" placeholder="Expiration Date (MM/YYYY)">
+							<label for="expDate" class="col-md-2 control-label">Expiration Date (MM/YY)</label>
+							<div class="col-md-4">
+								<div id="expDate" class="form-control"></div>
 							</div>
 
-							<label for="token" class="col-md-2 control-label">Payment Method Token (optional)</label>
+							<label for="cvv" class="col-md-2 control-label">CVV</label>
 							<div class="col-md-2">
-								<input type="text" class="form-control" name="token" value="<?php echo (isset($token))? $token: ''; ?>" placeholder="Payment Method Token">
+								<div id="cvv" class="form-control" name="cvv"></div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="token" class="col-md-2 control-label">Payment Method Token (optional)</label>
+							<div class="col-md-4">
+								<input type="text" class="form-control" name="token" placeholder="Payment Method Token"> <!-- if used, this value sets the name of the payment method -->
 							</div>
 						</div>
 
@@ -144,7 +149,7 @@ function showForm($errorsArr=[]){
 								</div>
 							</div>
 						</div>
-					</div> <!-- end .paymentMethodDetails -->
+					</div> <!-- END .paymentMethodDetails -->
 
 					<h3>Billing Address</h3>
 					<div class="radio">
@@ -164,7 +169,7 @@ function showForm($errorsArr=[]){
 							</div>
 							<div class="col-md-9"></div>						
 						</div>
-					</div> <!-- end .radio -->
+					</div> <!-- END .radio -->
 
 
 					<div class="billingAddressDetails">
@@ -231,7 +236,7 @@ function showForm($errorsArr=[]){
 								<?php include("../inc/countries.inc.php"); ?>
 							</div>
 						</div>
-					</div> <!-- end .billingAddressDetails -->
+					</div> <!-- END .billingAddressDetails -->
 					
 					<input class="btn greenBtn" type="submit" name="newCustSubmit" value="Create Customer">
 				</form>
@@ -239,29 +244,29 @@ function showForm($errorsArr=[]){
 		</div>
 	</div>
 <?php
-} // end showForm()
+} // END showForm()
 
 // @TODO validate values on the server side and the client side
 
-if(isset($_POST['newCustSubmit'])){ // if the form has been submitted
+if(isset($_POST['payment_method_nonce'])){ // if the form has been submitted
 	showBTHeader("Add New Customer", "Add New Customer");
 	showBTLeftNav();
 	$errorsArr = [];
-	$nonce = $_SESSION['nonce']; // already sanitized
+	$nonce = strip_tags($_POST['payment_method_nonce']);
 
 	$customerDetails = array( // sanitized here
-		"firstName"			=> strip_tags_special_chars($_POST['first']),
-		"lastName"			=> strip_tags_special_chars($_POST['last']),
-		"company"			=> strip_tags_special_chars($_POST['company']),
-		"email"				=> strip_tags_special_chars($_POST['email']),
-		"phone"				=> strip_tags_special_chars($_POST['phone']),
-		"fax"				=> strip_tags_special_chars($_POST['fax']),
-		"website"			=> strip_tags_special_chars($_POST['website'])
+		"firstName"			=> strip_tags($_POST['first']),
+		"lastName"			=> strip_tags($_POST['last']),
+		"company"			=> strip_tags($_POST['company']),
+		"email"				=> strip_tags($_POST['email']),
+		"phone"				=> strip_tags($_POST['phone']),
+		"fax"				=> strip_tags($_POST['fax']),
+		"website"			=> strip_tags($_POST['website'])
 	);
 
 	// This can be set dynamically from BT, so it does not have to be passed
 	if(!empty($_POST['customerId'])){
-		$customerDetails["id"] = strip_tags_special_chars($_POST['customerId']);
+		$customerDetails["id"] = strip_tags($_POST['customerId']);
 	}
 
 	// @TODO validate values on the server side and the client side
@@ -275,17 +280,17 @@ if(isset($_POST['newCustSubmit'])){ // if the form has been submitted
 	// if a billing address has been chosen, create a billing address
 	if($_POST["withPmtMethodRadio"] === "true" && $_POST['withBillingAddressRadio'] === "true"){
 		$customerDetails["creditCard"] = array(
-			"paymentMethodNonce"	=> strip_tags_special_chars($nonce),
+			"paymentMethodNonce"	=> $nonce, // value already sanitized
 			"billingAddress" 		=> array(
-				"firstName"			=> strip_tags_special_chars($_POST['billing_firstName']),
-				"lastName"			=> strip_tags_special_chars($_POST['billing_lastName']),
-				"company"			=> strip_tags_special_chars($_POST['billing_company']),
-				"streetAddress"		=> strip_tags_special_chars($_POST['streetAddress']),
-				"extendedAddress"	=> strip_tags_special_chars($_POST['extendedAddress']),
-				"locality"			=> strip_tags_special_chars($_POST['locality']),
-				"region"			=> strip_tags_special_chars($_POST['region']),
-				"postalCode"		=> strip_tags_special_chars($_POST['postalCode']),
-				"countryName"		=> strip_tags_special_chars($_POST['country'])
+				"firstName"			=> strip_tags($_POST['billing_firstName']),
+				"lastName"			=> strip_tags($_POST['billing_lastName']),
+				"company"			=> strip_tags($_POST['billing_company']),
+				"streetAddress"		=> strip_tags($_POST['streetAddress']),
+				"extendedAddress"	=> strip_tags($_POST['extendedAddress']),
+				"locality"			=> strip_tags($_POST['locality']),
+				"region"			=> strip_tags($_POST['region']),
+				"postalCode"		=> strip_tags($_POST['postalCode']),
+				"countryName"		=> strip_tags($_POST['country'])
 			),
 			"options"				=> array(
 				"verifyCard"		=> true
@@ -363,39 +368,43 @@ if(isset($_POST['newCustSubmit'])){ // if the form has been submitted
 	showForm();
 }
 ?>
-<script src="https://js.braintreegateway.com/js/braintree-2.22.2.min.js"></script>
+<script src="https://js.braintreegateway.com/js/braintree-2.22.1.min.js"></script>
 <script>
 	$("document").ready(function(){
-		// custom nonce prep
-		// braintree.setup("<?=$clientToken?>", "custom", { id: "newCustForm" });
-		$('#newCustForm').submit(function(event){
-			// if the nonce hasn't been submitted, run ajax. Otherwise we have nonce, and the form can use .unbind() and submit the form itself
-
-			var client = new braintree.api.Client({clientToken: "<?=$clientToken?>"});
-			client.tokenizeCard({
-				number: $('#number').val(),
-				expirationDate: $('#expirationDate').val()
-			}, function (err, nonce) {
-				console.error(err);
-				console.info("the Nonce: " + nonce);
-				// call AJAX
-				var data = {
-					"action": nonce 
-				};
-				$.ajax({
-					type: "POST",
-					async: false,
-					dataType: "json",
-					url: "nonceHandler.php",
-					data: data,
-					success: function(data) {
-						console.info("returned from ajax: " + data['nonce']); // for testing only
-						$('form').submit();
+		// adding PWPP capability when creating a customer
+		braintree.setup(
+			"<?=$clientToken?>",
+			"custom", 
+			{
+				id: 'newCustForm',
+				paypal: {
+					container: "pwpp",
+					singleUse: false,
+					locale: "en_us",
+					enableShippingAddress: true
+				},
+				hostedFields: {
+					number: {
+						selector: "#cardNum",
+						placeholder: "Card Number"
+					},
+					cvv: {
+						selector: "#cvv",
+						placeholder: "CVV"
+					},
+					expirationDate: {
+						selector: "#expDate",
+						placeholder: "Expiration Date"
 					}
-				}); // END $.ajax()
-			}); // END client.tokenizeCard()
-			return true; // for testing only
-		}); // END $.submit()
+				},
+				onPaymentMethodReceived: function(obj){
+					var nonceInsert = "<input type='hidden' name='payment_method_nonce' value='"+ obj.nonce +"'>";
+					$("[type='submit']").before(nonceInsert);
+					var form = document.getElementById("newCustForm");
+					HTMLFormElement.prototype.submit.call(form);
+				}
+			}
+		); // END braintree.setup()
 	}); // END document.ready()
 </script>
 <script src="../js/btScript.js"></script>

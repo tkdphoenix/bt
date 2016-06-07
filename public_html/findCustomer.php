@@ -51,24 +51,34 @@ if(isset($_POST['findCustSubmit'])){ // if the form has been submitted
 	showBTLeftNav();
 ?>
 	<div class="col-md-10">
-		<p>Results: </p>
-		<p>customer ID: <?=$customer->id?></p>
+		<h3>Results: </h3>
+		<p>Customer ID: <?=$customer->id?></p>
 		<p>Name: <?php echo $customer->firstName ." ". $customer->lastName?></p>
 		<p>Company: <?=$customer->company?></p>
 		<p>Email: <?=$customer->email?></p>
 		<p>Phone: <?=$customer->phone?></p>
 		<p>Website: <?=$customer->website?></p>
-		<!-- <p>Credit Card Info: <?=$customer->id?></p> -->
+	<?php
+		
+	?>
+		
 		<!-- <p>customer ID: <?=$customer->id?></p>
 		<p>customer ID: <?=$customer->id?></p>
 		<p>customer ID: <?=$customer->id?></p>
 		<p>customer ID: <?=$customer->id?></p> -->
 <?php
 	if(!empty($customer->creditCards) && isset($customer->creditCards[0]->billingAddress)){
-		echo "<p>BillingAddress: ". $customer->creditCards[0]->billingAddress->streetAddress ." ". 
-		$customer->creditCards[0]->billingAddress->locality .", ". 
-		$customer->creditCards[0]->billingAddress->region ." ".
-		$customer->creditCards[0]->billingAddress->postalCode;
+		echo "<p>Credit Card Info:</p>";
+		foreach($customer->creditCards as $card){
+	?>
+			<p><?=$card->bin?>******<?=$card->last4?> <img src="<?=$card->imageUrl?>" alt="Card type logo"> <?=$card->cardType?> 
+			<?php echo ($card->default)? " (default payment method)" : ''?>
+			</p>
+			<p>Payment Method Token: <?=$card->token?></p>
+			<p>Billing Address: <?=$card->billingAddress->streetAddress?><br>
+			<?=$card->billingAddress->locality?>, <?=$card->billingAddress->region?> <?=$card->billingAddress->postalCode?></p>
+<?php
+		}
 	}
 ?>
 	</div>

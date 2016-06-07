@@ -41,7 +41,8 @@
 					'amount' => $amt,
 					'paymentMethodNonce' => $nonce,
 					'options' => array(
-						'submitForSettlement' => false
+						'submitForSettlement' => true,
+						'storeInVaultOnSuccess' => true // store in vault
 				  	)
 				)
 			);
@@ -204,7 +205,7 @@
 			</div>
 		</div>
 	
-	<script src="https://js.braintreegateway.com/js/braintree-2.22.1.js"></script>
+	<script src="https://js.braintreegateway.com/js/braintree-2.24.1.min.js"></script>
 	<script>
 	braintree.setup(
 		"<?=$clientToken?>",

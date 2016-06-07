@@ -5,8 +5,10 @@ session_regenerate_id();
 
 defined("DS")? null : require_once(realpath(dirname(__FILE__) . DIRECTORY_SEPARATOR . "..") . DIRECTORY_SEPARATOR . "inc" . DIRECTORY_SEPARATOR . "initialize.php");
 
-require_once(LIB_PATH . DS . "inc" . DS . "common.inc.php");
 require_once(LIB_PATH . DS . "btVars.php");
+require_once(LIB_PATH . DS . "inc" . DS . "common.inc.php");
+// create the clientToken
+$clientToken = Braintree_ClientToken::generate();
 
 function showSearchForm(){
 ?>
@@ -18,12 +20,11 @@ function showSearchForm(){
 					<div class="form-group">
 						<label for="searchID">Customer ID to search for</label>
 						<div class="col-md-9">
-							<input type="text" id="searchId" class="form-control" name="searchId" value="<?php echo (isset($_POST['searchId']))? strip_tags_special_chars($_POST['searchId']): ''; ?>" required>
+							<input type="text" id="searchId" class="form-control" name="searchId" value="<?php echo (isset($_POST['searchId']))? strip_tags($_POST['searchId']): ''; ?>" required>
 						</div>
 					</div>
 
 						<input class="btn greenBtn" type="submit" name="searchCustSubmit" value="Search Customer">
-
 				</form>
 			</div>
 		</div>
@@ -56,49 +57,49 @@ function showForm($submitted = array(), $errorsArr=[]){
 					<div class="form-group">
 						<label for="first" class="col-md-3 control-label">First Name</label>
 						<div class="col-md-9">
-							<input type="text" id="first" class="form-control" name="first" value="<?php echo (isset($submitted['firstName']))? $submitted['firstName']: ''; ?>" required>
+							<input type="text" id="first" class="form-control" name="first" value="<?php echo (!empty($submitted['firstName']))? $submitted['firstName']: ''; ?>" required>
 						</div>
 					</div>
 					
 					<div class="form-group">
 						<label for="last" class="col-md-3 control-label">Last Name</label>
 						<div class="col-md-9">
-							<input type="text" id="last" class="form-control" name="last" value="<?php echo (isset($submitted['lastName']))? $submitted['lastName']: ''; ?>" required>
+							<input type="text" id="last" class="form-control" name="last" value="<?php echo (!empty($submitted['lastName']))? $submitted['lastName']: ''; ?>" required>
 						</div>
 					</div>
 					
 					<div class="form-group">
 						<label for="company" class="col-md-3 control-label">Company</label>
 						<div class="col-md-9">
-							<input type="text" id="company" class="form-control" name="company" value="<?php echo (isset($submitted['company']))? $submitted['company']: ''; ?>">
+							<input type="text" id="company" class="form-control" name="company" value="<?php echo (!empty($submitted['company']))? $submitted['company']: ''; ?>">
 						</div>
 					</div>
 					
 					<div class="form-group">
 						<label for="email" class="col-md-3 control-label">Email </label>
 						<div class="col-md-9">
-							<input type="email" id="email" class="form-control" name="email" value="<?php echo (isset($submitted['email']))? $submitted['email']: ''; ?>" required>
+							<input type="email" id="email" class="form-control" name="email" value="<?php echo (!empty($submitted['email']))? $submitted['email']: ''; ?>" required>
 						</div>
 					</div>
 					
 					<div class="form-group">
 						<label for="phone" class="col-md-3 control-label">Phone </label>
 						<div class="col-md-9">
-							<input type="tel" id="phone" class="form-control" name="phone" value="<?php echo (isset($submitted['phone']))? $submitted['phone']: ''; ?>" required>
+							<input type="tel" id="phone" class="form-control" name="phone" value="<?php echo (!empty($submitted['phone']))? $submitted['phone']: ''; ?>" required>
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label for="fax" class="col-md-3 control-label">Fax </label>
 						<div class="col-md-9">
-							<input type="tel" id="fax" class="form-control" name="fax" value="<?php echo (isset($submitted['fax']))? $submitted['fax']: ''; ?>">
+							<input type="tel" id="fax" class="form-control" name="fax" value="<?php echo (!empty($submitted['fax']))? $submitted['fax']: ''; ?>">
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label for="website" class="col-md-3 control-label">Website </label>
 						<div class="col-md-9">
-							<input type="url" id="website" class="form-control" name="website" value="<?php echo (isset($submitted['website']))? $submitted['website']: ''; ?>">
+							<input type="url" id="website" class="form-control" name="website" value="<?php echo (!empty($submitted['website']))? $submitted['website']: ''; ?>">
 						</div>
 					</div>
 					<!-- @TODO set payment method details as non-editable fields and allow customer to delete or create a new one to associate to the current customer -->
@@ -123,28 +124,33 @@ function showForm($submitted = array(), $errorsArr=[]){
 					</div> <!-- end .radio -->
 						
 					<div class="paymentMethodDetails">
+						<div id="pwpp" class="form-group"></div>
 						<div class="form-group">
 							<label for="cardholderName" class="col-md-2 control-label">Cardholder Name</label>
-							<div class="col-md-2">
-								<input type="text" class="form-control" name="cardholderName" value="<?php echo (isset($submitted['cardholderName']))? $submitted['cardholderName']: ''; ?>" placeholder="First Last">
+							<div class="col-md-4">
+								<input type="text" class="form-control" name="cardholderName" value="<?php echo (!empty($submitted['cardholderName']))? $submitted['cardholderName']: ''; ?>" placeholder="First Last">
 							</div>
 						
-							<label for="number" class="col-md-2 control-label">Credit Card Number</label>
-							<div class="col-md-3">
-								<input type="text" class="form-control" name="number" value="<?php echo (isset($submitted['cardNum']))? $submitted['cardNum']: ''; ?>" placeholder="Credit Card Number">
+							<label for="cardNum" class="col-md-2 control-label">Credit Card Number</label>
+							<div class="col-md-4">
+								<input id="cardNum" data-braintree-name="number" class="form-control" type="text" name="cardNum" value="<?php echo (!empty($submitted['cardNum']))? $submitted['cardNum']: ''; ?>" placeholder="Card Number">
 							</div>
 						</div>
 
 						<div class="form-group">	
-							<label for="expirationDate" class="col-md-2 control-label">Expiration Date</label>
-							<div class="col-md-2">
-								<input type="text" class="form-control" name="expirationDate" value="<?php echo (isset($submitted['cardExpDate']))? $submitted['cardExpDate']: ''; ?>" placeholder="Expiration Date (MM/YYYY)">
+							<label for="expDate" class="col-md-2 control-label">Expiration Date</label>
+							<div class="col-md-4">
+								<input id="expDate" data-braintree-name="expiration_date" class="form-control" type="text" name="expDate" value="<?php echo (!empty($submitted['cardExpDate']))? $submitted['cardExpDate']: ''; ?>" placeholder="Expiration Date">
 							</div>
 
 							<!-- <label for="token" class="col-md-2 control-label">Payment Method Token</label>
 							<div class="col-md-2">
-								<input type="text" class="form-control" name="token" value="<?php echo (isset($submitted['token']))? $submitted['token']: ''; ?>" placeholder="Payment Method Token">
-							</div> -->
+								<input type="text" class="form-control" name="token" value="<?php echo (!empty($submitted['token']))? $submitted['token']: ''; ?>" placeholder="Payment Method Token"> -->
+							<!-- </div> -->
+							<label for="cvv" class="col-md-2 control-label">CVV</label>
+							<div class="col-md-4">
+								<input id="cvv" data-braintree-name="cvv" type="number" class="form-control" name="cvv" value="<?php echo (!empty($submitted['cvv']))? $submitted['cvv']: ''; ?>" placeholder="CVV">
+							</div>
 						</div>
 
 						<div class="form-group">
@@ -184,56 +190,56 @@ function showForm($submitted = array(), $errorsArr=[]){
 						<div class="form-group">
 							<label for="firstName" class="col-md-3 control-label">First Name</label>
 							<div class="col-md-9">
-								<input type="text" class="form-control" name="billing_firstName" value="<?php echo (isset($submitted['billingFirstName']))? $submitted['billingFirstName']: ''; ?>" placeholder="First Name">
+								<input type="text" class="form-control" name="billing_firstName" value="<?php echo (!empty($submitted['billingFirstName']))? $submitted['billingFirstName']: ''; ?>" placeholder="First Name">
 							</div>
 						</div>
 						
 						<div class="form-group">
 							<label for="lastName" class="col-md-3 control-label">Last Name</label>
 							<div class="col-md-9">
-								<input type="text" class="form-control" name="billing_lastName" value="<?php echo (isset($submitted['billingLastName']))? $submitted['billingLastName']: ''; ?>" placeholder="Last Name">
+								<input type="text" class="form-control" name="billing_lastName" value="<?php echo (!empty($submitted['billingLastName']))? $submitted['billingLastName']: ''; ?>" placeholder="Last Name">
 							</div>
 						</div>
 						
 						<div class="form-group">
 							<label for="company" class="col-md-3 control-label">Company</label>
 							<div class="col-md-9">
-								<input type="text" class="form-control" name="billing_company" value="<?php echo (isset($submitted['billingCompany']))? $submitted['billingCompany']: ''; ?>" placeholder="Company">
+								<input type="text" class="form-control" name="billing_company" value="<?php echo (!empty($submitted['billingCompany']))? $submitted['billingCompany']: ''; ?>" placeholder="Company">
 							</div>
 						</div>
 						
 						<div class="form-group">
 							<label for="streetAddress" class="col-md-3 control-label">Street Address</label>
 							<div class="col-md-9">
-								<input type="text" class="form-control" name="streetAddress" value="<?php echo (isset($submitted['billingStreetAddress']))? $submitted['billingStreetAddress']: ''; ?>" placeholder="Street Address">
+								<input type="text" class="form-control" name="streetAddress" value="<?php echo (!empty($submitted['billingStreetAddress']))? $submitted['billingStreetAddress']: ''; ?>" placeholder="Street Address">
 							</div>
 						</div>
 						
 						<div class="form-group">
 							<label for="extendedAddress" class="col-md-3 control-label">Address 2</label>
 							<div class="col-md-9">
-								<input type="text" class="form-control" name="extendedAddress" value="<?php echo (isset($submitted['billingExtendedAddress']))? $submitted['billingExtendedAddress']: ''; ?>" placeholder="Address 2">
+								<input type="text" class="form-control" name="extendedAddress" value="<?php echo (!empty($submitted['billingExtendedAddress']))? $submitted['billingExtendedAddress']: ''; ?>" placeholder="Address 2">
 							</div>
 						</div>
 						
 						<div class="form-group">
 							<label for="locality" class="col-md-3 control-label">City</label>
 							<div class="col-md-9">
-								<input type="text" class="form-control" name="locality" value="<?php echo (isset($submitted['billingLocality']))? $submitted['billingLocality']: ''; ?>" placeholder="City">
+								<input type="text" class="form-control" name="locality" value="<?php echo (!empty($submitted['billingLocality']))? $submitted['billingLocality']: ''; ?>" placeholder="City">
 							</div>
 						</div>
 						
 						<div class="form-group">
 							<label for="region" class="col-md-3 control-label">State / Province (Region)</label>
 							<div class="col-md-9">
-								<input type="text" class="form-control" name="region" value="<?php echo (isset($submitted['billingRegion']))? $submitted['billingRegion']: ''; ?>" placeholder="State / Province (Region)">
+								<input type="text" class="form-control" name="region" value="<?php echo (!empty($submitted['billingRegion']))? $submitted['billingRegion']: ''; ?>" placeholder="State / Province (Region)">
 							</div>
 						</div>
 						
 						<div class="form-group">
 							<label for="postalCode" class="col-md-3 control-label">Postal Code</label>
 							<div class="col-md-9">
-								<input type="num" class="form-control" name="postalCode" value="<?php echo (isset($submitted['billingPostalCode']))? $submitted['billingPostalCode']: ''; ?>" placeholder="Postal Code">
+								<input type="num" class="form-control" name="postalCode" value="<?php echo (!empty($submitted['billingPostalCode']))? $submitted['billingPostalCode']: ''; ?>" placeholder="Postal Code">
 							</div>
 						</div>
 						
@@ -261,13 +267,13 @@ if(isset($_POST['updateCustSubmit'])){ // if the form has been submitted
 	showBTLeftNav();
 	$errorsArr = [];
 	$customerDetails = array(
-		"firstName"			=> strip_tags_special_chars($_POST['first']),
-		"lastName"			=> strip_tags_special_chars($_POST['last']),
-		"company"			=> strip_tags_special_chars($_POST['company']),
-		"email"				=> strip_tags_special_chars($_POST['email']),
-		"phone"				=> strip_tags_special_chars($_POST['phone']),
-		"fax"				=> strip_tags_special_chars($_POST['fax']),
-		"website"			=> strip_tags_special_chars($_POST['website'])
+		"firstName"			=> strip_tags($_POST['first']),
+		"lastName"			=> strip_tags($_POST['last']),
+		"company"			=> strip_tags($_POST['company']),
+		"email"				=> strip_tags($_POST['email']),
+		"phone"				=> strip_tags($_POST['phone']),
+		"fax"				=> strip_tags($_POST['fax']),
+		"website"			=> strip_tags($_POST['website'])
 	);
 
 	if(isset($_COOKIE['customerId'])){
@@ -313,7 +319,7 @@ if(isset($_POST['updateCustSubmit'])){ // if the form has been submitted
 		</div>
 <?php
 		} else {
-			// find and print errors
+			// @TODO find and print errors
 		}
 
 	} else {
@@ -323,10 +329,10 @@ if(isset($_POST['updateCustSubmit'])){ // if the form has been submitted
 	if($_POST['withPmtMethodRadio'] === "true"){ // if payment method details are submitted, set those variables
 
 		$creditCard = array(
-			"cardholderName" 	=> strip_tags_special_chars($_POST['cardholderName']),
-			"number"			=> strip_tags_special_chars($_POST['number']),
-			"expirationDate"	=> strip_tags_special_chars($_POST['expirationDate']),
-			"token"				=> strip_tags_special_chars($_POST['token'])
+			"cardholderName" 	=> strip_tags($_POST['cardholderName']),
+			"number"			=> strip_tags($_POST['number']),
+			"expDate"	=> strip_tags($_POST['expDate']),
+			"token"				=> strip_tags($_POST['token'])
 		);
 
 		// @TODO validate values before submitting
@@ -336,15 +342,15 @@ if(isset($_POST['updateCustSubmit'])){ // if the form has been submitted
 	
 	if($_POST['withBillingAddressRadio'] != 0){
 		$billingAddress = array(
-			"firstName"			=> strip_tags_special_chars($_POST['billing_firstName']),
-			"lastName"			=> strip_tags_special_chars($_POST['billing_lastName']),
-			"company"			=> strip_tags_special_chars($_POST['billing_company']),
-			"streetAddress"		=> strip_tags_special_chars($_POST['streetAddress']),
-			"extendedAddress"	=> strip_tags_special_chars($_POST['extendedAddress']),
-			"locality"			=> strip_tags_special_chars($_POST['locality']),
-			"region"			=> strip_tags_special_chars($_POST['region']),
-			"postalCode"		=> strip_tags_special_chars($_POST['postalCode']),
-			"countryName"		=> strip_tags_special_chars($_POST['country'])
+			"firstName"			=> strip_tags($_POST['billing_firstName']),
+			"lastName"			=> strip_tags($_POST['billing_lastName']),
+			"company"			=> strip_tags($_POST['billing_company']),
+			"streetAddress"		=> strip_tags($_POST['streetAddress']),
+			"extendedAddress"	=> strip_tags($_POST['extendedAddress']),
+			"locality"			=> strip_tags($_POST['locality']),
+			"region"			=> strip_tags($_POST['region']),
+			"postalCode"		=> strip_tags($_POST['postalCode']),
+			"countryName"		=> strip_tags($_POST['country'])
 		);
 
 		// @TODO validate values before submitting
@@ -364,7 +370,7 @@ if(isset($_POST['updateCustSubmit'])){ // if the form has been submitted
 ?>
 	<script>
 		// the header has already been set, so set the cookie to remember the customer ID on the client side
-		var customerId = "<?=strip_tags_special_chars($_POST['searchId'])?>";
+		var customerId = "<?=strip_tags($_POST['searchId'])?>";
 		var d = new Date();
 		d.setTime(d.getTime() + (24*60*60*1000)); // 1 day
 		d = d.toUTCString();
@@ -372,11 +378,13 @@ if(isset($_POST['updateCustSubmit'])){ // if the form has been submitted
 		document.cookie="customerId="+ customerId +"; expires="+ d;
 	</script>
 <?php
-	$customerId = strip_tags_special_chars($_POST['searchId']);
+	$customerId = strip_tags($_POST['searchId']);
 
 	$customer = Braintree_Customer::find($customerId); 
-	$cardNum = $customer->creditCards[0]->bin ."******". $customer->creditCards[0]->last4;
-	$cardExpDate = $customer->creditCards[0]->expirationMonth ."/". $customer->creditCards[0]->expirationYear;
+	if(isset($customer->creditCards[0])){
+		$cardNum = $customer->creditCards[0]->bin ."******". $customer->creditCards[0]->last4;
+		$cardExpDate = $customer->creditCards[0]->expirationMonth ."/". $customer->creditCards[0]->expirationYear;
+	}
 
 	// an array must be created to submit as the $submitted array parameter for the showForm() function.
 	$custVals = array();
@@ -389,25 +397,66 @@ if(isset($_POST['updateCustSubmit'])){ // if the form has been submitted
 	$custVals['phone'] 					= $customer->phone;
 	$custVals['fax'] 					= $customer->fax;
 	$custVals['website'] 				= $customer->website;
-	$custVals['cardNum']				= $cardNum;
-	$custVals['cardExpDate']			= $cardExpDate;
-	$custVals['billingStreetAddress']	= $customer->creditCards[0]->billingAddress->streetAddress;
-	$custVals['billingLocality']		= $customer->creditCards[0]->billingAddress->locality;
-	$custVals['billingRegion']			= $customer->creditCards[0]->billingAddress->region;
-	$custVals['billingPostalCode']		= $customer->creditCards[0]->billingAddress->postalCode;
-	
-	$custVals['billingFirstName']		= $customer->creditCards[0]->billingAddress->firstName;
-	$custVals['billingLastName']		= $customer->creditCards[0]->billingAddress->lastName;
-	$custVals['billingCompany']			= $customer->creditCards[0]->billingAddress->company;
-	// $custVals['postalCode']			= $customer->creditCards[0]->billingAddress->postalCode;
-	// $custVals['postalCode']			= $customer->creditCards[0]->billingAddress->postalCode;
-
+	if(isset($cardNum) && isset($cardExpDate)){
+		$custVals['cardNum']				= $cardNum;
+		$custVals['cardExpDate']			= $cardExpDate;
+	}
+	// if(isset()){}
+	if(isset($customer->creditCards[0]->billingAddress)){
+		$custVals['billingStreetAddress']	= $customer->creditCards[0]->billingAddress->streetAddress;
+		$custVals['billingLocality']		= $customer->creditCards[0]->billingAddress->locality;
+		$custVals['billingRegion']			= $customer->creditCards[0]->billingAddress->region;
+		$custVals['billingPostalCode']		= $customer->creditCards[0]->billingAddress->postalCode;
+		
+		$custVals['billingFirstName']		= $customer->creditCards[0]->billingAddress->firstName;
+		$custVals['billingLastName']		= $customer->creditCards[0]->billingAddress->lastName;
+		$custVals['billingCompany']			= $customer->creditCards[0]->billingAddress->company;
+	}
 
 
 	// show the form
 	showForm($custVals);
 }
 ?>
+<script src="https://js.braintreegateway.com/js/braintree-2.22.1.min.js"></script>
+<script>
+	$("document").ready(function(){
+		// adding PWPP capability when creating a customer
+		braintree.setup(
+			"<?=$clientToken?>",
+			"custom", 
+			{
+				id: 'updateCustForm',
+				paypal: {
+					container: "pwpp",
+					singleUse: false,
+					locale: "en_us",
+					enableShippingAddress: true
+				},
+				// hostedFields: {
+				// 	number: {
+				// 		selector: "#cardNum",
+				// 		placeholder: "Card Number"
+				// 	},
+				// 	cvv: {
+				// 		selector: "#cvv",
+				// 		placeholder: "CVV"
+				// 	},
+				// 	expirationDate: {
+				// 		selector: "#expDate",
+				// 		placeholder: "Expiration Date"
+				// 	}
+				// },
+				onPaymentMethodReceived: function(obj){
+					var nonceInsert = "<input type='hidden' name='payment_method_nonce' value='"+ obj.nonce +"'>";
+					$("[type='submit']").before(nonceInsert);
+					var form = document.getElementById("newCustForm");
+					// HTMLFormElement.prototype.submit.call(form);
+				}
+			}
+		); // END braintree.setup()
+	}); // END document.ready()
+</script>
 <script src="../js/btScript.js"></script>
 <?php
 showBTFooter();
