@@ -17,7 +17,7 @@ function showForm($errorsArr=[]){
 	}
 	if(isset($_POST)){
 		foreach($_POST as $key=>$val){
-			$$key = strip_tags_special_chars($_POST[$key]);	
+			$$key = strip_tags($_POST[$key]);	
 		}
 	}
 ?>
@@ -250,18 +250,18 @@ if(isset($_POST['newCustSubmit'])){ // if the form has been submitted
 	$nonce = $_SESSION['nonce']; // already sanitized
 
 	$customerDetails = array( // sanitized here
-		"firstName"			=> strip_tags_special_chars($_POST['first']),
-		"lastName"			=> strip_tags_special_chars($_POST['last']),
-		"company"			=> strip_tags_special_chars($_POST['company']),
-		"email"				=> strip_tags_special_chars($_POST['email']),
-		"phone"				=> strip_tags_special_chars($_POST['phone']),
-		"fax"				=> strip_tags_special_chars($_POST['fax']),
-		"website"			=> strip_tags_special_chars($_POST['website'])
+		"firstName"			=> strip_tags($_POST['first']),
+		"lastName"			=> strip_tags($_POST['last']),
+		"company"			=> strip_tags($_POST['company']),
+		"email"				=> strip_tags($_POST['email']),
+		"phone"				=> strip_tags($_POST['phone']),
+		"fax"				=> strip_tags($_POST['fax']),
+		"website"			=> strip_tags($_POST['website'])
 	);
 
 	// This can be set dynamically from BT, so it does not have to be passed
 	if(!empty($_POST['customerId'])){
-		$customerDetails["id"] = strip_tags_special_chars($_POST['customerId']);
+		$customerDetails["id"] = strip_tags($_POST['customerId']);
 	}
 
 	// @TODO validate values on the server side and the client side
@@ -275,17 +275,17 @@ if(isset($_POST['newCustSubmit'])){ // if the form has been submitted
 	// if a billing address has been chosen, create a billing address
 	if($_POST["withPmtMethodRadio"] === "true" && $_POST['withBillingAddressRadio'] === "true"){
 		$customerDetails["creditCard"] = array(
-			"paymentMethodNonce"	=> strip_tags_special_chars($nonce),
+			"paymentMethodNonce"	=> strip_tags($nonce),
 			"billingAddress" 		=> array(
-				"firstName"			=> strip_tags_special_chars($_POST['billing_firstName']),
-				"lastName"			=> strip_tags_special_chars($_POST['billing_lastName']),
-				"company"			=> strip_tags_special_chars($_POST['billing_company']),
-				"streetAddress"		=> strip_tags_special_chars($_POST['streetAddress']),
-				"extendedAddress"	=> strip_tags_special_chars($_POST['extendedAddress']),
-				"locality"			=> strip_tags_special_chars($_POST['locality']),
-				"region"			=> strip_tags_special_chars($_POST['region']),
-				"postalCode"		=> strip_tags_special_chars($_POST['postalCode']),
-				"countryName"		=> strip_tags_special_chars($_POST['country'])
+				"firstName"			=> strip_tags($_POST['billing_firstName']),
+				"lastName"			=> strip_tags($_POST['billing_lastName']),
+				"company"			=> strip_tags($_POST['billing_company']),
+				"streetAddress"		=> strip_tags($_POST['streetAddress']),
+				"extendedAddress"	=> strip_tags($_POST['extendedAddress']),
+				"locality"			=> strip_tags($_POST['locality']),
+				"region"			=> strip_tags($_POST['region']),
+				"postalCode"		=> strip_tags($_POST['postalCode']),
+				"countryName"		=> strip_tags($_POST['country'])
 			),
 			"options"				=> array(
 				"verifyCard"		=> true

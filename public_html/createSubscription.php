@@ -32,8 +32,8 @@ function showForm($errorsArr=[]){
 
 
 if(isset($_POST['subscriptionSubmit'])){
-	$token = strip_tags_special_chars($_POST['paymentMethodToken']);
-	$planId = strip_tags_special_chars($_POST['planId']);
+	$token = strip_tags($_POST['paymentMethodToken']);
+	$planId = strip_tags($_POST['planId']);
 
 	// @TODO perform form validation here
 
@@ -44,16 +44,21 @@ if(isset($_POST['subscriptionSubmit'])){
 			'planId' 					=> $planId,
 			'trialPeriod' 				=> false,
 			'addOns'					=> [
-				'remove'				=> ['extra_member']
-			],
-			'discounts'					=> [
-				'add'					=> [
+				'update'				=> [
 					[
-						'inheritedFromId'	=> 'disc_2_off',
-						'amount'			=> '5.00'
+						'existingId' 			=> 'tax',
+						'amount'				=> '2.00'
 					]
 				]
-		  ]
+			],
+			// 'discounts'					=> [
+			// 	'add'					=> [
+			// 		[
+			// 			'inheritedFromId'	=> 'disc_2_off',
+			// 			'amount'			=> '5.00'
+			// 		]
+			// 	]
+			// ]
 		]);
 		if(!$result->success){
 			foreach($result->errors->deepAll() as $error){

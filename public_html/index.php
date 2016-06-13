@@ -7,13 +7,14 @@
 
 	// test if the nonce has been posted
 	if(isset($_POST['payment_method_nonce'])){
-		$nonce = strip_tags_special_chars($_POST['payment_method_nonce']);
+		$nonce = strip_tags($_POST['payment_method_nonce']);
 		$amt = 30.00;
 
 		try{
 			$result = Braintree_Transaction::sale(array(
 				'amount' => $amt,
 				'paymentMethodNonce' => $nonce,
+				'taxAmount' => '2.00',
 				'options' => array(
 					'submitForSettlement' => true
 				)

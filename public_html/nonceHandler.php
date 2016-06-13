@@ -8,7 +8,7 @@
 
 	if (is_ajax()) {
 		if (isset($_POST["action"]) && !empty($_POST["action"])) { //Checks if action value exists
-			$action = strip_tags_special_chars($_POST["action"]);
+			$action = strip_tags($_POST["action"]);
 			$_SESSION['nonce'] = $action;
 			$return['nonce'] = $_SESSION['nonce'];
 			$return['json'] = json_encode($return);

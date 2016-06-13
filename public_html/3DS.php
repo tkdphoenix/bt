@@ -8,7 +8,7 @@
 
 	if(isset($_POST['payment_method_nonce'])){
 	// if(isset($_POST['payment_method_nonce'])){
-		$nonce = strip_tags_special_chars($_POST['payment_method_nonce']);
+		$nonce = strip_tags($_POST['payment_method_nonce']);
 		echo $nonce;
 		$amt = 500;
 		// display header and leftNav

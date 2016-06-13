@@ -22,7 +22,7 @@ function showForm($errorsArr=[]){
 						<div class="form-group">
 							<label for="custId" class="col-md-3 control-label">Customer ID</label>
 							<div class="col-md-9">
-								<input type="text" id="custId" class="form-control" name="custId" value="<?php echo (isset($_POST['custId']))? strip_tags_special_chars($_POST['custId']): ''; ?>" placeholder="Customer ID" required>
+								<input type="text" id="custId" class="form-control" name="custId" value="<?php echo (isset($_POST['custId']))? strip_tags($_POST['custId']): ''; ?>" placeholder="Customer ID" required>
 							</div>
 						</div>
 						
@@ -39,7 +39,7 @@ function showForm($errorsArr=[]){
 
 if(isset($_POST['findCustSubmit'])){ // if the form has been submitted
 	if(!empty($_POST['custId'])){
-		$custId = strip_tags_special_chars($_POST['custId']);
+		$custId = strip_tags($_POST['custId']);
 		// @TODO add try/catch block
 		$customer = Braintree_Customer::find($custId);
 	} else { // @TODO - else provide error message that a customer ID is required

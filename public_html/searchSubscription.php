@@ -1,4 +1,5 @@
 <?php
+// @TODO - update this to use all the criteria available: https://developers.braintreepayments.com/reference/request/subscription/search/php
 	(isset($_SESSION['plans'])) ?  : session_start();
 	session_regenerate_id();
 
@@ -11,22 +12,53 @@ defined("DS")? null : require_once(realpath(dirname(__FILE__) . DIRECTORY_SEPARA
 require_once(LIB_PATH . DS . "btVars.php");
 require_once(LIB_PATH . DS . "inc" . DS . "common.inc.php");
 
+$searchLine = LIB_PATH . DS. "inc". DS ."search.inc.php";
+
 function showForm(){
+	global $searchLine;
 ?>
+	<div class="row">
+		<div class="col-md-12">
+			<p>Choose an attribute to search</p>
+		</div>
+	</div>
+
 	<form id="findSubscriptionForm" class="form-horizontal" action="?" method="post">
-		<input type="text" id="planId" name="planId" placeholder="Plan ID" tabindex="5">
+		<!-- @TODO remove #planId and #planVal once full search is working-->
+		<input type="text" id="planNameBox" name="planId" placeholder="Plan ID" tabindex="5">
 		<input type="hidden" id="planVal" name="planVal">
+		<?php include($searchLine); ?>
+
 		<input type="submit" class="btn greenBtn" name="submit" value="Search" tabindex="10">
+		
 	</form>
 <?php
 } // END showForm()
 
 if(isset($_POST['submit'])){
-	$planId = strip_tags_special_chars($_POST['planId']);
+	$planId = strip_tags($_POST['planId']);
+	
+	// $collection = Braintree_Subscription::search([
+	//   Braintree_SubscriptionSearch::planId()->is($planId)
+	// ]);
+
+	// testing only!
 	$collection = Braintree_Subscription::search([
-	  Braintree_SubscriptionSearch::planId()->is($planId)
+		Braintree_SubscriptionSearch::status()->in(
+			[
+				Braintree_Subscription::ACTIVE,
+				Braintree_Subscription::CANCELED,
+				Braintree_Subscription::EXPIRED,
+				Braintree_Subscription::PAST_DUE,
+				Braintree_Subscription::PENDING
+			]
+		)
 	]);
-	$planIndex = strip_tags_special_chars($_POST['planVal']);
+	var_dump($collection); 
+	echo "<br><br>";
+	var_dump($collection->ids);
+	exit();
+	$planIndex = strip_tags($_POST['planVal']);
 	(isset($_SESSION['plans']) && isset($planIndex)) ? $selectedPlan = $_SESSION['plans'][$planIndex] : '';
 	// $selectedPlan = $_SESSION['plans'][$planIndex];
 	// Test if a plan has any subscriptions
@@ -119,10 +151,10 @@ foreach($plans as $plan){
 ?>
 		<tr id="plan<?=$planCount?>" class="planGroup">
 			<td id="planId" class="planClick"><?=$plan->id?></td>
-			<td id="planName"><?=$plan->name?></td>
-			<td id="planPrice"><?=$plan->price ." ". $plan->currencyIsoCode?></td>
-			<td id="planTrial"><?php if($plan->trialPeriod){ echo $plan->trialDuration ." ". $plan->trialDurationUnit; if ($plan->trialDuration != 1){ echo "s"; }} else { echo "None"; } ?></td>
-			<td id="planBillFreq"><?php echo "Every $plan->billingFrequency month(s)"; ?></td>
+			<td><?=$plan->name?></td>
+			<td><?=$plan->price ." ". $plan->currencyIsoCode?></td>
+			<td><?php if($plan->trialPeriod){ echo $plan->trialDuration ." ". $plan->trialDurationUnit; if ($plan->trialDuration != 1){ echo "s"; }} else { echo "None"; } ?></td>
+			<td><?php echo "Every $plan->billingFrequency month(s)"; ?></td>
 		</tr>
 <?php
 	$planCount++;
@@ -133,10 +165,35 @@ $_SESSION['plans'] = $planArray;
 		</tbody>
 	</table>
 </div> <!-- END .col-md-10 -->
+<script src="bootstrap-3.3.4-dist/js/bootstrap.min.js"></script>
 <script>
+	$(".ddClick").on('click', function(){
+		var selection = $(this);
+		var selectionText = $(selection).text();
+		var buttonSelect = $(selection).parent().parent().prev();
+		buttonSelect.html(selectionText + " <span class='caret'></span>");
+		buttonSelect.prop("name", selectionText);
+	});
+	$(document).ready(function(){
+		
+	});
+
+	$("div.searchLine").on("click", ".glyphicon-plus-sign", function(e){
+		var theBtn = $(this);
+		var firstSearch = $("#firstSearch").clone(true, true).removeAttr("id").append("<span class='glyphicon glyphicon-minus-sign'></span>");
+		var lastLine = $(".searchLine").last();
+		$(firstSearch).insertAfter(lastLine);
+	});
+
+	$("div.searchLine").on("click", ".glyphicon-minus-sign", function(e){
+		var minusBtn = $(this);
+		minusBtn.parent().remove();
+	});
+
+
 	$(".planClick").on('click', function(){
 		var theLink = $(this);
-		$("#planId").val(theLink.html());
+		$("#planNameBox").val(theLink.html());
 		var selectedPlan = theLink.parent(".planGroup").attr("id").substr(4);
 		$("#planVal").val(selectedPlan);
 	});

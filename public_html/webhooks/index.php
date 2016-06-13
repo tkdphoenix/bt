@@ -16,7 +16,7 @@ if(isset($_GET['bt_challenge'])){
 	$smsVars = httpPost($smsUrl, $params);
 } else if(isset($_POST["bt_signature"]) && isset($_POST["bt_payload"])){
     $webhookNotification = Braintree_WebhookNotification::parse(
-        strip_tags_special_chars($_POST["bt_signature"]), strip_tags_special_chars($_POST["bt_payload"])
+        strip_tags($_POST["bt_signature"]), strip_tags($_POST["bt_payload"])
     );
 
     $message =

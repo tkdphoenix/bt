@@ -30,8 +30,8 @@
 
 	// test if the nonce has been posted
 	if(isset($_POST['payment_method_nonce'])){
-		$nonce = strip_tags_special_chars($_POST['payment_method_nonce']);
-		$amt = strip_tags_special_chars($_POST['amt']);
+		$nonce = strip_tags($_POST['payment_method_nonce']);
+		$amt = strip_tags($_POST['amt']);
 		// echo "nonce = ". $nonce ."\r\n";
 		// echo "amt = ". $amt ."\r\n";
 
