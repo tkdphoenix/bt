@@ -1,0 +1,18 @@
+{
+    "name": "jogrissom/bt",
+    "description": "Braintree Integration for testing",
+    "require": {
+        "phpunit/phpunit": "^5.4",
+        "phpunit/php-invoker": "^1.1",
+        "sebastian/global-state": "^1.1"
+    },
+    "require-dev": {
+        "mindplay/blowfish": "^1.0"
+    },
+    "authors": [
+        {
+            "name": "Joel Grissom",
+            "email": "joelgrissom5@gmail.com"
+        }
+    ]
+}
