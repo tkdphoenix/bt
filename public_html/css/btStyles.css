@@ -38,8 +38,8 @@ h1,h2,h3,h4,h5,h6, .planTable .plan{
 	height: 30px;
 	border: 1px solid grey;
 }
-#planTable.table.table-hover>tbody>tr>td.planClick, #active.table.table-hover>tbody>tr>td.subscrClick,
-#subscriptionTable>tbody>tr>td.subscrClick{ color: #69c4a7; }
+#planTable.table.table-hover>tbody>tr>td.planClick, #active.table.table-hover>tbody>tr>td.planClick,
+#subscriptionTable>tbody>tr>td.planClick{ color: #69c4a7; }
 /* on createSubscription page*/
 .planTable>caption{
 	color: #69c4a7;

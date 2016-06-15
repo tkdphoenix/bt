@@ -54,10 +54,13 @@ if(isset($_POST['submit'])){
 			]
 		)
 	]);
-	var_dump($collection); 
-	echo "<br><br>";
-	var_dump($collection->ids);
-	exit();
+?>
+<div class="col-md-10">
+<?php
+	// var_dump($collection); 
+	// echo "<br><br>";
+	// var_dump($collection->_ids);
+	// exit();
 	$planIndex = strip_tags($_POST['planVal']);
 	(isset($_SESSION['plans']) && isset($planIndex)) ? $selectedPlan = $_SESSION['plans'][$planIndex] : '';
 	// $selectedPlan = $_SESSION['plans'][$planIndex];

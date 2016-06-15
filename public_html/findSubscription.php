@@ -14,7 +14,7 @@
 	function showForm($values=NULL){
 ?>
 		<form id="" action="?" method="post">
-			<input id="subscrNameBox" type="text" name="subscrId" placeholder="Subscription ID" tabindex="10">
+			<input id="planNameBox" type="text" name="subscrId" placeholder="Subscription ID" tabindex="10">
 			<input class="btn greenBtn" type="submit" name="submit" value="Submit" tabindex="20">
 		</form>
 <?php		
@@ -102,7 +102,7 @@
 			}
 ?>
 			<h3>Transaction Information</h3>
-			<table class="table table-striped">
+			<table class="table table-hover">
 				<thead>
 					<tr>
 						<td>ID</td>
@@ -174,7 +174,7 @@
 
 ?>
 		<tr class="subscrGroup">
-			<td class="subscrClick"><?=$subId?></td>
+			<td class="planClick"><?=$subId?></td>
 		</tr>
 <?php
 		$planCount++;
@@ -186,9 +186,9 @@
 		</table>
 	</div> <!-- END .col-md-10 -->
 	<script>
-		$(".subscrClick").on('click', function(){
+		$(".planClick").on('click', function(){
 			var theLink = $(this);
-			$("#subscrNameBox").val(theLink.text());
+			$("#planNameBox").val(theLink.text());
 		});
 	</script>
 <?php

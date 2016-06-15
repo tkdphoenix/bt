@@ -42,15 +42,15 @@ if(isset($_POST['subscriptionSubmit'])){
 		$result = Braintree_Subscription::create([
 			'paymentMethodToken' 		=> $token,
 			'planId' 					=> $planId,
-			'trialPeriod' 				=> false,
-			'addOns'					=> [
-				'update'				=> [
-					[
-						'existingId' 			=> 'tax',
-						'amount'				=> '2.00'
-					]
-				]
-			],
+			// 'trialPeriod' 				=> false,
+			// 'addOns'					=> [
+			// 	'update'				=> [
+			// 		[
+			// 			'existingId' 			=> 'tax',
+			// 			'amount'				=> '2.00'
+			// 		]
+			// 	]
+			// ],
 			// 'discounts'					=> [
 			// 	'add'					=> [
 			// 		[
@@ -106,6 +106,14 @@ if(isset($_POST['subscriptionSubmit'])){
 			</p>
 		</section>
 	</div>
+	<?php
+	} else {
+		showBTHeader("Subscription Error", "Error attempting to create subscription");
+		showBTLeftNav();
+	?>
+		<div class="col-md-10">
+			
+		</div>
 	<?php
 	}
 
