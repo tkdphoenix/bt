@@ -150,59 +150,59 @@ function sendPush($params){
 
 /**
  * parse an object and save the variable as a new line on a string for troubleshooting
- * @param  [object] $obj    the object to be parsed
- * @param  string $prefix 	If there is a prefix like "my_" that needs to be looped through
- * @return string         	end result should be a string that can be echoed to the screen or parsed into DB, etc.
+ * @param  [object] $obj    	the object to be parsed
+ * @param  string $prefix 		If there is a prefix like "my_" that needs to be looped through
+ * @return string $stringRtrn	end result should be a string that can be echoed to the screen or parsed into DB, etc.
  */
 function parseObj($obj, $prefix = ''){
-	$stringRtrn = 'here!! ';
+	$stringRtrn = '';
 	foreach($obj as $key=>$value){
+		echo "qqq<br>";
 		if($prefix){
-			switch ($key) {
-				case is_array($key):
-					foreach($key as $k=>$v){
-						$stringRtrn .= parseObj($key, $obj);
-					}
-					break;
-				case is_object($key):
-					$stringRtrn .= parseObj($key, $obj);
-					break;
-				default:
-					switch ($value) {
-						case is_array($value):
-							$stringRtrn .= parseObj($value, $key);
-							break;
-						case is_object($value):
-							$stringRtrn .= parseObj($value, $key);
-							break;
-						default:
-							$stringRtrn .= $prefix ."_". $key ." = ". $value ."<br>";
-							break;
-					}
-					break;
+			$stringRtrn .= "aaa<br>";
+			if(is_array($key)){
+				$stringRtrn .= "bbb<br>";
+				foreach($key as $k=>$v){
+					parseObj($key, $$obj);
+				}
+			} elseif(is_object($key)){
+				$stringRtrn .= "ccc<br>";
+				parseObj($key, $$obj);
+			} else{
+				$stringRtrn .= "asdfjkl;<br>";
+				if(is_array($value)){
+					$stringRtrn .= "ddd<br>";
+					parseObj($value, $key);
+				} elseif(is_object($value)){
+					$stringRtrn .= "eee<br>";
+					parseObj($value, $key);
+				} else {
+					$stringRtrn .= "fff<br>";
+					$stringRtrn .= $prefix ."_". $key ." = ". $value ."<br>";
+				}
 			}
 		} else { // end if($prefix)
-			switch($key){
-				case is_array($key):
-					$stringRtrn .= parseObj($key, $obj);
-					break;
-				case is_object($key):
-					$stringRtrn .= parseObj($key, $obj);
-					break;
-				default:
-					switch ($value) {
-						case is_array($value):
-							$stringRtrn .= parseObj($value, $key);
-							break;
-						case is_object($value):
-							$stringRtrn .= parseObj($value, $key);
-							break;						
-						default:
-							$stringRtrn .= $key ." = ". $value ."<br>";
-							break;
-					} // end inner switch 
+		     $stringRtrn .= "zzz<br>";
+			if(is_array($key)){
+				$stringRtrn .= "ggg<br>";
+				parseObj($key, $obj);
+			} elseif(is_object($key)){
+				$stringRtrn .= "hhh<br>";
+				parseObj($key, $obj);
+			} else {
+				if(is_array($value)){
+					$stringRtrn .= "iii<br>";
+					parseObj($value, $key);
+				} elseif(is_object($value)){
+					$stringRtrn .= "jjj<br>";
+					parseObj($value, $key);
+				} else {
+					$stringRtrn .= "kkk<br>";
+					$stringRtrn .= $key ." = ". $value ."<br>";
+				} // end inner switch 
 			} // end outer switch
 		} // end else
 	} // end foreach($obj as $key=>$value)
+	$stringRtrn .= "yyy<br>";
 	return $stringRtrn;
 } // END parseObj()

@@ -8,7 +8,7 @@
 	// echo "Your client token: ". $clientToken . "<br>";
 
 	if(isset($_POST['payment_method_nonce'])){
-		$nonce = strip_tags_special_chars($_POST['payment_method_nonce']);
+		$nonce = strip_tags($_POST['payment_method_nonce']);
 		$amt = 50.00;
 		showBTHeader("Braintree Initialization", "Results");
 		showBTLeftNav();
@@ -64,7 +64,7 @@
 	<div class="col-md-7">
 		<div class="row">
 			<div class="col-md-12">
-				<form id="checkout" method="post" action="?">
+				<form id="checkout" class="form-horizontal" method="post" action="<?php echo htmlspecialchars("?"); ?>">
 					<div id="myDropin"></div>
 					<input type="submit" value="Pay $50">
 				</form>				

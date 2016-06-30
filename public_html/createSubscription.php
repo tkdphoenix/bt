@@ -12,7 +12,7 @@ function showForm($errorsArr=[]){
 	<div class="col-md-10">
 		<div class="row">
 			<div class="col-md-12">
-				<form id="subscriptionForm" class="form-horizontal" action="?" method="post">
+				<form id="subscriptionForm" class="form-horizontal" action="<?php echo htmlspecialchars("?"); ?>" method="post">
 					<div class="form-group">
 						<label for="token">Payment Token
 							<input type="text" class="planBoxes" name="paymentMethodToken" tabindex="10" placeholder="Payment Token" required>
@@ -32,8 +32,8 @@ function showForm($errorsArr=[]){
 
 
 if(isset($_POST['subscriptionSubmit'])){
-	$token = strip_tags_special_chars($_POST['paymentMethodToken']);
-	$planId = strip_tags_special_chars($_POST['planId']);
+	$token = strip_tags($_POST['paymentMethodToken']);
+	$planId = strip_tags($_POST['planId']);
 
 	// @TODO perform form validation here
 
@@ -42,18 +42,23 @@ if(isset($_POST['subscriptionSubmit'])){
 		$result = Braintree_Subscription::create([
 			'paymentMethodToken' 		=> $token,
 			'planId' 					=> $planId,
-			'trialPeriod' 				=> false,
-			'addOns'					=> [
-				'remove'				=> ['extra_member']
-			],
-			'discounts'					=> [
-				'add'					=> [
-					[
-						'inheritedFromId'	=> 'disc_2_off',
-						'amount'			=> '5.00'
-					]
-				]
-		  ]
+			// 'trialPeriod' 				=> false,
+			// 'addOns'					=> [
+			// 	'update'				=> [
+			// 		[
+			// 			'existingId' 			=> 'tax',
+			// 			'amount'				=> '2.00'
+			// 		]
+			// 	]
+			// ],
+			// 'discounts'					=> [
+			// 	'add'					=> [
+			// 		[
+			// 			'inheritedFromId'	=> 'disc_2_off',
+			// 			'amount'			=> '5.00'
+			// 		]
+			// 	]
+			// ]
 		]);
 		if(!$result->success){
 			foreach($result->errors->deepAll() as $error){
@@ -101,6 +106,14 @@ if(isset($_POST['subscriptionSubmit'])){
 			</p>
 		</section>
 	</div>
+	<?php
+	} else {
+		showBTHeader("Subscription Error", "Error attempting to create subscription");
+		showBTLeftNav();
+	?>
+		<div class="col-md-10">
+			
+		</div>
 	<?php
 	}
 

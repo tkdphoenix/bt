@@ -1,6 +1,6 @@
 <?php
 require_once("common.inc.php");
-(isset($_POST["country"]))? $country = strip_tags_special_chars($_POST["country"]) : $country = "";
+(isset($_POST["country"]))? $country = strip_tags($_POST["country"]) : $country = "";
 ?>
 					<select id="country" name="country" class="form-control" value="<?php echo $country; ?>">
 						<option value=" " default>Please Select Your Country</option>

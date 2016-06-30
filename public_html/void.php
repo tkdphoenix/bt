@@ -9,7 +9,7 @@ function showForm(){
 	<div class="col-md-7">
 		<div class="row">
 			<div class="col-md-12">
-				<form action="?" method="post" id="voidForm">
+				<form id="voidForm" class="form-horizontal" method="post" action="<?php echo htmlspecialchars("?"); ?>">
 					<input type="text" id="txnID" name="txnID" tabindex="1" placeholder="Transaction ID" <?php if (isset($txnid)){echo "value='$txnid'"; }?>>
 					<input type="submit" id="submitVoid" name="submitVoid" value="Void transactions">
 				</form>
@@ -21,7 +21,7 @@ function showForm(){
 if(isset($_POST['txnID'])){
 	showBTHeader("Void Transaction", "Results");
 	showBTLeftNav();
-	$txnid = strip_tags_special_chars($_POST['txnID']);
+	$txnid = strip_tags($_POST['txnID']);
 	$result = Braintree_Transaction::void($txnid);
 ?>
 	<div class="col-md-7">

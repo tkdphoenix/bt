@@ -13,7 +13,7 @@
 			}
 		}
 	?>
-				<form id="hostedCheckoutForm" method="post" action="?">
+				<form id="hostedCheckoutForm" class="form-horizontal" method="post" action="<?php echo htmlspecialchars("?"); ?>">
 					<div id="error-message"></div>
 					<label for="card-number">Card Number</label>
 					<div id="card-number" class="hosted-field" tabindex="10"></div>
@@ -32,8 +32,8 @@
 
 	// test if the nonce has been posted
 	if(isset($_POST['payment-method-nonce'])){
-		$nonce = strip_tags_special_chars($_POST['payment-method-nonce']);
-		$amt = strip_tags_special_chars($_POST['amt']);
+		$nonce = strip_tags($_POST['payment-method-nonce']);
+		$amt = strip_tags($_POST['amt']);
 		// echo "nonce = ". $nonce ."\r\n";
 		// echo "amt = ". $amt ."\r\n";
 

@@ -9,12 +9,12 @@ function showSearchForm(){
 	<div class="col-md-7">
 		<div class="row">
 			<div class="col-md-12">
-				<form action="?" id="searchForm" method="post" class="form-horizontal">
+				<form id="searchForm" class="form-horizontal" method="post" action="<?php echo htmlspecialchars("?"); ?>" class="form-horizontal">
 					<h3>Search for a Customer to Delete</h3>
 					<div class="form-group">
 						<label for="searchID">Customer ID to search for</label>
 						<div class="col-md-9">
-							<input type="text" id="searchId" class="form-control" name="searchId" value="<?php echo (isset($_POST['searchId']))? strip_tags_special_chars($_POST['searchId']): ''; ?>" required>
+							<input type="text" id="searchId" class="form-control" name="searchId" value="<?php echo (isset($_POST['searchId']))? strip_tags($_POST['searchId']): ''; ?>" required>
 						</div>
 					</div>
 					<input class="btn greenBtn" type="submit" name="searchCustSubmit" value="Search Customer">
@@ -55,7 +55,7 @@ function deleteForm($submitted){
 			<p>Phone: <?=$submitted['phone']?></p>
 			<p>Fax: <?=$submitted['fax']?></p>
 			<p>Website: <?=$submitted['website']?></p>
-			<form id="deleteCustForm" action="?" method="post" class="form-horizontal">
+			<form id="deleteCustForm" class="form-horizontal" method="post" action="<?php echo htmlspecialchars("?"); ?>" class="form-horizontal">
 				<input type="hidden" name="customerId" value="<?php echo (isset($submitted['customerId']))? $submitted['customerId'] : ''; ?>" required>
 				<input class="btn greenBtn" type="submit" name="deleteCustSubmit" value="Delete Customer">	
 			</form>
@@ -69,7 +69,7 @@ function deleteForm($submitted){
 
 if(isset($_POST['deleteCustSubmit'])){ // if the form has been submitted
 	if(isset($_POST['customerId'])){
-		$customerId = strip_tags_special_chars($_POST['customerId']);
+		$customerId = strip_tags($_POST['customerId']);
 		$result = Braintree_Customer::delete($customerId);
 		if($result->success){
 			showBTHeader("Delete Customer", "Customer Deleted");
@@ -111,7 +111,7 @@ if(isset($_POST['deleteCustSubmit'])){ // if the form has been submitted
 	showSearchForm();
 // @TODO - make sure the form is submitted to search for the customer so values can be added to the form, then insert values as params to the deleteForm() method. 
 } elseif(isset($_POST['searchCustSubmit'])){
-	$customerId = strip_tags_special_chars($_POST['searchId']);
+	$customerId = strip_tags($_POST['searchId']);
 
 	$customer = Braintree_Customer::find($customerId);
 	showBTHeader("Delete Customer", "This is the customer that will be Deleted");

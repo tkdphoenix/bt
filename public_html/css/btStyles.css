@@ -38,14 +38,15 @@ h1,h2,h3,h4,h5,h6, .planTable .plan{
 	height: 30px;
 	border: 1px solid grey;
 }
-#planTable.table.table-hover>tbody>tr>td.planClick, #active.table.table-hover>tbody>tr>td.subscrClick{ color: #69c4a7; }
+#planTable.table.table-hover>tbody>tr>td.planClick, #active.table.table-hover>tbody>tr>td.planClick,
+#subscriptionTable>tbody>tr>td.planClick{ color: #69c4a7; }
 /* on createSubscription page*/
 .planTable>caption{
 	color: #69c4a7;
 	font-size: 20pt;
 	font-family: 'Courier_Prime', 'Helvetica Neue', Helvetica, sans-serif;
 }
-.planTable .plan{cursor: pointer;}
+.planTable .plan{ cursor: pointer; }
 .planBoxes, a.greenLink{ color: #69c4a7; }
 .page404 .container h1{ color:red; }
 .page404 .container .mainImg{ margin: 0 auto;  }
@@ -54,12 +55,8 @@ h1,h2,h3,h4,h5,h6, .planTable .plan{
 	font-weight: bold;
 	font-size: 18pt;
 }
-.form-control.braintree-hosted-fields-invalid{
-	border: 1px solid red;
-}
-
-
-
-
-
+.form-control.braintree-hosted-fields-invalid{ border: 1px solid red; }
+.glyphicon{ color: #69c4a7; }
+hr.bt { border-top: 1px solid #69c4a7; }
+.red{ color: #c00; }
 

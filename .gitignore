@@ -13,5 +13,6 @@ public_html/webhooks/webhook.log
 public_html/test/
 logs/
 .idea/
-bt.sublime-project
-bt.sublime-workspace
+*.sublime-project
+*.sublime-workspace
+/vendor/
