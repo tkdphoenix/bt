@@ -13,7 +13,7 @@
 			}
 		}
 	?>
-				<form id="hostedCheckoutForm" method="post" action="?">
+				<form id="hostedCheckoutForm" class="form-horizontal" method="post" action="<?php echo htmlspecialchars("?"); ?>">
 					<div id="error-message"></div>
 					<label for="card-number">Card Number</label>
 					<div id="card-number" class="hosted-field" tabindex="10"></div>

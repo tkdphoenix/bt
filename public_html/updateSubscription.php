@@ -2,14 +2,14 @@
 defined("DS")? null : require_once(realpath(dirname(__FILE__) . DIRECTORY_SEPARATOR . "..") . DIRECTORY_SEPARATOR . "inc" . DIRECTORY_SEPARATOR . "initialize.php");
 
 require_once(LIB_PATH . DS . "btVars.php");
-require_once("../inc/common.inc.php");
+require_once(LIB_PATH . DS ."inc". DS ."common.inc.php");
 
 function showForm(){
 ?>
 		<div class="row">
 			<div class="col-md-12">
 				<p>Choose a subscription ID and the subscription details will be added to a form for you to update / change. You can only update Pending, Active, and Past Due subscriptions.</p>
-				<form id="chooseSubscriptionForm" class="form-horizontal" action="?" method="post">
+				<form id="chooseSubscriptionForm" class="form-horizontal" method="post" action="<?php echo htmlspecialchars("?"); ?>">
 					<div class="form-group">
 						<label>Subscription ID
 							<input id="planNameBox" type="text" name="subscriptionId" placeholder="Subscription ID" tabindex="10"></label>
@@ -25,7 +25,7 @@ function showUpdateForm($obj=NULL){
 ?>
 		<div class="row">
 			<div class="col-md-12">
-				<form id="updateSubscriptionForm" class="form-horizontal" action="?" method="post">
+				<form id="updateSubscriptionForm" class="form-horizontal" method="post" action="<?php echo htmlspecialchars("?"); ?>">
 <?php
 	$digit = 35; // to create different tabindex values
 	if($obj->status == "Active" || $obj->status == "Pending"){
@@ -310,11 +310,85 @@ if(isset($_POST['subscriptionSubmit'])){ // if the choose subscription form was 
 	$pmtMethodToken = strip_tags($_POST['pmtMethodToken']);
 	$maid = strip_tags($_POST['maid']);
 
+	// @TODO see if the functionality for cleaning up add-ons and discounts can be put into a function or object
+	
+	// $newAddOnsArray = array();
+	// $newDiscountsArray = array();
+	// foreach($_POST as $key => $value){
+	// 	// find if $key starts with 'newAddOn' and ends with a certain number
+	// 	if(preg_match("/^newAddOnAmount/", $key)){
+	// 		preg_match("/\d/", $key, $matches);
+	// 		$suffix = substr($key, strpos($key, $matches[0]));
+	// 		$tempArray = array();
+	// 		if(empty($_POST["newAddOnInheritedFromId{$suffix}"])){
+	// 			echo "The value for the discount ID is required."; 
+	// 		} else {
+	// 			$newAddOnInheritedFromId = strip_tags($_POST["newAddOnInheritedFromId{$suffix}"]);
+	// 			$tempArray["newAddOnInheritedFromId"] = $newAddOnInheritedFromId;
+	// 		}
+	// 		if(!empty($_POST["newAddOnAmount{$suffix}"])){
+	// 			$newAddOnAmount = strip_tags($_POST["newAddOnAmount{$suffix}"]);
+	// 			$tempArray["newAddOnAmount"] = $newAddOnAmount;
+	// 		}
+	// 		if(!empty($_POST["newAddOnNeverExpires{$suffix}"])){
+	// 			$newAddOnNeverExpires = strip_tags($_POST["newAddOnNeverExpires{$suffix}"]);
+	// 			$tempArray["newAddOnNeverExpires"] = $newAddOnNeverExpires;
+	// 		}
+	// 		if(!empty($_POST["newAddOnNumberOfBillingCycles{$suffix}"])){
+	// 			$newAddOnNumberOfBillingCycles	= strip_tags($_POST["newAddOnNumberOfBillingCycles{$suffix}"]);
+	// 			$tempArray["newAddOnNumberOfBillingCycles"] = $newAddOnNumberOfBillingCycles;
+	// 		}
+	// 		if(!empty($_POST["newAddOnQuantity{$suffix}"])){
+	// 			$newAddOnQuantity = strip_tags($_POST["newAddOnQuantity{$suffix}"]);
+	// 			$tempArray["newAddOnQuantity"] = $newAddOnQuantity;
+	// 		}
+	// 		array_push($newAddOnsArray, $tempArray);
+	// 	} elseif(preg_match("/^newDiscountAmount/", $key)){
+	// 		preg_match("/\d/", $key, $matches);
+	// 		$suffix = substr($key, strpos($key, $matches[0]));
+	// 		$tempArray = array();
+	// 		if(empty($_POST["newDiscountInheritedFromId{$suffix}"])){
+	// 			echo "The value for the discount ID is required."; 
+	// 		} else {
+	// 			$newDiscountInheritedFromId = strip_tags($_POST["newDiscountInheritedFromId{$suffix}"]);
+	// 			$tempArray["newDiscountInheritedFromId"] = $newDiscountInheritedFromId;
+	// 		}
+	// 		if(!empty($_POST["newDiscountAmount{$suffix}"])){
+	// 			$newDiscountAmount = strip_tags($_POST["newDiscountAmount{$suffix}"]);
+	// 			$tempArray["newDiscountAmount"] = $newDiscountAmount;
+	// 		}
+	// 		if(!empty($_POST["newDiscountNeverExpires{$suffix}"])){
+	// 			$newDiscountNeverExpires = strip_tags($_POST["newDiscountNeverExpires{$suffix}"]);
+	// 			$tempArray["newDiscountNeverExpires"] = $newDiscountNeverExpires;
+	// 		}
+	// 		if(!empty($_POST["newDiscountNumberOfBillingCycles{$suffix}"])){
+	// 			$newDiscountNumberOfBillingCycles	= strip_tags($_POST["newDiscountNumberOfBillingCycles{$suffix}"]);
+	// 			$tempArray["newDiscountNumberOfBillingCycles"] = $newDiscountNumberOfBillingCycles;
+	// 		}
+	// 		if(!empty($_POST["newDiscountQuantity{$suffix}"])){
+	// 			$newDiscountQuantity = strip_tags($_POST["newDiscountQuantity{$suffix}"]);
+	// 			$tempArray["newDiscountQuantity"] = $newDiscountQuantity;
+	// 		}
+	// 		array_push($newDiscountsArray, $tempArray);
+	// 	} // END elseif(preg_match("/^newDiscountAmount/", $key))
+	// } // END foreach()
+	
+	// testing class AddOn_Discount
+	require_once(LIB_PATH . DS ."inc". DS ."AddOn_Discount.inc.php");
+	$addDisc = new AddOn_Discount();
+	echo "AddOns: "; var_dump($addDisc->newAddOnsArray);
+	echo "<br><br>";
+	echo "Discounts: "; var_dump($addDisc->newDiscountsArray); exit();
+
+	if(empty($newAddOnsArray)){ echo "Empty"; } else { echo "<br>New AddOns array: "; var_dump($newAddOnsArray); echo "<br><br>"; }
+	if(empty($newDiscountsArray)){ echo "Empty"; } else { echo "<br>New Discounts array: "; var_dump($newDiscountsArray); }
 
 	// @TODO show updated fields, or show errors 
 	// run update method using a subscription ID 
 	// $result = Braintree_Subscription::update($subscriptionId, [
-		
+		// if(isset($)){
+
+		// }		
 		// 'addOns' => [
 		// 	'add' => [
 		// 		'amount' => '',
@@ -374,74 +448,6 @@ if(isset($_POST['subscriptionSubmit'])){ // if the choose subscription form was 
 	var_dump($_POST);
 	echo "<br><br>";
 
-	$newAddOnsArray = array();
-	$newDiscountsArray = array();
-	$temp;
-	foreach($_POST as $key => $value){
-		global $temp;
-		// find if $key starts with 'newAddOn' and ends with a certain number
-		if(preg_match("/^newAddOnAmount/", $key)){
-			preg_match("/\d/", $key, $matches);
-			$suffix = substr($key, strpos($key, $matches[0]));
-			$temp = $suffix;
-			$tempArray = array();
-			if(empty($_POST["newAddOnInheritedFromId{$suffix}"])){
-				echo "The value for the discount ID is required."; 
-			} else {
-				$newAddOnInheritedFromId = strip_tags($_POST["newAddOnInheritedFromId{$suffix}"]);
-				$tempArray["newAddOnInheritedFromId"] = $newAddOnInheritedFromId;
-			}
-			if(!empty($_POST["newAddOnAmount{$suffix}"])){
-				$newAddOnAmount = strip_tags($_POST["newAddOnAmount{$suffix}"]);
-				$tempArray["newAddOnAmount"] = $newAddOnAmount;
-			}
-			if(!empty($_POST["newAddOnNeverExpires{$suffix}"])){
-				$newAddOnNeverExpires = strip_tags($_POST["newAddOnNeverExpires{$suffix}"]);
-				$tempArray["newAddOnNeverExpires"] = $newAddOnNeverExpires;
-			}
-			if(!empty($_POST["newAddOnNumberOfBillingCycles{$suffix}"])){
-				$newAddOnNumberOfBillingCycles	= strip_tags($_POST["newAddOnNumberOfBillingCycles{$suffix}"]);
-				$tempArray["newAddOnNumberOfBillingCycles"] = $newAddOnNumberOfBillingCycles;
-			}
-			if(!empty($_POST["newAddOnQuantity{$suffix}"])){
-				$newAddOnQuantity = strip_tags($_POST["newAddOnQuantity{$suffix}"]);
-				$tempArray["newAddOnQuantity"] = $newAddOnQuantity;
-			}
-			if(empty($tempArray)){ echo "Empty"; } else { echo "<br>New Temp array: "; var_dump($tempArray); }
-			array_push($newAddOnsArray, $tempArray);
-		} elseif(preg_match("/^newDiscountAmount/", $key)){
-			preg_match("/\d/", $key, $matches);
-			$suffix = substr($key, strpos($key, $matches[0]));
-			$temp = $suffix;
-			$tempArray = array();
-			if(empty($_POST["newDiscountInheritedFromId{$suffix}"])){
-				echo "The value for the discount ID is required."; 
-			} else {
-				$newDiscountInheritedFromId = strip_tags($_POST["newDiscountInheritedFromId{$suffix}"]);
-				$tempArray["newDiscountInheritedFromId"] = $newDiscountInheritedFromId;
-			}
-			if(!empty($_POST["newDiscountAmount{$suffix}"])){
-				$newDiscountAmount = strip_tags($_POST["newDiscountAmount{$suffix}"]);
-				$tempArray["newDiscountAmount"] = $newDiscountAmount;
-			}
-			if(!empty($_POST["newDiscountNeverExpires{$suffix}"])){
-				$newDiscountNeverExpires = strip_tags($_POST["newDiscountNeverExpires{$suffix}"]);
-				$tempArray["newDiscountNeverExpires"] = $newDiscountNeverExpires;
-			}
-			if(!empty($_POST["newDiscountNumberOfBillingCycles{$suffix}"])){
-				$newDiscountNumberOfBillingCycles	= strip_tags($_POST["newDiscountNumberOfBillingCycles{$suffix}"]);
-				$tempArray["newDiscountNumberOfBillingCycles"] = $newDiscountNumberOfBillingCycles;
-			}
-			if(!empty($_POST["newDiscountQuantity{$suffix}"])){
-				$newDiscountQuantity = strip_tags($_POST["newDiscountQuantity{$suffix}"]);
-				$tempArray["newDiscountQuantity"] = $newDiscountQuantity;
-			}
-			array_push($newDiscountsArray, $tempArray);
-		} // END elseif(preg_match("/^newDiscountAmount/", $key))
-	} // END foreach()
-	echo "<br><br>";
-	if(empty($newAddOnsArray)){ echo "Empty"; } else { echo "<br>New AddOns array: "; var_dump($newAddOnsArray); echo "<br><br>"; }
-	if(empty($newDiscountsArray)){ echo "Empty"; } else { echo "<br>New Discounts array: "; var_dump($newDiscountsArray); }
 } else {
 	showBTHeader("Update a Subscription", "Choose a Subscription to Update");
 	showBTLeftNav();

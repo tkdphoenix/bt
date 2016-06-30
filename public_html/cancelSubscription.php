@@ -5,7 +5,7 @@ require_once(LIB_PATH . DS . "btVars.php");
 require_once(LIB_PATH . DS . "inc" . DS . "common.inc.php");
 function showForm(){
 ?>
-	<form id="cancelForm" class="form-horizontal" action="?" method="post">
+	<form id="cancelForm" class="form-horizontal" action="<?php echo htmlspecialchars("?"); ?>" method="post">
 		<input type="text" id="subscrId" name="subscrId" placeholder="Subscription ID" tabindex="5">
 		<input type="submit" class="btn greenBtn" name="cancelSubmit" value="Cancel Subscription">
 	</form>

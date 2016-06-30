@@ -13,7 +13,7 @@
 			}
 		}
 	?>
-				<form id="hostedCheckoutForm" method="post" action="?">
+				<form id="hostedCheckoutForm" class="form-horizontal" method="post" action="<?php echo htmlspecialchars("?"); ?>">
 					<label for="cardNum">Card Number</label>
 					<div id="cardNum" tabindex="10"></div>
 					<label for="cvv">CVV</label>
@@ -220,6 +220,12 @@
 				enableShippingAddress: true
 			},
 			hostedFields: {
+				styles: {
+					'input': {
+						'font-size': '14px',
+						'color': 'blue'
+					}
+				},
 				number: {
 					selector: "#cardNum",
 					placeholder: "Card Number"

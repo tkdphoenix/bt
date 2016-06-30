@@ -8,7 +8,7 @@
 		<div class="col-md-7">
 			<div class="row">
 				<div class="col-md-12">
-					<form id="createMerchantForm" class="form-horizontal" action="?" method="post">
+					<form id="createMerchantForm" class="form-horizontal" action="<?php echo htmlspecialchars("?"); ?>" method="post">
 						<div class="form-group">
 							<label for="fname" class="col-md-3 control-label">First Name</label>
 							<div class="col-md-9">

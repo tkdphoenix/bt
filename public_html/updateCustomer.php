@@ -13,7 +13,7 @@ function showSearchForm(){
 	<div class="col-md-7">
 		<div class="row">
 			<div class="col-md-12">
-				<form action="?" id="searchForm" method="post" class="form-horizontal">
+				<form id="searchForm" class="form-horizontal" method="post" action="<?php echo htmlspecialchars("?"); ?>">
 					<h3>Search for a Customer to Update</h3>
 					<div class="form-group">
 						<label for="searchID">Customer ID to search for</label>
@@ -51,7 +51,7 @@ function showForm($submitted = array(), $errorsArr=[]){
 	<div class="col-md-7">
 		<div class="row">
 			<div class="col-md-12">
-				<form id="updateCustForm" action="?" method="post" class="form-horizontal">
+				<form id="updateCustForm" class="form-horizontal" method="post" action="<?php echo htmlspecialchars("?"); ?>">
 					<h3>Customer Details</h3>
 					<div class="form-group">
 						<label for="first" class="col-md-3 control-label">First Name</label>

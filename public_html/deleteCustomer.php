@@ -9,7 +9,7 @@ function showSearchForm(){
 	<div class="col-md-7">
 		<div class="row">
 			<div class="col-md-12">
-				<form action="?" id="searchForm" method="post" class="form-horizontal">
+				<form id="searchForm" class="form-horizontal" method="post" action="<?php echo htmlspecialchars("?"); ?>" class="form-horizontal">
 					<h3>Search for a Customer to Delete</h3>
 					<div class="form-group">
 						<label for="searchID">Customer ID to search for</label>
@@ -55,7 +55,7 @@ function deleteForm($submitted){
 			<p>Phone: <?=$submitted['phone']?></p>
 			<p>Fax: <?=$submitted['fax']?></p>
 			<p>Website: <?=$submitted['website']?></p>
-			<form id="deleteCustForm" action="?" method="post" class="form-horizontal">
+			<form id="deleteCustForm" class="form-horizontal" method="post" action="<?php echo htmlspecialchars("?"); ?>" class="form-horizontal">
 				<input type="hidden" name="customerId" value="<?php echo (isset($submitted['customerId']))? $submitted['customerId'] : ''; ?>" required>
 				<input class="btn greenBtn" type="submit" name="deleteCustSubmit" value="Delete Customer">	
 			</form>

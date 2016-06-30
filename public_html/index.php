@@ -55,12 +55,12 @@
 						<img class="cord" src="img/iphoneCord.jpeg" alt="iPhone Cord">
 					</div>
 					<div class="col-md-9">
-						<p class="cordTxt">This is a simple payment for a $30 iPad charging cable.</p>
+						<p class="cordTxt">This is a simple payment for a $30 iPhone / iPad charging cable.</p>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-12">
-						<form id="checkout" class="form-horizontal" method="post" action="?">
+						<form id="checkout" class="form-horizontal" method="post" action="<?php echo htmlspecialchars("?"); ?>">
 							<div class="form-group">
 								<label for="num">Card Number
 									<input id="num" class="form-control" data-braintree-name="number" value="4111111111111111">

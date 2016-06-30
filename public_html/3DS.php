@@ -70,8 +70,7 @@
 				</div>
 				<div class="row">
 					<div class="col-md-12">
-						<form id="checkout" class="form-horizontal" method="post" action="?">
-						<!-- <form id="checkout" class="form-horizontal" method="post" action="3DSComplete.php"> -->
+						<form id="checkout" class="form-horizontal" method="post" action="<?php echo htmlspecialchars("?"); ?>">
 							<div class="form-group">
 								<label for="cardNum">Card Number
 									<div id="cardNum" class="form-control"></div>

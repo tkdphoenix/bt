@@ -24,7 +24,7 @@ function showForm($errorsArr=[]){
 	<div class="col-md-7">
 		<div class="row">
 			<div class="col-md-12">
-				<form id="newCustForm" action="?" method="post" class="form-horizontal">
+				<form id="newCustForm" action="<?php echo htmlspecialchars("?"); ?>" method="post" class="form-horizontal">
 					<h3>Customer Details</h3>
 					<div class="form-group">
 						<label for="first" class="col-md-3 control-label">First Name</label>

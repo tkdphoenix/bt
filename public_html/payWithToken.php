@@ -60,7 +60,7 @@ showBTLeftNav();
 			
 
 			<!-- depending on which radio option is selected, the button will change and the name of the field to post -->
-			<form action="?" id="pmtForm" method="post">
+			<form id="pmtForm" class="form-horizontal" method="post" action="<?php echo htmlspecialchars("?"); ?>">
 				<div class="radio">
 					<div class="row">
 						<div class="col-md-3">

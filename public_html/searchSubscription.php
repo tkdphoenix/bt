@@ -23,7 +23,7 @@ function showForm(){
 		</div>
 	</div>
 
-	<form id="findSubscriptionForm" class="form-horizontal" action="?" method="post">
+	<form id="findSubscriptionForm" class="form-horizontal" method="post" action="<?php echo htmlspecialchars("?"); ?>">
 		<!-- @TODO remove #planId and #planVal once full search is working-->
 		<input type="text" id="planNameBox" name="planId" placeholder="Plan ID" tabindex="5">
 		<input type="hidden" id="planVal" name="planVal">

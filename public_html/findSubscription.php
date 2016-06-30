@@ -13,7 +13,7 @@
 
 	function showForm($values=NULL){
 ?>
-		<form id="" action="?" method="post">
+		<form id="findSubscriptionForm" class="form-horizontal" method="post" action="<?php echo htmlspecialchars("?"); ?>">
 			<input id="planNameBox" type="text" name="subscrId" placeholder="Subscription ID" tabindex="10">
 			<input class="btn greenBtn" type="submit" name="submit" value="Submit" tabindex="20">
 		</form>

@@ -12,7 +12,7 @@ function showForm($errorsArr=[]){
 	<div class="col-md-10">
 		<div class="row">
 			<div class="col-md-12">
-				<form id="subscriptionForm" class="form-horizontal" action="?" method="post">
+				<form id="subscriptionForm" class="form-horizontal" action="<?php echo htmlspecialchars("?"); ?>" method="post">
 					<div class="form-group">
 						<label for="token">Payment Token
 							<input type="text" class="planBoxes" name="paymentMethodToken" tabindex="10" placeholder="Payment Token" required>
