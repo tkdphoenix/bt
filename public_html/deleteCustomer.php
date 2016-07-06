@@ -4,6 +4,7 @@ defined("DS")? null : require_once(realpath(dirname(__FILE__) . DIRECTORY_SEPARA
 require_once(LIB_PATH . DS . "btVars.php");
 require_once(LIB_PATH . DS . "inc" . DS . "common.inc.php");
 
+// @TODO may be able to get a list of customers to show in a table similar to other pages like createSubscription.php
 function showSearchForm(){
 ?>
 	<div class="col-md-7">
@@ -12,9 +13,9 @@ function showSearchForm(){
 				<form id="searchForm" class="form-horizontal" method="post" action="<?php echo htmlspecialchars("?"); ?>" class="form-horizontal">
 					<h3>Search for a Customer to Delete</h3>
 					<div class="form-group">
-						<label for="searchID">Customer ID to search for</label>
+						<label for="searchID" class="sr-only">Customer ID to search for</label>
 						<div class="col-md-9">
-							<input type="text" id="searchId" class="form-control" name="searchId" value="<?php echo (isset($_POST['searchId']))? strip_tags($_POST['searchId']): ''; ?>" required>
+							<input type="text" id="searchId" class="form-control" name="searchId" value="<?php echo (isset($_POST['searchId']))? strip_tags($_POST['searchId']): ''; ?>" aria-label="Customer ID to search for" placeholder="Customer ID to search for" required>
 						</div>
 					</div>
 					<input class="btn greenBtn" type="submit" name="searchCustSubmit" value="Search Customer">

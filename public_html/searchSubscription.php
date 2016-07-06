@@ -25,11 +25,13 @@ function showForm(){
 
 	<form id="findSubscriptionForm" class="form-horizontal" method="post" action="<?php echo htmlspecialchars("?"); ?>">
 		<!-- @TODO remove #planId and #planVal once full search is working-->
-		<input type="text" id="planNameBox" name="planId" placeholder="Plan ID" tabindex="5">
+		<div class="form-group">
+			<input type="text" id="planNameBox" name="planId" aria-label="Plan ID" placeholder="Plan ID" tabindex="5">
+		</div>
 		<input type="hidden" id="planVal" name="planVal">
 		<?php include($searchLine); ?>
 
-		<input type="submit" class="btn greenBtn" name="submit" value="Search" tabindex="10">
+		<input type="submit" class="btn greenBtn" name="submit" aria-label="Search button" value="Search" tabindex="10">
 		
 	</form>
 <?php

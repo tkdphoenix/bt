@@ -11,9 +11,9 @@ function showForm(){
 				<p>Choose a subscription ID and the subscription details will be added to a form for you to update / change. You can only update Pending, Active, and Past Due subscriptions.</p>
 				<form id="chooseSubscriptionForm" class="form-horizontal" method="post" action="<?php echo htmlspecialchars("?"); ?>">
 					<div class="form-group">
-						<label>Subscription ID
-							<input id="planNameBox" type="text" name="subscriptionId" placeholder="Subscription ID" tabindex="10"></label>
-						<input class="btn greenBtn" type="submit" name="subscriptionSubmit" value="Submit">
+						<label for="planNameBox" class="sr-only">Subscription ID</label>
+						<input id="planNameBox" type="text" name="subscriptionId" aria-label="Subscription ID" placeholder="Subscription ID" tabindex="10">
+						<input class="btn greenBtn" type="submit" name="subscriptionSubmit" aria-label="Subscription submit button" value="Submit">
 					</div>
 				</form>
 			</div>
@@ -31,23 +31,24 @@ function showUpdateForm($obj=NULL){
 	if($obj->status == "Active" || $obj->status == "Pending"){
 ?>
 						<div class="form-group">
-							<label>Subscription ID 
-								<input type="text" placeholder="Subscription ID" name="subscriptionId" tabindex="10" value="<?=$obj->id?>"></label>
+							<label class="sr-only">Subscription ID </label>
+							<input type="text" name="subscriptionId" tabindex="10" value="<?=$obj->id?>" aria-label="Subscription ID" placeholder="Subscription ID">
 						</div>
 						<div class="form-group">
-							<label>Price 
-								<input type="number" placeholder="Price" name="price" tabindex="10" value="<?=$obj->price?>"></label>
+							<label class="sr-only">Price </label>
+							<input type="number" name="price" tabindex="10" value="<?=$obj->price?>" aria-label="Subscription Price" placeholder="Price">
 						</div>
 						<div class="form-group">
-							<label>Plan ID 
-								<input type="text" placeholder="Plan" name="planId" tabindex="20" value="<?=$obj->planId?>"></label>
+							<label class="sr-only">Plan ID </label>
+							<input type="text" name="planId" tabindex="20" value="<?=$obj->planId?>" aria-label="Subscription Plan ID" placeholder="Subscription Plan ID">
 						</div>
 						<div class="form-group">
-							<label>Payment Method 
-								<input type="text" placeholder="Payment Method" name="pmtMethodToken" tabindex="30" value="<?=$obj->paymentMethodToken?>"></label>
+							<label class="sr-only">Payment Method </label>
+							<input type="text" placeholder="Payment Method" name="pmtMethodToken" tabindex="30" value="<?=$obj->paymentMethodToken?>" aria-label="Payment Method" placeholder="Payment Method">
 						</div>
 						<div class="form-group">
-							<label for="">Merchant Account ID <input type="text" placeholder="Merchant Account ID" name="maid" tabindex="32" value="<?=$obj->merchantAccountId?>"></label>
+							<label class="sr-only">Merchant Account ID </label>
+							<input type="text" name="maid" tabindex="32" value="<?=$obj->merchantAccountId?>" aria-label="Merchant Account ID" placeholder="Merchant Account ID">
 							</div>
 						<!-- @TODO calculate fields for add-ons and discounts with conditionals -->
 						<div class="form-group">
@@ -59,43 +60,42 @@ function showUpdateForm($obj=NULL){
 			foreach($obj->addOns as $addon){
 ?>
 						<div class="form-group">
-							<label>Update this add-on &ensp;
-								<input type="radio" name="addOnHandler<?=$indexVal?>" value="updateAddOn" checked> &emsp;
-							</label>
-							<label>Remove this add-on &ensp;
-								<input type="radio" name="addOnHandler<?=$indexVal?>" value="removeAddOn"> &emsp;
-							</label>
+							<label class="sr-only">Update this add-on &ensp;
+							<input type="radio" name="addOnHandler<?=$indexVal?>" aria-label="Update this add-on" value="updateAddOn" checked> &emsp;
+							<label class="sr-only">Remove this add-on &ensp;</label>
+							<input type="radio" name="addOnHandler<?=$indexVal?>" aria-label="Remove this add-on" value="removeAddOn"> &emsp;
 						</div>
 						<div class="form-group">
-							<label>Add On <?=$indexVal?> Amount: 
-								<input type="number" placeholder="Amount" name="addOnAmt<?=$indexVal?>" tabindex="<?=$digit?>" value="<?=$addon->amount?>"><?php $digit++; ?></label>
+							<label class="sr-only">Add On <?=$indexVal?> Amount: </label>
+							<input type="number" name="addOnAmt<?=$indexVal?>" tabindex="<?=$digit?>" value="<?=$addon->amount?>"><?php $digit++; ?>" aria-label="Add On <?=$indexVal?> Amount" placeholder="Add On <?=$indexVal?> Amount">
 						</div>
 						<div class="form-group">
-							<label>Add On <?=$indexVal?> Current Billing Cycle: 
-								<input type="text" placeholder="Current Billing Cycle" name="addOnCurrBillCycle<?=$indexVal?>" tabindex="<?=$digit?>" value="<?=$addon->currentBillingCycle?>"><?php $digit++; ?></label>
+							<label class="sr-only">Add On <?=$indexVal?> Current Billing Cycle: </label>
+							<input type="text" name="addOnCurrBillCycle<?=$indexVal?>" tabindex="<?=$digit?>" value="<?=$addon->currentBillingCycle?>" aria-label="Add On <?=$indexVal?> Current Billing Cycle" placeholder="Add On <?=$indexVal?> Current Billing Cycle"><?php $digit++; ?>
 						</div>
 						<div class="form-group">
-							<label>Add On <?=$indexVal?> ID: 
-								<input type="text" placeholder="Add On ID" name="addOnId<?=$indexVal?>" tabindex="<?=$digit?>" value="<?=$addon->id?>"><?php $digit++; ?></label>
+							<label class="sr-only">Add On <?=$indexVal?> ID: </label>
+							<input type="text" placeholder="Add On ID" name="addOnId<?=$indexVal?>" tabindex="<?=$digit?>" value="<?=$addon->id?>" aria-label="Add On <?=$indexVal?> ID" placeholder="Add On <?=$indexVal?> ID"><?php $digit++; ?>
 						</div>
 						<div class="form-group">
-							<label>Add On <?=$indexVal?> Name: 
-								<input type="text" placeholder="Add On Name" name="addOnName<?=$indexVal?>" tabindex="<?=$digit?>" value="<?=$addon->name?>"><?php $digit++; ?></label>
+							<label class="sr-only">Add On <?=$indexVal?> Name: </label>
+							<input type="text" placeholder="Add On Name" name="addOnName<?=$indexVal?>" tabindex="<?=$digit?>" value="<?=$addon->name?>" aria-label="Add On <?=$indexVal?> Name" placeholder="Add On <?=$indexVal?> Name"><?php $digit++; ?>
 						</div>
 <?php
+				// @TODO make "never expires" a checkbox
 				if($addon->neverExpires == true ){
-									echo "<div class='form-group'><label>Add On $indexVal Never Expires: <input type='text' placeholder='Never Expires' name='addOnNeverExpires{$indexVal}' tabindex='{$digit}' value='true'></label></div>"; $digit++;
+									echo "<div class='form-group'><label class='sr-only'>Add On {$indexVal} Never Expires: </label><input type='text' name='addOnNeverExpires{$indexVal}' tabindex='{$digit}' value='true' aria-label='Add On {$indexVal} Never Expires' placeholder='Add On {$indexVal} Never Expires'></div>"; $digit++;
 				} elseif($addon->neverExpires == false){
-									echo "<div class='form-group><label>Add On $indexVal Never Expires: <input type='text' placeholder='Never Expires' name='addOnNeverExpires{$indexVal}' tabindex='{$digit}' value='false'></label></div>"; $digit++;
+									echo "<div class='form-group><label class='sr-only'>Add On {$indexVal} Never Expires: </label><input type='text' placeholder='Never Expires' name='addOnNeverExpires{$indexVal}' tabindex='{$digit}' value='false' aria-label='Add On {$indexVal} Never Expires' placeholder='Add On {$indexVal} Never Expires'></div>"; $digit++;
 				}
 ?>
 						<div class="form-group">
-							<label>Add On <?=$indexVal?> Number of Billing Cycles: 
-								<input type="number" placeholder="Number of Billing Cycles" name="addOnNumBillCycles<?=$indexVal?>" tabindex="<?=$digit?>" value="<?=$addon->numberOfBillingCycles?>"><?php $digit++; ?></label>
+							<label class="sr-only">Add On <?=$indexVal?> Number of Billing Cycles: </label>
+							<input type="number" name="addOnNumBillCycles<?=$indexVal?>" tabindex="<?=$digit?>" value="<?=$addon->numberOfBillingCycles?>" aria-label="Add On <?=$indexVal?> Number of Billing Cycles" placeholder="Add On <?=$indexVal?> Number of Billing Cycles"><?php $digit++; ?>
 						</div>
 						<div class="form-group">
-							<label>Add On <?=$indexVal?> Quantity: 
-								<input type="number" placeholder="Quantity" name="addOnQuantity<?=$indexVal?>" tabindex="<?=$digit?>" value="<?=$addon->quantity?>"><?php $digit++; ?></label>
+							<label class="sr-only">Add On <?=$indexVal?> Quantity: </label>
+								<input type="number" placeholder="Quantity" name="addOnQuantity<?=$indexVal?>" tabindex="<?=$digit?>" value="<?=$addon->quantity?>" aria-label="Add On <?=$indexVal?> Quantity" placeholder="Add On <?=$indexVal?> Quantity"><?php $digit++; ?>
 						</div>
 						<hr class="bt">
 <?php
@@ -124,42 +124,43 @@ function showUpdateForm($obj=NULL){
 ?>
 						<div class="form-group">
 							<label>Update this discount &ensp;
-								<input type="radio" name="discountHandler<?=$indexVal?>" value="updateDiscount" checked> &emsp;
+								<input type="radio" name="discountHandler<?=$indexVal?>" aria-label="Update this discount" value="updateDiscount" checked> &emsp;
 							</label>
 							<label>Remove this discount &ensp;
-								<input type="radio" name="discountHandler<?=$indexVal?>" value="removeDiscount"> &emsp;
+								<input type="radio" name="discountHandler<?=$indexVal?>" aria-label="Remove this discount" value="removeDiscount"> &emsp;
 							</label>
 						</div>
 						<div class="form-group">
-							<label>Discount <?=$indexVal?> Amount: 
-								<input type="number" placeholder="Amount" name="discountAmt<?=$indexVal?>" tabindex="<?=$digit?>" value="<?=$discount->amount?>"><?php $digit++; ?></label>
+							<label class="sr-only">Discount <?=$indexVal?> Amount: </label>
+							<input type="number" placeholder="Amount" name="discountAmt<?=$indexVal?>" tabindex="<?=$digit?>" value="<?=$discount->amount?>" aria-label="zzz" placeholder="zzz"><?php $digit++; ?>
 						</div>
 						<div class="form-group">
-							<label>Discount <?=$indexVal?> Current Billing Cycle: 
-								<input type="text" placeholder="Current Billing Cycle" name="discountCurrBillCycle<?=$indexVal?>" tabindex="<?=$digit?>" value="<?=$discount->currentBillingCycle?>"><?php $digit++; ?></label>
+							<label class="sr-only">Discount <?=$indexVal?> Current Billing Cycle: </label>
+							<input type="text" placeholder="Current Billing Cycle" name="discountCurrBillCycle<?=$indexVal?>" tabindex="<?=$digit?>" value="<?=$discount->currentBillingCycle?>" aria-label="zzz" placeholder="zzz"><?php $digit++; ?>
 						</div>
 						<div class="form-group">
-							<label>Discunt <?=$indexVal?> ID: 
-								<input type="text" placeholder="Discount ID" name="discountId<?=$indexVal?>" tabindex="<?=$digit?>" value="<?=$discount->id?>"><?php $digit++; ?></label>
+							<label class="sr-only">Discunt <?=$indexVal?> ID: </label>
+							<input type="text" placeholder="Discount ID" name="discountId<?=$indexVal?>" tabindex="<?=$digit?>" value="<?=$discount->id?>" aria-label="zzz" placeholder="zzz"><?php $digit++; ?>
 						</div>
 						<div class="form-group">
-							<label>Discount <?=$indexVal?> Name:
-								<input type="text" placeholder="Discount Name" name="discountName<?=$indexVal?>" tabindex="<?=$digit?>" value="<?=$discount->name?>"><?php $digit++; ?></label>
+							<label class="sr-only">Discount <?=$indexVal?> Name: </label>
+							<input type="text" placeholder="Discount Name" name="discountName<?=$indexVal?>" tabindex="<?=$digit?>" value="<?=$discount->name?>" aria-label="zzz" placeholder="zzz"><?php $digit++; ?>
 						</div>
 <?php
+				// @TODO set the "never expires" value as a checkbox
 				if($discount->neverExpires == true ){
-									echo "<div class='form-group'><label>Discount $indexVal Never Expires: <input type='text' placeholder='Never Expires{$indexVal}' name='discountNeverExpires{$indexVal}' tabindex='{$digit}' value='true'></label></div>"; $digit++;
+									echo "<div class='form-group'><label class='sr-only'>Discount {$indexVal} Never Expires: </label><input type='text' placeholder='Never Expires' name='discountNeverExpires{$indexVal}' tabindex='{$digit}' value='true' aria-label='Discount Never Expires{$indexVal}'></div>"; $digit++;
 				} elseif($discount->neverExpires == false){
-									echo "<div class='form-group'><label>Discount $indexVal Never Expires: <input type='text' placeholder='Never Expires' name='discountNeverExpires{$indexVal}' tabindex='{$digit}' value='false'></label></div>"; $digit++;
+									echo "<div class='form-group'><label class='sr-only'>Discount {$indexVal} Never Expires: <input type='text' placeholder='Never Expires' name='discountNeverExpires{$indexVal}' tabindex='{$digit}' value='false' aria-label='Discount Never Expires{$indexVal}'></div>"; $digit++;
 				}
 ?>
 						<div class="form-group">
-							<label>Discount <?=$indexVal?> Number of Billing Cycles: 
-								<input type="number" placeholder="Number of Billing Cycles" name="discountNumBillCycles<?=$indexVal?>" tabindex="<?=$digit?>" value="<?=$discount->numberOfBillingCycles?>"><?php $digit++; ?></label>
+							<label class="sr-only">Discount <?=$indexVal?> Number of Billing Cycles: </label>
+							<input type="number" name="discountNumBillCycles<?=$indexVal?>" tabindex="<?=$digit?>" value="<?=$discount->numberOfBillingCycles?>" aria-label="Number of Billing Cycles" placeholder="Number of Billing Cycles"><?php $digit++; ?>
 						</div>
 						<div class="form-group">
-							<label>Discount <?=$indexVal?> Quantity:
-								<input type="number" placeholder="Quantity" name="discountQuantity<?=$indexVal?>" tabindex="<?=$digit?>" value="<?=$discount->quantity?>"><?php $digit++; ?></label>
+							<label>Discount <?=$indexVal?> Quantity: </label>
+							<input type="number" name="discountQuantity<?=$indexVal?>" tabindex="<?=$digit?>" value="<?=$discount->quantity?>" aria-label="Discount <?=$indexVal?> Quantity" placeholder="Discount <?=$indexVal?> Quantity"><?php $digit++; ?>
 						</div>
 						<hr class="bt">
 <?php
@@ -187,16 +188,16 @@ function showUpdateForm($obj=NULL){
 			foreach($obj->descriptor as $descrip){
 ?>
 						<div class="form-group">
-							<label>Descriptor Name
-								<input type="text" placeholder="Descriptor Name" name="descripName" tabindex="<?=$digit?>" value="<?=$descrip['name']?>"><?php $digit++; ?></label>
+							<label class="sr-only">Descriptor Name
+							<input type="text" name="descripName" tabindex="<?=$digit?>" value="<?=$descrip['name']?>" aria-label="Descriptor Name" placeholder="Descriptor Name"><?php $digit++; ?>
 						</div>
 						<div class="form-group">
-							<label>Descriptor Phone
-								<input type="tel" placeholder="Descriptor Phone" name="descripPhone" tabindex="<?=$digit?>" value="<?=$descrip['phone']?>"><?php $digit++; ?></label>
+							<label>Descriptor Phone</label>
+							<input type="tel" name="descripPhone" tabindex="<?=$digit?>" value="<?=$descrip['phone']?>" aria-label="Descriptor Phone" placeholder="Descriptor Phone"><?php $digit++; ?>
 						</div>
 						<div class="form-group">
-							<label>Descriptor URL
-								<input type="url" placeholder="Descriptor URL" name="descripUrl" tabindex="<?=$digit?>" value="<?=$descrip['url']?>"><?php $digit++; ?></label>
+							<label class="sr-only">Descriptor URL</label>
+							<input type="url" name="descripUrl" tabindex="<?=$digit?>" value="<?=$descrip['url']?>" aria-label="Descriptor URL" placeholder="Descriptor URL"><?php $digit++; ?>
 						</div>
 <?php
 			}
@@ -211,37 +212,38 @@ function showUpdateForm($obj=NULL){
 	} elseif($obj->status == "Past Due") {
 ?>
 					<div class="form-group">
-						<label>Subscription ID
-							<input type="text" placeholder="Subscription ID" name="subscriptionId" tabindex="10" value="<?=$obj->id?>"></label>
+						<label class="sr-only">Subscription ID</label>
+						<input type="text" name="subscriptionId" tabindex="10" value="<?=$obj->id?>" aria-label="Subscription ID" placeholder="Subscription ID">
 					</div>
 					<div class="form-group">
-						<label>Payment Method
-							<input type="text" placeholder="Payment Method" name="pmtMethodToken" tabindex="20" value="<?=$obj->id?>"></label>
+						<label class="sr-only">Payment Method</label>
+						<input type="text" name="value="<?=$obj->id?>" aria-label="Payment Method" placeholder="Payment Method">
 					</div>
 					<div class="form-group">
-						<label>Merchant Account
-							<input type="text" placeholder="Merchant Account" name="maid" tabindex="30" value="<?=$obj->id?>"></label>
+					<?php // @TODO gather this from user login when available ?>
+						<label class="sr-only">Merchant Account</label>
+						<input type="text" placeholder="Merchant Account" name="maid" tabindex="30" value="<?=$obj->id?>" aria-label="Merchant Account" placeholder="Merchant Account">
 					</div>
 <?php
 	foreach($obj->descriptor as $descrip){
 ?>
 					<div class="form-group">
-						<label>Descriptor Name
-							<input type="text" placeholder="Descriptor Name" name="descripName" tabindex="<?=$digit?>" value="<?=$descrip['name']?>"><?php $digit++; ?></label>
+						<label class="sr-only">Descriptor Name</label>
+						<input type="text" name="descripName" tabindex="<?=$digit?>" value="<?=$descrip['name']?>" aria-label="Descriptor Name" placeholder="Descriptor Name"><?php $digit++; ?>
 					</div>
 					<div class="form-group">
-						<label>Descriptor Phone
-							<input type="tel" placeholder="Descriptor Phone" name="descripPhone" tabindex="<?=$digit?>" value="<?=$descrip['phone']?>"><?php $digit++; ?></label>
+						<label class="sr-only">Descriptor Phone</label>
+						<input type="tel" name="descripPhone" tabindex="<?=$digit?>" value="<?=$descrip['phone']?>" aria-label="Descriptor Phone" placeholder="Descriptor Phone"><?php $digit++; ?>
 					</div>
 					<div class="form-group">
-						<label>Descriptor URL
-							<input type="url" placeholder="Descriptor URL" name="descripUrl" tabindex="<?=$digit?>" value="<?=$descrip['url']?>"><?php $digit++; ?></label>
+						<label class="sr-only">Descriptor URL</label>
+						<input type="url" name="descripUrl" tabindex="<?=$digit?>" value="<?=$descrip['url']?>" aria-label="Descriptor URL" placeholder="Descriptor URL"><?php $digit++; ?>
 					</div>
 <?php
-	}
-}
+	} // END foreach 
+} // END elseif($obj->status == "Past Due")
 ?>
-					<input class="btn greenBtn" type="submit" name="updateSubmit" value="Submit" tabindex="150">
+					<input class="btn greenBtn" type="submit" name="updateSubmit" aria-label="Submit button" value="Submit" tabindex="150">
 				</form>
 			</div>
 		</div>
@@ -269,12 +271,13 @@ if(isset($_POST['subscriptionSubmit'])){ // if the choose subscription form was 
 				if(thisBtn.parent().parent().hasClass("addAnAddOn")){
 					console.info("add on");
 					var addOnFields = "<section class='newAddOn'><div class='form-group'>New Add On"+ 
-					  "<br><input class='col-md-5' type='number' placeholder='Amount' name='newAddOnAmount"+ initAddOnVal +"'></div>" +
-					  "<div class='form-group'><input class='col-md-5' type='text' placeholder='ID (This add-on ID must already exist in your account)' name='newAddOnInheritedFromId" + initAddOnVal + "'></div>" +
-					  "<div class='form-group'><input class='col-md-5' type='text' placeholder='Never Expires (should be true or false)' name='newAddOnNeverExpires"+ initAddOnVal +"'></div>" +
-					  "<div class='form-group'><input class='col-md-5' type='number' placeholder='Number Of Billing Cycles' name='newAddOnNumberOfBillingCycles"+ initAddOnVal +"'></div>" +
-					  "<div class='form-group'><input class='col-md-5' type='number' placeholder='Quantity' name='newAddOnQuantity"+ initAddOnVal +"'></div>" +
-					  "<div class='form-group'>Cancel this Add-On <span class='glyphicon glyphicon-minus-sign'></span></div>" +
+					  "<br><input class='col-md-5' type='number' name='newAddOnAmount"+ initAddOnVal +"' aria-label='Add-On Amount' placeholder='Add-On Amount'></div>" +
+					  "<div class='form-group'><input class='col-md-5' type='text' name='newAddOnInheritedFromId" + initAddOnVal + "' aria-label='ID (This add-on ID must already exist in your account)' placeholder='ID (This add-on ID must already exist in your account)'></div>" +
+					  // @TODO make this field a checkbox for "never expires"
+					  "<div class='form-group'><input class='col-md-5' type='text' name='newAddOnNeverExpires"+ initAddOnVal +"' aria-label='Never Expires (should be true or false)' placeholder='Never Expires (should be true or false)'></div>" +
+					  "<div class='form-group'><input class='col-md-5' type='number' name='newAddOnNumberOfBillingCycles"+ initAddOnVal +"' aria-label='Number of Billing Cycles' placeholder='Number of Billing Cycles'></div>" +
+					  "<div class='form-group'><input class='col-md-5' type='number' name='newAddOnQuantity"+ initAddOnVal +"' aria-label='Quantity' placeholder='Quantity'></div>" +
+					  "<div class='form-group'>Cancel this Add-On <span class='glyphicon glyphicon-minus-sign' aria-hidden='true'></span></div>" +
 					  "<hr class='bt'></section>";
 					$(addOnFields).insertBefore(thisBtn.parent());
 
@@ -282,12 +285,13 @@ if(isset($_POST['subscriptionSubmit'])){ // if the choose subscription form was 
 				} else if(thisBtn.parent().parent().hasClass("addADiscount")){
 					console.info("discount");
 					var discountFields = "<section class='newDiscount'><div class='form-group'>New Discount"+ 
-					  "<br><input class='col-md-5' type='number' placeholder='Amount' name='newDiscountAmount"+ initDiscountVal +"'></div>" +
-					  "<div class='form-group'><input class='col-md-5' type='text' placeholder='ID (This discount ID must already exist in your account)' name='newDiscountInheritedFromId"+ initDiscountVal +"'> &nbsp; <span class='red'>*</span></div>" +
-					  "<div class='form-group'><p><input class='col-md-5' type='text' placeholder='Never Expires (should be true or false)' name='newDiscountNeverExpires"+ initDiscountVal +"'></div>" +
-					  "<div class='form-group'><input class='col-md-5' type='number' placeholder='Number Of Billing Cycles' name='newDiscountNumberOfBillingCycles"+ initDiscountVal +"'></div>" +
-					  "<div class='form-group'><input class='col-md-5' type='number' placeholder='Quantity' name='newDiscountQuantity"+ initDiscountVal +"'></div>" +
-					  "<div class='form-group'>Cancel this Discount <span class='glyphicon glyphicon-minus-sign'></span></div>" +
+					  "<br><input class='col-md-5' type='number' name='newDiscountAmount"+ initDiscountVal +"' aria-label='New Discount Amount' placeholder='New Discount Amount'></div>" +
+					  "<div class='form-group'><input class='col-md-5' type='text' name='newDiscountInheritedFromId"+ initDiscountVal +"' aria-label='Discount ID (This Discount ID must already exist in your account' placeholder='Discount ID (This Discount ID must already exist in your account'> &nbsp; <span class='red'>*</span></div>" +
+					  // @TODO make "never expires" into a checkbox
+					  "<div class='form-group'><p><input class='col-md-5' type='text' name='newDiscountNeverExpires"+ initDiscountVal +"' aria-label='Never Expires (should be true or false)' placeholder='Never Expires (should be true or false)'></div>" +
+					  "<div class='form-group'><input class='col-md-5' type='number' name='newDiscountNumberOfBillingCycles"+ initDiscountVal +"' aria-label='Number of Billing Cycles' placeholder='Number of Billing Cycles'></div>" +
+					  "<div class='form-group'><input class='col-md-5' type='number' name='newDiscountQuantity"+ initDiscountVal +"' aria-label='Discount Quantity' placeholder='Discount Quantity'></div>" +
+					  "<div class='form-group'>Cancel this Discount <span class='glyphicon glyphicon-minus-sign aria-hidden='true'></span></div>" +
 					  "<hr class='bt'></section>";
 					$(discountFields).insertBefore(thisBtn.parent().parent());
 					initDiscountVal++;

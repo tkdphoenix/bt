@@ -11,11 +11,12 @@
 	require_once(LIB_PATH . DS . "btVars.php");
 	require_once(LIB_PATH . DS . "inc" . DS . "common.inc.php");
 
+	// @TODO may be able to create a table with subscription IDs similar to createSubscription.php
 	function showForm($values=NULL){
 ?>
 		<form id="findSubscriptionForm" class="form-horizontal" method="post" action="<?php echo htmlspecialchars("?"); ?>">
-			<input id="planNameBox" type="text" name="subscrId" placeholder="Subscription ID" tabindex="10">
-			<input class="btn greenBtn" type="submit" name="submit" value="Submit" tabindex="20">
+			<input id="planNameBox" type="text" name="subscrId" aria-label="Subscription ID" placeholder="Subscription ID" tabindex="10">
+			<input class="btn greenBtn" type="submit" name="submit" aria-label="Submit Button" value="Submit" tabindex="20">
 		</form>
 <?php		
 	} // END showForm()

@@ -57,6 +57,7 @@ h1,h2,h3,h4,h5,h6, .planTable .plan{
 }
 .form-control.braintree-hosted-fields-invalid{ border: 1px solid red; }
 .glyphicon{ color: #69c4a7; }
-hr.bt { border-top: 1px solid #69c4a7; }
+hr.bt{ border-top: 1px solid #69c4a7; }
 .red{ color: #c00; }
+section{ margin-bottom: 30px; }
 

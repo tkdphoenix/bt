@@ -66,7 +66,7 @@
 			<div class="col-md-12">
 				<form id="checkout" class="form-horizontal" method="post" action="<?php echo htmlspecialchars("?"); ?>">
 					<div id="myDropin"></div>
-					<input type="submit" value="Pay $50">
+					<input type="submit" aria-label="Button - Pay $50" value="Pay $50">
 				</form>				
 			</div>
 		</div>

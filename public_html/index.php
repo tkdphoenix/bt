@@ -5,6 +5,9 @@
 
 	$clientToken = Braintree_ClientToken::generate();
 
+	// @TODO move form into showForm() function
+	// @TODO add PWPP button
+	
 	// test if the nonce has been posted
 	if(isset($_POST['payment_method_nonce'])){
 		$nonce = strip_tags($_POST['payment_method_nonce']);
@@ -62,27 +65,23 @@
 					<div class="col-md-12">
 						<form id="checkout" class="form-horizontal" method="post" action="<?php echo htmlspecialchars("?"); ?>">
 							<div class="form-group">
-								<label for="num">Card Number
-									<input id="num" class="form-control" data-braintree-name="number" value="4111111111111111">
-								</label>
+								<label for="num">Card Number</label>
+									<input id="num" class="form-control" data-braintree-name="number" aria-label="Card Number" placeholder="Card Number" value="4111111111111111">
 							</div>
 							<div class="form-group">
-								<label for="mo">Month
-									<input id="mo" class="form-control" data-braintree-name="expiration_month" value="11">
-								</label>
+								<label for="mo">Month</label>
+									<input id="mo" class="form-control" data-braintree-name="expiration_month" aria-label="Month" placeholder="Month" value="11">
 							</div>
 							<div class="form-group">
-								<label for="yr">Year (yy)
-									<input id="yr" class="form-control" data-braintree-name="expiration_year" value="18">
-								</label>
+								<label for="yr">Year (yy)</label>
+									<input id="yr" class="form-control" data-braintree-name="expiration_year" aria-label="Year (yy)" placeholder="Year (yy)" value="18">
 							</div>
 							<div class="form-group">
-								<label for="cvv">CVV
-									<input id="cvv" class="form-control" data-braintree-name="cvv" value="111">
-								</label>
+								<label for="cvv">CVV</label>
+									<input id="cvv" class="form-control" data-braintree-name="cvv" aria-label="CVV" placeholder="CVV" value="111">
 							</div>
 							<div class="form-group">
-								<input class="btn greenBtn" type="submit" name="submit" id="submitCustom" value="Pay">
+								<input class="btn greenBtn" type="submit" name="submit" id="submitCustom" aria-label="Pay button" value="Pay">
 							</div>
 						</form>
 					</div>

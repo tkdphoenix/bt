@@ -4,9 +4,7 @@ defined("DS")? null : require_once(realpath(dirname(__FILE__) . DIRECTORY_SEPARA
 require_once(LIB_PATH . DS . "btVars.php");
 require_once(LIB_PATH . DS . "inc" . DS . "common.inc.php");
 
-showBTHeader("Find Customer", "Find Customer");
-
-
+// @TODO may be able to create a list of customers similar to createSubscription.php
 function showForm($errorsArr=[]){
 	if(isset($errorsArr)){
 		foreach($errorsArr as $errMsg){
@@ -18,15 +16,14 @@ function showForm($errorsArr=[]){
 			<div class="row">
 				<div class="col-md-12">
 					<form id="newCustForm" class="form-horizontal" method="post" action="<?php echo htmlspecialchars("?"); ?>">
-						<h3>Find a Cusomter</h3>
 						<div class="form-group">
-							<label for="custId" class="col-md-3 control-label">Customer ID</label>
+							<label for="custId" class="col-md-3 sr-only">Customer ID</label>
 							<div class="col-md-9">
-								<input type="text" id="custId" class="form-control" name="custId" value="<?php echo (isset($_POST['custId']))? strip_tags($_POST['custId']): ''; ?>" placeholder="Customer ID" required>
+								<input type="text" id="custId" class="form-control" name="custId" value="<?php echo (isset($_POST['custId']))? strip_tags($_POST['custId']): ''; ?>" aria-label="Customer ID" placeholder="Customer ID" required>
 							</div>
 						</div>
 						
-						<input type="submit" name="findCustSubmit" value="Find Customer">	
+						<input class="btn greenBtn" type="submit" name="findCustSubmit" aria-label="Find Customer Button" value="Find Customer">	
 					</form>
 				</div>
 			</div>
@@ -84,6 +81,8 @@ if(isset($_POST['findCustSubmit'])){ // if the form has been submitted
 	</div>
 <?php	
 } else { // the form has not been submitted, so display the form
+	showBTHeader("Find a Customer", "Find a Customer");
+	showBTLeftNav();
 	showForm();
 }
 ?>

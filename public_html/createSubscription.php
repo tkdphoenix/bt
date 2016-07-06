@@ -4,7 +4,7 @@
 defined("DS")? null : require_once(realpath(dirname(__FILE__) . DIRECTORY_SEPARATOR . "..") . DIRECTORY_SEPARATOR . "inc" . DIRECTORY_SEPARATOR . "initialize.php");
 
 require_once(LIB_PATH . DS . "btVars.php");
-require_once("../inc/common.inc.php");
+require_once(LIB_PATH . DS . "inc" . DS . "common.inc.php");
 
 // function to show the form to be filled out
 function showForm($errorsArr=[]){
@@ -14,13 +14,11 @@ function showForm($errorsArr=[]){
 			<div class="col-md-12">
 				<form id="subscriptionForm" class="form-horizontal" action="<?php echo htmlspecialchars("?"); ?>" method="post">
 					<div class="form-group">
-						<label for="token">Payment Token
-							<input type="text" class="planBoxes" name="paymentMethodToken" tabindex="10" placeholder="Payment Token" required>
-						</label>
-						<label for="token">Subscription Plan
-							<input type="text" id="planId" class="planBoxes" name="planId" tabindex="20" placeholder="Subscription Plan" required>
-						</label>
-						<input class="btn greenBtn" type="submit" name="subscriptionSubmit" value="Create Subscription">
+						<label for="token" class="sr-only">Payment Token</label>
+						<input type="text" class="planBoxes" name="paymentMethodToken" tabindex="10" aria-label="Payment Token" placeholder="Payment Token" required>
+						<label for="token" class="sr-only">Subscription Plan</label>
+						<input type="text" id="planId" class="planBoxes" name="planId" tabindex="20" aria-label="Subscription Plan" placeholder="Subscription Plan" required>
+						<input class="btn greenBtn" type="submit" name="subscriptionSubmit" aria-label="Create Subscription Button" value="Create Subscription">
 					</div>
 				</form>
 			</div>

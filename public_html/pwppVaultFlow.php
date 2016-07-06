@@ -21,7 +21,7 @@ if ($result->success) {
 ?>
     <form id="" action="?" method="post">
       <div id="paypal-container"></div>
-      <input id="submit" type="submit" name="submit" value="Submit" />
+      <input id="submit" type="submit" name="submit" aria-label="Submit button" value="Submit">
     </form>
     <script src="https://js.braintreegateway.com/js/braintree-2.24.1.min.js"></script>
     <script type="text/javascript">

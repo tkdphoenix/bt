@@ -72,22 +72,22 @@
 					<div class="col-md-12">
 						<form id="checkout" class="form-horizontal" method="post" action="<?php echo htmlspecialchars("?"); ?>">
 							<div class="form-group">
-								<label for="cardNum">Card Number
-									<div id="cardNum" class="form-control"></div>
+								<label class=".sr-only" for="cardNum">Card Number
+									<div id="cardNum" aria-label="card number" class="form-control"></div>
 								</label>
 							</div>
 							<div class="form-group">
-								<label for="expDate">Expiration Date
-									<div id="expDate" class="form-control" tabindex="25"></div>
+								<label class=".sr-only" for="expDate">Expiration Date
+									<div id="expDate" aria-label="expiration date" class="form-control" tabindex="25"></div>
 								</label>
 							</div>
 							<div class="form-group">
-								<label for="cvv">CVV
-									<div id="cvv" class="form-control"></div>
+								<label class=".sr-only" for="cvv">CVV
+									<div id="cvv" aria-label="cvv" class="form-control"></div>
 								</label>
 							</div>
 							<div class="form-group">
-								<input class="btn greenBtn" type="submit" name="submit" id="submitCustom" value="Pay">
+								<input class="btn greenBtn" type="submit" name="submit" id="submitCustom" aria-label="Pay button" value="Pay">
 							</div>
 						</form>
 					</div>

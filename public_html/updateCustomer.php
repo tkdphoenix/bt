@@ -18,13 +18,13 @@ function showSearchForm(){
 				<form id="searchForm" class="form-horizontal" method="post" action="<?php echo htmlspecialchars("?"); ?>">
 					<h3>Search for a Customer to Update</h3>
 					<div class="form-group">
-						<label for="searchID">Customer ID to search for</label>
+						<label for="searchID" class="sr-only">Customer ID to search for</label>
 						<div class="col-md-9">
-							<input type="text" id="searchId" class="form-control" name="searchId" value="<?php echo (isset($_POST['searchId']))? strip_tags($_POST['searchId']): ''; ?>" required>
+							<input type="text" id="searchId" class="form-control" name="searchId" value="<?php echo (isset($_POST['searchId']))? strip_tags($_POST['searchId']): ''; ?>" aria-label="Customer ID to search for" placeholder="Customer ID to search for" required>
 						</div>
 					</div>
 
-						<input class="btn greenBtn" type="submit" name="searchCustSubmit" value="Search Customer">
+						<input class="btn greenBtn" type="submit" name="searchCustSubmit" aria-label="Search Customer button" value="Search Customer">
 				</form>
 			</div>
 		</div>
@@ -42,7 +42,8 @@ function showSearchForm(){
  *	@param $errorsArray (array) - an array that contains all of the errors from the form validation after submission (server side validation) and their messages to be displayed on the page if errors are found. The errors should appear at the top of the form. This parameter is optional.
  * @return - nothing is returned from this function, since HTML is produced on the page where the function is invoked.
  */
-function showForm($submitted = array(), $errorsArr=[]){
+// @TODO correct form to have same params as other showForm() methods with values and error object
+function showForm($submitted = array(), $errorsArr=NULL){
 	if(!empty($errorsArr)){
 		foreach($errorsArr as $errMsg){
 			echo "<p class='alert alert-danger'>". $errMsg ."</p>";
@@ -55,51 +56,51 @@ function showForm($submitted = array(), $errorsArr=[]){
 				<form id="updateCustForm" class="form-horizontal" method="post" action="<?php echo htmlspecialchars("?"); ?>">
 					<h3>Customer Details</h3>
 					<div class="form-group">
-						<label for="first" class="col-md-3 control-label">First Name</label>
+						<label for="first" class="col-md-3 sr-only">First Name</label>
 						<div class="col-md-9">
-							<input type="text" id="first" class="form-control" name="first" value="<?php echo (!empty($submitted['firstName']))? $submitted['firstName']: ''; ?>" required>
+							<input type="text" id="first" class="form-control" name="first" value="<?php echo (!empty($submitted['firstName']))? $submitted['firstName']: ''; ?>" aria-label="First name" placeholder="First name" required>
 						</div>
 					</div>
 					
 					<div class="form-group">
-						<label for="last" class="col-md-3 control-label">Last Name</label>
+						<label for="last" class="col-md-3 sr-only">Last Name</label>
 						<div class="col-md-9">
-							<input type="text" id="last" class="form-control" name="last" value="<?php echo (!empty($submitted['lastName']))? $submitted['lastName']: ''; ?>" required>
+							<input type="text" id="last" class="form-control" name="last" value="<?php echo (!empty($submitted['lastName']))? $submitted['lastName']: ''; ?>" aria-label="Last Name" placeholder="Last Name" required>
 						</div>
 					</div>
 					
 					<div class="form-group">
-						<label for="company" class="col-md-3 control-label">Company</label>
+						<label for="company" class="col-md-3 sr-only">Company</label>
 						<div class="col-md-9">
-							<input type="text" id="company" class="form-control" name="company" value="<?php echo (!empty($submitted['company']))? $submitted['company']: ''; ?>">
+							<input type="text" id="company" class="form-control" name="company" value="<?php echo (!empty($submitted['company']))? $submitted['company']: ''; ?>" aria-label="Company">
 						</div>
 					</div>
 					
 					<div class="form-group">
-						<label for="email" class="col-md-3 control-label">Email </label>
+						<label for="email" class="col-md-3 sr-only">Email </label>
 						<div class="col-md-9">
-							<input type="email" id="email" class="form-control" name="email" value="<?php echo (!empty($submitted['email']))? $submitted['email']: ''; ?>" required>
+							<input type="email" id="email" class="form-control" name="email" value="<?php echo (!empty($submitted['email']))? $submitted['email']: ''; ?>" aria-label="Email Address" required>
 						</div>
 					</div>
 					
 					<div class="form-group">
-						<label for="phone" class="col-md-3 control-label">Phone </label>
+						<label for="phone" class="col-md-3 sr-only">Phone </label>
 						<div class="col-md-9">
-							<input type="tel" id="phone" class="form-control" name="phone" value="<?php echo (!empty($submitted['phone']))? $submitted['phone']: ''; ?>" required>
+							<input type="tel" id="phone" class="form-control" name="phone" value="<?php echo (!empty($submitted['phone']))? $submitted['phone']: ''; ?>" aria-label="Phone Number" required>
 						</div>
 					</div>
 
 					<div class="form-group">
-						<label for="fax" class="col-md-3 control-label">Fax </label>
+						<label for="fax" class="col-md-3 sr-only">Fax </label>
 						<div class="col-md-9">
-							<input type="tel" id="fax" class="form-control" name="fax" value="<?php echo (!empty($submitted['fax']))? $submitted['fax']: ''; ?>">
+							<input type="tel" id="fax" class="form-control" name="fax" value="<?php echo (!empty($submitted['fax']))? $submitted['fax']: ''; ?>" aria-label="Fax Number">
 						</div>
 					</div>
 
 					<div class="form-group">
-						<label for="website" class="col-md-3 control-label">Website </label>
+						<label for="website" class="col-md-3 sr-only">Website </label>
 						<div class="col-md-9">
-							<input type="url" id="website" class="form-control" name="website" value="<?php echo (!empty($submitted['website']))? $submitted['website']: ''; ?>">
+							<input type="url" id="website" class="form-control" name="website" value="<?php echo (!empty($submitted['website']))? $submitted['website']: ''; ?>" aria-label="Website">
 						</div>
 					</div>
 					<!-- @TODO set payment method details as non-editable fields and allow customer to delete or create a new one to associate to the current customer -->
@@ -108,56 +109,50 @@ function showForm($submitted = array(), $errorsArr=[]){
 						<div class="row">
 							<div class="col-md-3">
 								<label>
-									<input type="radio" id="without" class="radioPmtMethod" name="withPmtMethodRadio" value="false">
+									<input type="radio" id="without" class="radioPmtMethod" name="withPmtMethodRadio" aria-label="Update without payment method" value="false">
 								Without Payment Method</label>						
 							</div>
-							<div class="col-md-9"></div>
 						</div>
 						<div class="row">
 							<div class="col-md-3">
 								<label>
-									<input type="radio" id="with" class="radioPmtMethod" name="withPmtMethodRadio" value="true" checked>
+									<input type="radio" id="with" class="radioPmtMethod" name="withPmtMethodRadio" aria-label="Update with payment method" value="true" checked>
 								With Payment Method</label>
 							</div>
-							<div class="col-md-9"></div>						
 						</div>
 					</div> <!-- end .radio -->
 						
 					<div class="paymentMethodDetails">
 						<div id="pwpp" class="form-group"></div>
 						<div class="form-group">
-							<label for="cardholderName" class="col-md-2 control-label">Cardholder Name</label>
+							<label for="cardholderName" class="col-md-2 sr-only">Cardholder Name</label>
 							<div class="col-md-4">
-								<input type="text" class="form-control" name="cardholderName" value="<?php echo (!empty($submitted['cardholderName']))? $submitted['cardholderName']: ''; ?>" placeholder="First Last">
+								<input type="text" class="form-control" name="cardholderName" value="<?php echo (!empty($submitted['cardholderName']))? $submitted['cardholderName']: ''; ?>" aria-label="Cardholder Name" placeholder="Cardholder Name">
 							</div>
 						
-							<label for="cardNum" class="col-md-2 control-label">Credit Card Number</label>
+							<label for="cardNum" class="col-md-2 sr-only">Credit Card Number</label>
 							<div class="col-md-4">
-								<input id="cardNum" data-braintree-name="number" class="form-control" type="text" name="cardNum" value="<?php echo (!empty($submitted['cardNum']))? $submitted['cardNum']: ''; ?>" placeholder="Card Number">
+								<input id="cardNum" data-braintree-name="number" class="form-control" type="text" name="cardNum" value="<?php echo (!empty($submitted['cardNum']))? $submitted['cardNum']: ''; ?>" aria-label="Card Number" placeholder="Card Number">
 							</div>
 						</div>
 
 						<div class="form-group">	
-							<label for="expDate" class="col-md-2 control-label">Expiration Date</label>
+							<label for="expDate" class="col-md-2 sr-only">Expiration Date</label>
 							<div class="col-md-4">
-								<input id="expDate" data-braintree-name="expiration_date" class="form-control" type="text" name="expDate" value="<?php echo (!empty($submitted['cardExpDate']))? $submitted['cardExpDate']: ''; ?>" placeholder="Expiration Date">
+								<input id="expDate" data-braintree-name="expiration_date" class="form-control" type="text" name="expDate" value="<?php echo (!empty($submitted['cardExpDate']))? $submitted['cardExpDate']: ''; ?>" aria-label="Expiration Date" placeholder="Expiration Date">
 							</div>
-
-							<!-- <label for="token" class="col-md-2 control-label">Payment Method Token</label>
-							<div class="col-md-2">
-								<input type="text" class="form-control" name="token" value="<?php echo (!empty($submitted['token']))? $submitted['token']: ''; ?>" placeholder="Payment Method Token"> -->
-							<!-- </div> -->
-							<label for="cvv" class="col-md-2 control-label">CVV</label>
+							<!-- @TODO add PayPal as payment method -->
+							<label for="cvv" class="col-md-2 sr-only">CVV</label>
 							<div class="col-md-4">
-								<input id="cvv" data-braintree-name="cvv" type="number" class="form-control" name="cvv" value="<?php echo (!empty($submitted['cvv']))? $submitted['cvv']: ''; ?>" placeholder="CVV">
+								<input id="cvv" data-braintree-name="cvv" type="number" class="form-control" name="cvv" value="<?php echo (!empty($submitted['cvv']))? $submitted['cvv']: ''; ?>" aria-label="CVV" placeholder="CVV">
 							</div>
 						</div>
 
 						<div class="form-group">
-							<div class="col-md-offset-2 col-md10">
+							<div class="col-md-offset-2 col-md-10">
 								<div class="checkbox">
 									<label>
-										<input type="checkbox" name="makeDefault"> Make Default
+										<input type="checkbox" aria-label="Make default payment method" name="makeDefault"> Make Default
 									</label>
 								</div>
 							</div>
@@ -169,18 +164,16 @@ function showForm($submitted = array(), $errorsArr=[]){
 						<div class="row">
 							<div class="col-md-3">
 								<label>
-									<input type="radio" id="noBillingAddr" class="radioBillingAddr" name="withBillingAddressRadio" value="false">
+									<input type="radio" id="noBillingAddr" class="radioBillingAddr" name="withBillingAddressRadio" aria-label="Update without billing address" value="false">
 								None</label>						
 							</div>
-							<div class="col-md-9"></div>
 						</div>
 						<div class="row">
 							<div class="col-md-3">
 								<label>
-									<input type="radio" id="withBillingAddr" class="radioBillingAddr" name="withBillingAddressRadio" value="true" checked>
+									<input type="radio" id="withBillingAddr" class="radioBillingAddr" name="withBillingAddressRadio" aria-label="Update with billing address" value="true" checked>
 								Create New Address</label>
 							</div>
-							<div class="col-md-9"></div>						
 						</div>
 					</div> <!-- end .radio -->
 
@@ -188,70 +181,70 @@ function showForm($submitted = array(), $errorsArr=[]){
 					<div class="billingAddressDetails">
 						<!-- billing address info -->			
 						<div class="form-group">
-							<label for="firstName" class="col-md-3 control-label">First Name</label>
+							<label for="firstName" class="col-md-3 sr-only">First Name</label>
 							<div class="col-md-9">
-								<input type="text" class="form-control" name="billing_firstName" value="<?php echo (!empty($submitted['billingFirstName']))? $submitted['billingFirstName']: ''; ?>" placeholder="First Name">
+								<input type="text" class="form-control" name="billing_firstName" value="<?php echo (!empty($submitted['billingFirstName']))? $submitted['billingFirstName']: ''; ?>" aria-label="First Name" placeholder="First Name">
 							</div>
 						</div>
 						
 						<div class="form-group">
-							<label for="lastName" class="col-md-3 control-label">Last Name</label>
+							<label for="lastName" class="col-md-3 sr-only">Last Name</label>
 							<div class="col-md-9">
-								<input type="text" class="form-control" name="billing_lastName" value="<?php echo (!empty($submitted['billingLastName']))? $submitted['billingLastName']: ''; ?>" placeholder="Last Name">
+								<input type="text" class="form-control" name="billing_lastName" value="<?php echo (!empty($submitted['billingLastName']))? $submitted['billingLastName']: ''; ?>" aria-label="Last Name" placeholder="Last Name">
 							</div>
 						</div>
 						
 						<div class="form-group">
-							<label for="company" class="col-md-3 control-label">Company</label>
+							<label for="company" class="col-md-3 sr-only">Company</label>
 							<div class="col-md-9">
-								<input type="text" class="form-control" name="billing_company" value="<?php echo (!empty($submitted['billingCompany']))? $submitted['billingCompany']: ''; ?>" placeholder="Company">
+								<input type="text" class="form-control" name="billing_company" value="<?php echo (!empty($submitted['billingCompany']))? $submitted['billingCompany']: ''; ?>" aria-label="Company" placeholder="Company">
 							</div>
 						</div>
 						
 						<div class="form-group">
-							<label for="streetAddress" class="col-md-3 control-label">Street Address</label>
+							<label for="streetAddress" class="col-md-3 sr-only">Street Address</label>
 							<div class="col-md-9">
-								<input type="text" class="form-control" name="streetAddress" value="<?php echo (!empty($submitted['billingStreetAddress']))? $submitted['billingStreetAddress']: ''; ?>" placeholder="Street Address">
+								<input type="text" class="form-control" name="streetAddress" value="<?php echo (!empty($submitted['billingStreetAddress']))? $submitted['billingStreetAddress']: ''; ?>" aria-label="Street Address" placeholder="Street Address">
 							</div>
 						</div>
 						
 						<div class="form-group">
-							<label for="extendedAddress" class="col-md-3 control-label">Address 2</label>
+							<label for="extendedAddress" class="col-md-3 sr-only">Address 2</label>
 							<div class="col-md-9">
-								<input type="text" class="form-control" name="extendedAddress" value="<?php echo (!empty($submitted['billingExtendedAddress']))? $submitted['billingExtendedAddress']: ''; ?>" placeholder="Address 2">
+								<input type="text" class="form-control" name="extendedAddress" value="<?php echo (!empty($submitted['billingExtendedAddress']))? $submitted['billingExtendedAddress']: ''; ?>" aria-label="Address 2" placeholder="Address 2">
 							</div>
 						</div>
 						
 						<div class="form-group">
-							<label for="locality" class="col-md-3 control-label">City</label>
+							<label for="locality" class="col-md-3 sr-only">City</label>
 							<div class="col-md-9">
-								<input type="text" class="form-control" name="locality" value="<?php echo (!empty($submitted['billingLocality']))? $submitted['billingLocality']: ''; ?>" placeholder="City">
+								<input type="text" class="form-control" name="locality" value="<?php echo (!empty($submitted['billingLocality']))? $submitted['billingLocality']: ''; ?>" aria-label="City" placeholder="City">
 							</div>
 						</div>
 						
 						<div class="form-group">
-							<label for="region" class="col-md-3 control-label">State / Province (Region)</label>
+							<label for="region" class="col-md-3 sr-only">State / Province / Region</label>
 							<div class="col-md-9">
-								<input type="text" class="form-control" name="region" value="<?php echo (!empty($submitted['billingRegion']))? $submitted['billingRegion']: ''; ?>" placeholder="State / Province (Region)">
+								<input type="text" class="form-control" name="region" value="<?php echo (!empty($submitted['billingRegion']))? $submitted['billingRegion']: ''; ?>" aria-label="State / Province / Region" placeholder="State / Province / Region">
 							</div>
 						</div>
 						
 						<div class="form-group">
-							<label for="postalCode" class="col-md-3 control-label">Postal Code</label>
+							<label for="postalCode" class="col-md-3 sr-only">Postal Code</label>
 							<div class="col-md-9">
-								<input type="num" class="form-control" name="postalCode" value="<?php echo (!empty($submitted['billingPostalCode']))? $submitted['billingPostalCode']: ''; ?>" placeholder="Postal Code">
+								<input type="num" class="form-control" name="postalCode" value="<?php echo (!empty($submitted['billingPostalCode']))? $submitted['billingPostalCode']: ''; ?>" aria-label="Postal Code" placeholder="Postal Code">
 							</div>
 						</div>
 						
 						<div class="form-group">
-							<label for="countryName" class="col-md-3 control-label">Country Name</label>
+							<label for="countryName" class="col-md-3 sr-only">Country Name</label>
 							<div class="col-md-9">
 								<?php include("../inc/countries.inc.php"); ?>
 							</div>
 						</div>
 					</div> <!-- end .billingAddressDetails -->
 
-					<input type="submit" name="updateCustSubmit" value="Update Customer">	
+					<input type="submit" name="updateCustSubmit" aria-label="Update Customer button" value="Update Customer">	
 				</form>
 			</div>
 		</div>

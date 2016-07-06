@@ -10,8 +10,9 @@
 			<div class="row">
 				<div class="col-md-12">
 					<form id="voidForm" class="form-horizontal" method="post" action="<?php echo htmlspecialchars("?"); ?>">
-						<input type="text" id="txnID" name="txnID" tabindex="1" placeholder="Transaction ID" <?php if (isset($txnid)){echo "value='$txnid'"; }?>>
-						<input type="submit" id="submitVoid" name="submitVoid" value="Settle transactions">
+						<label for="txnID" class="sr-only">Transaction ID</label>
+						<input type="text" id="txnID" name="txnID" tabindex="1" aria-label="Transaction ID" placeholder="Transaction ID" <?php if (isset($txnid)){echo "value='$txnid'"; }?>>
+						<input type="submit" id="submitVoid" class="btn greenBtn" name="submitVoid" aria-label="Settle Transaction button" value="Settle Transaction">
 					</form>
 				</div>
 			</div>

@@ -15,15 +15,15 @@
 	?>
 				<form id="hostedCheckoutForm" class="form-horizontal" method="post" action="<?php echo htmlspecialchars("?"); ?>">
 					<label for="cardNum">Card Number</label>
-					<div id="cardNum" tabindex="10"></div>
+					<div id="cardNum" aria-label="Card Number" tabindex="10"></div>
 					<label for="cvv">CVV</label>
-					<div id="cvv" tabindex="15"></div>
+					<div id="cvv" aria-label="CVV" tabindex="15"></div>
 					<label for="zip">Zip Code</label>
-					<div id="zip" tabindex="20"></div>
+					<div id="zip" aria-label="Zip Code" tabindex="20"></div>
 					<label for="expDate">Expiration Date</label>
-					<div id="expDate" tabindex="25"></div>
-					<input id="amt" name="amt" type="hidden" value="10.00" />
-					<input class="btn greenBtn" name="submit" type="submit" value="Pay $10" tabindex="30" />
+					<div id="expDate" aria-label="Expiration Date" tabindex="25"></div>
+					<input id="amt" name="amt" type="hidden" value="10.00">
+					<input class="btn greenBtn" name="submit" type="submit" aria-label="Pay $10 button" value="Pay $10" tabindex="30">
 				</form>
 	<?php
 	} // END showForm()

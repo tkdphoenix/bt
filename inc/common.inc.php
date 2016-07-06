@@ -3,8 +3,8 @@
 // @todo this is not correct - should be absolute
 $pathToBTErrorLog 	= realpath(dirname(__FILE__) .DS. '..') .DS. "logs" .DS. "BraintreeErrors.txt";
 
-function strip_tags_special_chars($string){
-	return htmlentities(strip_tags($string));
+function strip_tags_trim($string){
+	return trim(strip_tags($string));
 }
 
 /**

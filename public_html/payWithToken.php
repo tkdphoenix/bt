@@ -65,22 +65,22 @@ showBTLeftNav();
 					<div class="row">
 						<div class="col-md-3">
 							<label for="token">
-								<input id="token" type="radio" name="paymentType" value="token" checked>
+								<input id="token" type="radio" name="paymentType" aria-label="Use Payment Method Token" value="token" checked>
 							Use Payment Method Token</label>
 						</div>
 						<div class="col-md-3">
 							<label for="custId">
-								<input id="custId" type="radio" name="paymentType" value="custId">
+								<input id="custId" type="radio" name="paymentType" aria-label="Use Customer ID" value="custId">
 							Use Customer ID</label>
 						</div>
 						<div class="col-md-6">
-							<input type="text" name="paymentToken" tabindex="20">
+							<input type="text" name="paymentToken" aria-label="Payment Method Token / Customer ID" tabindex="20">
 						</div>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-3">
-						<input class="btn greenBtn" type="submit" name="submitPmt" value="Submit" tabindex="30">
+						<input class="btn greenBtn" type="submit" name="submitPmt" aria-label="Submit button" value="Submit" tabindex="30">
 					</div>
 					<div class="col-md-9"></div>
 				</div>
