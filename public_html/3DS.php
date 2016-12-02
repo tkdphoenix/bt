@@ -45,7 +45,6 @@
 			} else { 
 				var_dump($result->errors->deepAll());
 				throw new Exception("The transaction wasn't successful.");
-				
 			}
 		} catch (Exception $e){
 			echo 'Caught exception: ',  $e->getMessage(), "\n";
@@ -73,17 +72,17 @@
 						<form id="checkout" class="form-horizontal" method="post" action="<?php echo htmlspecialchars("?"); ?>">
 							<div class="form-group">
 								<label class=".sr-only" for="cardNum">Card Number
-									<div id="cardNum" aria-label="card number" class="form-control"></div>
+									<div id="cardNum" aria-label="card number" class="form-control" tabindex="10"></div>
 								</label>
 							</div>
 							<div class="form-group">
 								<label class=".sr-only" for="expDate">Expiration Date
-									<div id="expDate" aria-label="expiration date" class="form-control" tabindex="25"></div>
+									<div id="expDate" aria-label="expiration date" class="form-control" tabindex="20"></div>
 								</label>
 							</div>
 							<div class="form-group">
 								<label class=".sr-only" for="cvv">CVV
-									<div id="cvv" aria-label="cvv" class="form-control"></div>
+									<div id="cvv" aria-label="cvv" class="form-control" tabindex="30"></div>
 								</label>
 							</div>
 							<div class="form-group">
@@ -104,7 +103,7 @@
 					'custom', {
 						id: 'checkout',
 						onPaymentMethodReceived: function(obj){
-							console.info(obj);
+							console.info(obj.details);
 
 							client.verify3DS({
 								amount: 500,

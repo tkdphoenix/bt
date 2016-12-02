@@ -11,7 +11,8 @@
 	// test if the nonce has been posted
 	if(isset($_POST['payment_method_nonce'])){
 		$nonce = strip_tags($_POST['payment_method_nonce']);
-		$amt = 30.00;
+		// $nonce = "fake-valid-prepaid-nonce";
+		$amt = strip_tags($_POST['amt']);
 
 		try{
 			$result = Braintree_Transaction::sale(array(
@@ -32,7 +33,7 @@
 				<div class="col-md-12">
 <?php
 				$txn = $result->transaction;
-
+				print_r($txn); exit();
 				echo "<p>Your payment went through. You are the proud owner of a iPad charging cable!</p>";
 				echo "<h3>Transaction detaiils:</h3>";
 				echo "id = ". $txn->id ."</p>";
@@ -46,7 +47,11 @@
 		} catch (Exception $e){
 			echo "<p class='error'>This payment could not be processed.". $e->getMessage() ."</p>";
 			echo "<br><br>Transaction errors: <br>";
-			var_dump($result->errors);			
+			var_dump($result->errors->deepAll());
+			echo "<br><br>";
+			print_r($result->errors);
+			echo "<br><br>";
+			var_dump($result);		
 		}
 	} else { // END if(isset($_POST['payment_method_nonce']))
 		showBTHeader("Braintree Initialization", "Welcome to Braintree!");
@@ -58,7 +63,7 @@
 						<img class="cord" src="img/iphoneCord.jpeg" alt="iPhone Cord">
 					</div>
 					<div class="col-md-9">
-						<p class="cordTxt">This is a simple payment for a $30 iPhone / iPad charging cable.</p>
+						<p class="cordTxt">This is a simple payment to purchase an iPhone / iPad charging cable. You can change the price for <a class="greenLink" href="https://developers.braintreepayments.com/reference/general/testing/#test-amounts" target="_blank">testing purposes</a> using <a class="greenLink" href="https://developers.braintreepayments.com/reference/general/processor-responses/authorization-responses#decline-codes" target="_blank">processor decline codes</a> and <a class="greenLink" href="https://developers.braintreepayments.com/reference/general/processor-responses/avs-cvv-responses" target="_blank">gateway rejections</a>.</p>
 					</div>
 				</div>
 				<div class="row">
@@ -79,6 +84,11 @@
 							<div class="form-group">
 								<label for="cvv">CVV</label>
 									<input id="cvv" class="form-control" data-braintree-name="cvv" aria-label="CVV" placeholder="CVV" value="111">
+							</div>
+							<div class="form-group">
+								<label for="amt">Amount
+									<input type="number" id="amt" class="form-control" name="amt" aria-label="amount" placeholder="Amount" value="10">
+								</label>
 							</div>
 							<div class="form-group">
 								<input class="btn greenBtn" type="submit" name="submit" id="submitCustom" aria-label="Pay button" value="Pay">

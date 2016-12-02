@@ -17,7 +17,7 @@
 					<label for="cardNum">Card Number</label>
 					<div id="cardNum" aria-label="Card Number" tabindex="10"></div>
 					<label for="cvv">CVV</label>
-					<div id="cvv" aria-label="CVV" tabindex="15"></div>
+					<div id="cvv" aria-label="CVV" type="password" tabindex="15"></div>
 					<label for="zip">Zip Code</label>
 					<div id="zip" aria-label="Zip Code" tabindex="20"></div>
 					<label for="expDate">Expiration Date</label>

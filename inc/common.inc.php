@@ -20,7 +20,7 @@ function showBTHeader($title, $heading){
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title><?=$title?></title>
 	<link rel="stylesheet" href="<?php echo "bootstrap-3.3.4-dist" .DS. "css" .DS. "bootstrap.min.css"?>">
 	<link rel="stylesheet" href="<?php echo "css" .DS. "btStyles.css"?>">
@@ -48,7 +48,7 @@ function showBTLeftNav(){
 				<ul class="nav nav-pills nav-stacked">
 					<li>
 						<h4>Payments</h4>
-						<a href="index.php">Simple Payment</a></li>
+						<a href="index.php">Custom Checkout Payment</a></li>
 					<li><a href="dropin.php">Dropin UI</a></li>
 					<li><a href="hostedFields.php">Hosted Fields</a></li>
 					<li><a href="settlement.php">Settlement</a></li>
@@ -74,7 +74,7 @@ function showBTLeftNav(){
 						<a href="3DS.php">3D Secure Checkout</a></li>
 					<li>
 						<h4>Marketplace</h4>
-						<a href="createMerchantAccount.php">Create Merchant</a></li>
+						<a href="createSubMerchantAccount.php">Create Sub-Merchant</a></li>
 				</ul>
 			</div>
 <?php
