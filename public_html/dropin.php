@@ -78,7 +78,7 @@
 		var clientToken =   "<?=$clientToken?>";
 
 		braintree.setup(clientToken, "dropin", {
-		container: "myDropin"
+			container: "myDropin"
 		});
 	</script>
 <?php

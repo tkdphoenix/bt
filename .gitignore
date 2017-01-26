@@ -16,3 +16,5 @@ logs/
 *.sublime-project
 *.sublime-workspace
 /vendor/
+*.sublime-project
+*.sublime-workspace

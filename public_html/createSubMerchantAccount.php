@@ -82,7 +82,7 @@
 							</div>
 							<div class="form-group">
 								<label for="businessTaxId">Tax ID</label>
-								<input type="text" class="form-control" name="businessTaxId" value="<?php echo (isset($vals->businessTaxId))? $vals->businessTaxId : ''; ?>" placeholder="Tax ID">
+								<input type="text" class="form-control" name="businessTaxId" value="<?php echo (isset($vals->businessTaxId))? $vals->businessTaxId : ''; ?>" placeholder="Tax ID (ex. 98-7654321)">
 							</div>
 							<div class="form-group">
 								<label for="businessStr">Business Street Address</label>
@@ -138,10 +138,10 @@
 							</div>
 							<div class="form-group">
 								<label for="fundingRoutingNumber">Routing Number</label>
-								<input type="text" class="form-control" name="fundingRoutingNumber" value="<?php echo (isset($vals->fundingRoutingNumber))? $vals->fundingRoutingNumber : ''; ?>" placeholder="Routing Number">
+								<input type="text" class="form-control" name="fundingRoutingNumber" value="<?php echo (isset($vals->fundingRoutingNumber))? $vals->fundingRoutingNumber : ''; ?>" placeholder="Routing Number (ex. 114900685)">
 							</div>
 							<div class="form-group">
-								<label><input type="checkbox" name="tosAccepted" value="<?php echo (isset($vals->tosAccepted))? 'checked' : ''; ?>"> I accept the terms of service.</label>
+								<label><input type="checkbox" name="tosAccepted" <?php echo (isset($vals->tosAccepted))? 'checked' : ''; ?>> I accept the terms of service.</label>
 							</div>
 							
 							<!-- @TODO will need to update this once multiple accounts are implemented for teammates -->
@@ -187,9 +187,17 @@
 		$fundingMobilePhone = strip_tags($_POST['fundingMobilePhone']);
 		$fundingAccountNumber = strip_tags($_POST['fundingAccountNumber']);
 		$fundingRoutingNumber = strip_tags($_POST['fundingRoutingNumber']);
-		$tosAccepted = strip_tags($_POST['tosAccepted']);
+		$tosAccepted = (strip_tags($_POST['tosAccepted']))? true : false;
 		$masterMerchantAccountId = strip_tags($_POST['masterMerchantAccountId']);
 		$id = strip_tags($_POST['id']);
+		// echo $_POST['tosAccepted'] . "<br>";
+		// echo "tos accepted: ". $tosAccepted;
+		// if($_POST['tosAccepted']){
+		// 	echo "yes";
+		// } else {
+		// 	echo "no";
+		// }
+		// exit();
 
 		// @TODO - form validation - check for required fields
 		showBTHeader("Creating Sub-Merchant", "Creating Sub-Merchant");
@@ -231,7 +239,7 @@
 				],
 				'tosAccepted' => $tosAccepted,
 				'masterMerchantAccountId' => "b9gndw43fy826hvc",
-				'id' => "blue_ladders_store"
+				'id' => $id
 			];
 			$result = Braintree_MerchantAccount::create($merchantAccountParams);
 
@@ -254,6 +262,7 @@
 			} else {
 				var_dump($result->errors->deepAll());
 				throw new Exception("The transaction wasn't successful.");
+				showForm();
 			}
 		} catch (Exception $e) {
 			echo 'Caught exception: ',  $e->getMessage(), "\n";
