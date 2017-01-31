@@ -1,7 +1,7 @@
 <?php
 // Sandbox configuration
 // require_once("braintree-php-2.38.0/lib/Braintree.php");
-require_once("braintree-php-3.9.0/lib/Braintree.php");
+require_once("braintree-php-3.21.1/lib/Braintree.php");
 Braintree_Configuration::environment('sandbox');
 // My Creds:
 Braintree_Configuration::merchantId('w23gxftvk5dhcygm');

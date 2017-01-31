@@ -68,13 +68,19 @@ function showBTLeftNav(){
 						<a href="findSubscription.php">Find Subscription</a>
 						<a href="retrySubscription.php">Retry Subscription Charge</a>
 						<a href="searchSubscription.php">Search Subscription</a>
-						<a href="updateSubscription.php">Update Subscription</a></li>
+						<a href="updateSubscription.php">Update Subscription</a>
+					</li>
 					<li>
 						<h4>3D Secure</h4>
-						<a href="3DS.php">3D Secure Checkout</a></li>
+						<a href="3DS.php">3D Secure Checkout</a>
+					</li>
 					<li>
 						<h4>Marketplace</h4>
-						<a href="createSubMerchantAccount.php">Create Sub-Merchant</a></li>
+						<a href="createSubMerchantAccount.php">Create Sub-Merchant</a>
+						<a>Confirm Sub-Merchant Account</a> <!-- href="confirmSubMerchantAccount.php" -->
+						<a href="updateSubMerchantAccount.php">Update Sub-Merchant Account</a>
+						<a>Create Sub-Merchant Transaction</a> <!-- href="createSMTransaction.php" -->
+					</li>
 				</ul>
 			</div>
 <?php

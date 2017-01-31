@@ -164,6 +164,7 @@
 	} // end showForm()
 
 	if(isset($_POST['createSubmit'])){
+		// clean variables submitted from form
 		$firstName = strip_tags($_POST['firstName']);
 		$lastName = strip_tags($_POST['lastName']);
 		$individualEmail = strip_tags($_POST['individualEmail']);
@@ -190,14 +191,7 @@
 		$tosAccepted = (strip_tags($_POST['tosAccepted']))? true : false;
 		$masterMerchantAccountId = strip_tags($_POST['masterMerchantAccountId']);
 		$id = strip_tags($_POST['id']);
-		// echo $_POST['tosAccepted'] . "<br>";
-		// echo "tos accepted: ". $tosAccepted;
-		// if($_POST['tosAccepted']){
-		// 	echo "yes";
-		// } else {
-		// 	echo "no";
-		// }
-		// exit();
+
 
 		// @TODO - form validation - check for required fields
 		showBTHeader("Creating Sub-Merchant", "Creating Sub-Merchant");
@@ -251,18 +245,18 @@
 				<div class="col-md-12">
 <?php
 				print_r($result);
-				// $txn = $result->transaction;
-
-				// echo "<p>Your payment went through. You are the proud owner of a MacBook Pro 13&quot;! What a great deal!</p>";
-				// echo "<h3>Transaction detaiils:</h3>";
-				// echo "id = ". $txn->id ."</p>";
-				// echo "<p>status = ". $txn->status ."</p>";
-				// echo "<p>type = ". $txn->type ."</p>";
-				// echo "<p>amount = ". $txn->amount ."</p>";
+				
+				echo "<p>Your new sub-merchant account has been created.</p>";
+				echo "<h3>Sub-Merchant Detaiils</h3>";
+				echo "<p>Sub-Merchant ID: ". $result->merchantAccount->id ."</p>";
+				echo "<p>Sub-Merchant status: ". $result->merchantAccount->status ."</p>";
+				echo "<p>Currency code: ". $result->merchantAccount->currencyIsoCode ."</p>";
+				echo "<p>masterMerchantAccount ID: ". $result->merchantAccount->masterMerchantAccount->id ."</p>";
+				// @TODO - REMOVE the (feature coming soon) once you create the webhook creation tool
+				echo "<p>To get a confirmation for this sub-merchant, create a webhook (feature coming soon)</p>";
 			} else {
 				var_dump($result->errors->deepAll());
 				throw new Exception("The transaction wasn't successful.");
-				showForm();
 			}
 		} catch (Exception $e) {
 			echo 'Caught exception: ',  $e->getMessage(), "\n";
@@ -272,6 +266,7 @@
 		showBTHeader("Create a New Sub-Merchant", "Create a New Sub-Merchant");
 		showBTLeftNav();
 		showForm();
+		showBTFooter();
 	}
 
 ?>

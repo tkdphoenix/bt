@@ -4,7 +4,7 @@
        url('../fonts/Courier_Prime.ttf') format('truetype'); /* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */
 }
 
-h1,h2,h3,h4,h5,h6, .planTable .plan{
+h1,h2,h3,h4,h5,h6, .planTable .plan, .submerchants .subId{
 	color: #69c4a7;
 	font-family: 'Courier_Prime', 'Helvetica Neue', Helvetica, sans-serif;
 }
