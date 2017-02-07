@@ -45,21 +45,6 @@
 		    <button disabled value="submit" id="submit" class="btn greenBtn"><div>Pay</div></button>
 		  </div>
 		</div>
-
-				<!-- <form id="hostedCheckoutForm" class="form-horizontal" method="post" action="<?php echo htmlspecialchars("?"); ?>">
-				<!-- 	<div id="error-message"></div>
-					<div data-input-text="card-number">Card Number</label>
-					<div id="card-number" class="hosted-field" tabindex="10"></div>
-					<label for="cvv">CVV</label>
-					<div id="cvv" class="hosted-field" tabindex="15"></div>
-					<label for="zip">Zip Code</label>
-					<div id="zip" tabindex="20"></div>
-					<label for="expiration-date">Expiration Date</label>
-					<div id="expiration-date" class="hosted-field" tabindex="25"></div>
-					<input id="amt" name="amt" type="hidden" value="10.00" />
-					<input type="hidden" name="payment-method-nonce">
-					<input class="btn greenBtn" name="btnSubmit" type="submit" value="Pay $10" tabindex="30" disabled />
-				</form> -->
 	<?php
 	} // END showForm()
 
@@ -244,7 +229,7 @@
 	<script>
 	var submit = document.querySelector('#submit');
 	var form = document.querySelector('#hostedCheckoutForm');
-		braintree.client.create({
+	braintree.client.create({
 		authorization: 'sandbox_g42y39zw_348pk9cgf3bgyw2b'
 		}, function (err, clientInstance) {
 		braintree.hostedFields.create({

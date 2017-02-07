@@ -147,12 +147,119 @@
 	if(isset($_POST['updateSubmit'])){
 		showBTHeader("Sub-Merchant Updated", "Sub-Merchant Updated");
 		showBTLeftNav();
-		
+		// set up 2 dimensional array for the update() method
+		$tempArr = Array("individual" => [], "business" => [], "funding" => []);
 		// clean submitted values
 		foreach($_POST as $key=>$val){
 			$$key = strip_tags($val);
-			echo "<p>". $key .": ". $$key ."</p>";
-		}
+
+			echo "<p>". $key .": ". $$key ."</p>"; // for testing that values and vars were created as expected
+			echo substr($key, 0, 10);
+			switch($key){
+				case "firstName":
+				case "lastName":
+				case "individualEmail":
+				case "individualPhone": 
+				case "dateOfBirth": 
+				case "ssn": 
+				case "individualStreetAddress": 
+				case "individualLocality": 
+				case "individualRegion": 
+				case "individualPostalCode":
+					// if 'individual' is in the word remove it and correctly set the case for the word
+					if(substr($key, 0, 10) == "individual"){
+						$tempKey = substr($key, 10);
+						$tempArr['individual'][$tempKey] = $$key;
+					} else {
+						// insert key and value into $tempArr
+						$tempArr['individual'][$key] = $$key;
+					}
+					break;
+				case "businessLegalName": 
+				case "dbaName": 
+				case "businessTaxId": 
+				case "businessStreetAddress": 
+				case "businessLocality": 
+				case "businessRegion": 
+				case "businessPostalCode": 
+					// if 'business' is in the word remove it and correctly set the case for the word
+					if(substr($key, 0, 8) == "business"){
+						$tempKey = substr($key, 8);
+						// because it is camel cased you have to change the new first character to lower case 
+						$tempChar = strtolower(substr($tempKey, 0, 1));
+						$tempKey = substr_replace($tempKey, $tempChar, 0, 1);
+						$tempArr['business'][$tempKey] = $$key;
+					} else {
+						// insert key and value into $tempArr
+						$tempArr['business'][$key] = $$key;
+					}
+					break;
+				case "fundingDescriptor": 
+				case "destination": 
+				case "fundingEmail": 
+				case "fundingMobilePhone": 
+				case "fundingAccountNumber": 
+				case "fundingRoutingNumber": 
+				case "masterMerchantAccountId": 
+					// if 'funding' is in the word remove it and correctly set the case for the word
+					if(substr($key, 0, 7) == "funding"){
+						$tempKey = substr($key, 7);
+						// because it is camel cased you have to change the new first character to lower case 
+						$tempChar = strtolower(substr($tempKey, 0, 1));
+						$tempKey = substr_replace($tempKey, $tempChar, 0, 1);
+						$tempArr['funding'][$tempKey] = $$key;
+					} else {
+						// insert key and value into $tempArr
+						$tempArr['funding'][$key] = $$key;
+					}
+					break;
+			}
+		} // end switch case
+		echo "<br>TempArr: "; print_r($tempArr); echo "<br>";
+
+
+				// individual details
+	// $result = Braintree_MerchantAccount::update(
+	// 	'blue_ladders_store', // here you can put $tempArr instead of adding the lines below in $result
+	// 	[
+	// 		'individual' => [
+	// 			'firstName' => 'Jane',
+	// 			'lastName' => 'Smith',
+	// 			'email' => 'doublederp@14ladders.com',
+	// 			'phone' => '5553334444',
+	// 			'dateOfBirth' => '1901-01-01',
+	// 			'ssn' => '333-22-4444',
+	// 			'address' => [
+	// 				'streetAddress' => '111 Main St',
+	// 				'locality' => 'Reading',
+	// 				'region' => 'PA',
+	// 				'postalCode' => '11111'
+	// 			]
+	// 		],
+	// 		'business' => [
+	// 			'legalName' => 'Jane\'s Ladders',
+	// 			'dbaName' => 'Jane\'s Ladders',
+	// 			'taxId' => '98-7654321',
+	// 			'address' => [
+	// 				'streetAddress' => '111 Main St',
+	// 				'locality' => 'Reading',
+	// 				'region' => 'PA',
+	// 				'postalCode' => '11111'
+	// 			]
+	// 		],
+	// 		'funding' => [
+	// 			'descriptor' => 'Blue Ladders',
+	// 			// 'destination' => Braintree_MerchantAccount::FUNDING_DESTINATION_BANK,
+	// 			'email' => 'derp@blueladders.com',
+	// 			'mobilePhone' => '5555555555',
+	// 			'accountNumber' => '1123581321',
+	// 			'routingNumber' => '071101307'
+	// 		]		
+	// 	]
+	// );
+	// print_r($result);
+	// exit();
+			
 	} else if(isset($_GET['id'])){
 		$id = strip_tags($_GET['id']);
 		$merchantAccount = Braintree_MerchantAccount::find($id);
@@ -200,74 +307,3 @@
 	<?php
 	} // END else
 	showBTFooter();
-
-	// individual details
-	// $result = Braintree_MerchantAccount::update(
-	//   'blue_ladders_store',
-	//   [
-	//     'individual' => [
-	//       'firstName' => 'Jane',
-	//       'lastName' => 'Doe',
-	//       'email' => 'jane@14ladders.com',
-	//       'phone' => '5553334444',
-	//       'dateOfBirth' => '1981-11-19',
-	//       'ssn' => '456-45-4567',
-	//       'address' => [
-	//         'streetAddress' => '111 Main St',
-	//         'locality' => 'Chicago',
-	//         'region' => 'IL',
-	//         'postalCode' => '60622'
-	//       ]
-	//     ]
-	//   ]
-	// );
-
-	// $merchantAccount = $result->merchantAccount;
-	// echo $merchantAccount->individualDetails->firstName;
-	// // Jane
-	
-	// // business details
-	// $result = Braintree_MerchantAccount::update(
-	//   'blue_ladders_store',
-	//   [
-	//     'business' => [
-	//       'legalName' => 'Jane\'s Ladders',
-	//       'dbaName' => 'Jane\'s Ladders',
-	//       'taxId' => '98-7654321',
-	//       'address' => [
-	//         'streetAddress' => '111 Main St',
-	//         'locality' => 'Chicago',
-	//         'region' => 'IL',
-	//         'postalCode' => '60622'
-	//       ]
-	//     ]
-	//   ]
-	// );
-
-	// $merchantAccount = $result->merchantAccount;
-	// echo $merchantAccount->businessDetails->legalName;
-	// // Jane's Ladders
-	// echo $merchantAccount->businessDetails->taxId;
-	// // 98-7654321
-	
-
-	// // funding details
-	// $result = Braintree_MerchantAccount::update(
-	//   'blue_ladders_store',
-	//   [
-	//     'funding' => [
-	//       'descriptor' => 'Blue Ladders',
-	//       'destination' => Braintree_MerchantAccount::FUNDING_DESTINATION_BANK,
-	//       'email' => 'funding@blueladders.com',
-	//       'mobilePhone' => '5555555555',
-	//       'accountNumber' => '1123581321',
-	//       'routingNumber' => '071101307'
-	//       ]
-	//   ]
-	// );
-
-	// $merchantAccount = $result->merchantAccount;
-	// echo $merchantAccount->fundingDetails->accountNumberLast4;
-	// // 1321
-	// echo $merchantAccount->fundingDetails->routingNumber;
-	// // 071101307
