@@ -12,7 +12,7 @@ if(isset($_GET['bt_challenge'])){
 	
 	// send SMS message
 	$smsUrl = "http://textbelt.com/text";
-	$params = array("number" => 6023123846, "message" => "Your webhook went off!");
+	$params = array("number" => '6023123846', "message" => "Your webhook went off!", 'key' => 'textbelt');
 	$smsVars = httpPost($smsUrl, $params);
 } else if(isset($_POST["bt_signature"]) && isset($_POST["bt_payload"])){
     $webhookNotification = Braintree_WebhookNotification::parse(
@@ -25,7 +25,7 @@ if(isset($_GET['bt_challenge'])){
         . "Subscription: " . $webhookNotification->subscription->id . "\n\r";
 	// send SMS message
 	$smsUrl = "http://textbelt.com/text";
-	$params = array('number' => 6023123846, 'message' => $message);
+	$params = array('number' => '6023123846', 'message' => $message, 'key' => 'textbelt');
 	$smsVars = httpPost($smsUrl, $params);
     file_put_contents("webhook.log", $message, FILE_APPEND);
 
@@ -33,7 +33,7 @@ if(isset($_GET['bt_challenge'])){
 	file_put_contents("webhook.log", "Attempt falied\r\n", FILE_APPEND);
 	// send SMS message
 	$smsUrl = "http://textbelt.com/text";
-	$params = array('number' => 6023123846, 'message' => "Your webhook didn't work, but something happened!");
+	$params = array('number' => '6023123846', 'message' => "Your webhook didn't work, but something happened!", 'key' => 'textbelt');
 	$smsVars = httpPost($smsUrl, $params);
 	file_put_contents("webhook.log", "Tried to create smsVars after try/catch: ". print_r($smsVars) ."\r\n", FILE_APPEND);
 

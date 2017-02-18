@@ -256,6 +256,8 @@
 				echo "<p>To get a confirmation for this sub-merchant, create a webhook (feature coming soon)</p>";
 			} else {
 				var_dump($result->errors->deepAll());
+				// showForm($result);
+				echo "<br><br>"; print_r($result);
 				throw new Exception("The transaction wasn't successful.");
 			}
 		} catch (Exception $e) {
