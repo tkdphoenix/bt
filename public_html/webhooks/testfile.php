@@ -13,7 +13,7 @@
 	$phpsms = new PHPSMS\PHPSMS($number,$message);
 
 	//with a different From
-	// $from = 'joelsppacct@gmail.com';
+	$from = 'joelsppacct@gmail.com';
 	$phpsms = new PHPSMS\PHPSMS($number,$message,$from);
 
 	//not sending to the us - note totally untested
